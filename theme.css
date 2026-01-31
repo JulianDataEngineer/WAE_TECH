@@ -1,0 +1,841 @@
+/* ============================================
+   WAE - Light Mode & Enhanced Features
+   Additional Styles
+   ============================================ */
+
+/* ============================================
+   Light Mode Variables
+   ============================================ */
+[data-theme="light"] {
+    /* Light Mode Background */
+    --bg-primary: #f8fafc;
+    --bg-secondary: #f1f5f9;
+    --bg-tertiary: #e2e8f0;
+    --bg-card: rgba(255, 255, 255, 0.9);
+    --bg-card-hover: rgba(255, 255, 255, 0.95);
+
+    /* Surface Colors (Glassmorphism) */
+    --surface-glass: rgba(0, 0, 0, 0.03);
+    --surface-glass-hover: rgba(0, 0, 0, 0.06);
+    --surface-border: rgba(0, 0, 0, 0.1);
+    --surface-border-hover: rgba(0, 212, 255, 0.5);
+
+    /* Text Colors */
+    --text-primary: #0f172a;
+    --text-secondary: rgba(15, 23, 42, 0.7);
+    --text-tertiary: rgba(15, 23, 42, 0.5);
+
+    /* Shadows for Light Mode */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
+
+    /* Gradient adjustments */
+    --gradient-glow: radial-gradient(ellipse at center, rgba(0, 212, 255, 0.15) 0%, transparent 70%);
+}
+
+/* Light mode particles adjustment */
+[data-theme="light"] .particles-bg {
+    background:
+        radial-gradient(ellipse at 20% 20%, rgba(0, 212, 255, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(0, 255, 136, 0.06) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(124, 58, 237, 0.04) 0%, transparent 60%);
+}
+
+[data-theme="light"] .particles-bg::before {
+    background-image:
+        radial-gradient(1px 1px at 20px 30px, rgba(0, 0, 0, 0.15), transparent),
+        radial-gradient(1px 1px at 40px 70px, rgba(0, 212, 255, 0.3), transparent),
+        radial-gradient(1px 1px at 50px 160px, rgba(0, 0, 0, 0.1), transparent),
+        radial-gradient(1px 1px at 90px 40px, rgba(0, 255, 136, 0.2), transparent),
+        radial-gradient(1px 1px at 130px 80px, rgba(0, 0, 0, 0.1), transparent),
+        radial-gradient(1.5px 1.5px at 160px 120px, rgba(0, 212, 255, 0.3), transparent);
+}
+
+/* Light mode header scrolled */
+[data-theme="light"] .main-header.scrolled {
+    background: rgba(248, 250, 252, 0.9);
+}
+
+/* Light mode form inputs */
+[data-theme="light"] .form-group select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%230f172a' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+}
+
+[data-theme="light"] .form-group select option {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+/* ============================================
+   WAE Logo Title - Stylized Text
+   ============================================ */
+.logo-title-link {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    text-decoration: none;
+    transition: transform var(--transition-base);
+}
+
+.logo-title-link:hover {
+    transform: scale(1.05);
+}
+
+.logo-text {
+    font-size: 2rem;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #00d4ff 0%, #00a8cc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    transition: all var(--transition-base);
+    text-shadow: none;
+}
+
+.logo-text.accent {
+    background: linear-gradient(135deg, #00ff88 0%, #00d4ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.logo-title-link:hover .logo-text {
+    filter: brightness(1.2);
+    text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+}
+
+/* Header Logo Image */
+.logo-link {
+    display: flex;
+    align-items: center;
+}
+
+/* Header Logo - Circular */
+.header-logo {
+    height: 50px;
+    width: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.header-logo:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 20px rgba(0, 212, 255, 0.4);
+}
+
+/* ============================================
+   Theme Toggle Button
+   ============================================ */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+.theme-toggle {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-full);
+    background: var(--surface-glass);
+    border: 1px solid var(--surface-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition-base);
+    position: relative;
+    overflow: hidden;
+}
+
+.theme-toggle:hover {
+    background: var(--surface-glass-hover);
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-glow);
+    transform: rotate(15deg);
+}
+
+.theme-toggle .material-symbols-outlined {
+    font-size: 22px;
+    position: absolute;
+    transition: all var(--transition-base);
+}
+
+/* Dark mode (default) - show moon, hide sun */
+.theme-toggle .sun-icon {
+    opacity: 0;
+    transform: rotate(-90deg) scale(0);
+    color: #fbbf24;
+}
+
+.theme-toggle .moon-icon {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+    color: var(--color-primary);
+}
+
+/* Light mode - show sun, hide moon */
+[data-theme="light"] .theme-toggle .sun-icon {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+}
+
+[data-theme="light"] .theme-toggle .moon-icon {
+    opacity: 0;
+    transform: rotate(90deg) scale(0);
+}
+
+/* ============================================
+   Enhanced Planet / Orbital System
+   ============================================ */
+.hero-graphic {
+    position: relative;
+    width: 500px;
+    height: 500px;
+    animation: float 6s ease-in-out infinite;
+    cursor: pointer;
+}
+
+/* Override original orbit styles */
+.orbit {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 50%;
+    border: 2px solid var(--surface-border);
+    transform: translate(-50%, -50%);
+    transition: all var(--transition-slow);
+}
+
+.orbit::before {
+    display: none;
+}
+
+.orbit-dot {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    box-shadow: 0 0 20px currentColor;
+    transition: all var(--transition-base);
+}
+
+.orbit-1 {
+    width: 260px;
+    height: 260px;
+    animation: spin 15s linear infinite;
+    border-color: rgba(0, 212, 255, 0.4);
+}
+
+.orbit-1 .orbit-dot {
+    background: var(--color-primary);
+    color: var(--color-primary);
+    top: -7px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.orbit-2 {
+    width: 360px;
+    height: 360px;
+    animation: spin 25s linear infinite reverse;
+    border-color: rgba(0, 255, 136, 0.3);
+}
+
+.orbit-2 .orbit-dot {
+    background: var(--color-secondary);
+    color: var(--color-secondary);
+    right: -7px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.orbit-3 {
+    width: 460px;
+    height: 460px;
+    animation: spin 35s linear infinite;
+    border-color: rgba(124, 58, 237, 0.25);
+}
+
+.orbit-3 .orbit-dot {
+    background: var(--color-accent);
+    color: var(--color-accent);
+    bottom: -7px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Hover effects on planet system */
+.hero-graphic:hover {
+    animation-play-state: paused;
+}
+
+.hero-graphic:hover .orbit {
+    border-width: 3px;
+}
+
+.hero-graphic:hover .orbit-1 {
+    animation: spin 8s linear infinite;
+    border-color: rgba(0, 212, 255, 0.7);
+}
+
+.hero-graphic:hover .orbit-2 {
+    animation: spin 12s linear infinite reverse;
+    border-color: rgba(0, 255, 136, 0.6);
+}
+
+.hero-graphic:hover .orbit-3 {
+    animation: spin 16s linear infinite;
+    border-color: rgba(124, 58, 237, 0.5);
+}
+
+.hero-graphic:hover .orbit-dot {
+    width: 18px;
+    height: 18px;
+    box-shadow: 0 0 30px currentColor, 0 0 50px currentColor;
+}
+
+/* Center Planet */
+.center-planet {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+}
+
+.planet-core {
+    position: relative;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 50%, #0a0a1a 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow:
+        0 0 60px rgba(0, 212, 255, 0.4),
+        0 0 100px rgba(0, 212, 255, 0.2),
+        inset 0 0 60px rgba(0, 212, 255, 0.1);
+    border: 3px solid rgba(0, 212, 255, 0.5);
+    transition: all var(--transition-slow);
+    cursor: pointer;
+}
+
+/* Light mode planet */
+[data-theme="light"] .planet-core {
+    background: linear-gradient(135deg, #e0f7ff 0%, #b3ecff 50%, #e0f7ff 100%);
+    box-shadow:
+        0 0 60px rgba(0, 212, 255, 0.3),
+        0 0 100px rgba(0, 212, 255, 0.15),
+        inset 0 0 60px rgba(0, 212, 255, 0.2);
+}
+
+.planet-glow {
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(0, 212, 255, 0.15) 0%, transparent 60%);
+    pointer-events: none;
+    animation: pulse-glow 3s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+
+    0%,
+    100% {
+        opacity: 0.5;
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.1);
+    }
+}
+
+.planet-ring {
+    position: absolute;
+    width: 220px;
+    height: 60px;
+    border: 3px solid rgba(0, 212, 255, 0.4);
+    border-radius: 50%;
+    transform: rotateX(70deg);
+    animation: ring-rotate 8s linear infinite;
+}
+
+@keyframes ring-rotate {
+    from {
+        transform: rotateX(70deg) rotateZ(0deg);
+    }
+
+    to {
+        transform: rotateX(70deg) rotateZ(360deg);
+    }
+}
+
+.planet-text {
+    font-size: 2.5rem;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    background: var(--gradient-hero);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 3s ease-in-out infinite;
+    z-index: 2;
+}
+
+/* Planet Logo Image - Circular */
+.planet-logo {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    z-index: 2;
+    transition: all var(--transition-base);
+    box-shadow:
+        0 0 30px rgba(0, 212, 255, 0.4),
+        0 0 60px rgba(0, 212, 255, 0.2);
+}
+
+.hero-graphic:hover .planet-logo {
+    transform: scale(1.1);
+    box-shadow:
+        0 0 50px rgba(0, 212, 255, 0.6),
+        0 0 100px rgba(0, 255, 136, 0.3);
+}
+
+/* Planet hover effects */
+.hero-graphic:hover .planet-core {
+    transform: scale(1.15);
+    box-shadow:
+        0 0 80px rgba(0, 212, 255, 0.6),
+        0 0 120px rgba(0, 212, 255, 0.3),
+        0 0 160px rgba(0, 255, 136, 0.2),
+        inset 0 0 80px rgba(0, 212, 255, 0.2);
+    border-color: var(--color-primary);
+}
+
+.hero-graphic:hover .planet-glow {
+    animation: pulse-glow-fast 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-glow-fast {
+
+    0%,
+    100% {
+        opacity: 0.7;
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.3);
+    }
+}
+
+.hero-graphic:hover .planet-ring {
+    animation: ring-rotate 3s linear infinite;
+    border-color: rgba(0, 212, 255, 0.7);
+    border-width: 4px;
+}
+
+.hero-graphic:hover .planet-text {
+    animation: shimmer 1s ease-in-out infinite;
+    filter: brightness(1.3);
+}
+
+/* Planet click animation */
+.planet-core.clicked {
+    animation: planet-pulse 0.5s ease-out;
+}
+
+@keyframes planet-pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.3);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* ============================================
+   Responsive Adjustments for New Elements
+   ============================================ */
+@media (max-width: 1024px) {
+    .hero-graphic {
+        width: 400px;
+        height: 400px;
+    }
+
+    .orbit-1 {
+        width: 200px;
+        height: 200px;
+    }
+
+    .orbit-2 {
+        width: 280px;
+        height: 280px;
+    }
+
+    .orbit-3 {
+        width: 360px;
+        height: 360px;
+    }
+
+    .planet-core {
+        width: 130px;
+        height: 130px;
+    }
+
+    .planet-ring {
+        width: 180px;
+        height: 50px;
+    }
+
+    .planet-text {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .logo-text {
+        font-size: 1.6rem;
+    }
+
+    .theme-toggle {
+        width: 40px;
+        height: 40px;
+    }
+
+    .theme-toggle .material-symbols-outlined {
+        font-size: 20px;
+    }
+
+    .hero-graphic {
+        width: 320px;
+        height: 320px;
+    }
+
+    .orbit-1 {
+        width: 160px;
+        height: 160px;
+    }
+
+    .orbit-2 {
+        width: 230px;
+        height: 230px;
+    }
+
+    .orbit-3 {
+        width: 300px;
+        height: 300px;
+    }
+
+    .planet-core {
+        width: 100px;
+        height: 100px;
+    }
+
+    .planet-ring {
+        width: 140px;
+        height: 40px;
+    }
+
+    .planet-text {
+        font-size: 1.5rem;
+    }
+
+    .orbit-dot {
+        width: 10px;
+        height: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo-text {
+        font-size: 1.4rem;
+    }
+
+    .hero-graphic {
+        width: 280px;
+        height: 280px;
+    }
+
+    .orbit-1 {
+        width: 140px;
+        height: 140px;
+    }
+
+    .orbit-2 {
+        width: 200px;
+        height: 200px;
+    }
+
+    .orbit-3 {
+        width: 260px;
+        height: 260px;
+    }
+
+    .planet-core {
+        width: 80px;
+        height: 80px;
+    }
+
+    .planet-ring {
+        width: 110px;
+        height: 30px;
+    }
+
+    .planet-text {
+        font-size: 1.2rem;
+    }
+}
+
+/* ============================================
+   Footer Logo Image Styles - Circular
+   ============================================ */
+.footer-logo-container {
+    margin-bottom: var(--space-sm);
+}
+
+.footer-logo-img {
+    height: 70px;
+    width: 70px;
+    object-fit: cover;
+    border-radius: 50%;
+    transition: all var(--transition-base);
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+}
+
+.footer-logo-img:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 25px rgba(0, 212, 255, 0.5);
+}
+
+/* Legacy footer text styles (backup) */
+.footer-logo-text {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-bottom: var(--space-sm);
+}
+
+.footer-logo-text .logo-text {
+    font-size: 2.5rem;
+}
+
+.footer-tagline-sub {
+    font-size: var(--text-sm);
+    color: var(--text-tertiary);
+    margin-top: var(--space-xs);
+}
+
+/* ============================================
+   Mission/Vision Card Styles
+   ============================================ */
+.mission-vision-card {
+    background: var(--bg-card);
+    border: 1px solid var(--surface-border);
+    border-radius: var(--radius-xl);
+    padding: var(--space-2xl);
+    backdrop-filter: blur(10px);
+    transition: all var(--transition-base);
+}
+
+.mission-vision-card:hover {
+    border-color: var(--surface-border-hover);
+    box-shadow: var(--shadow-glow);
+}
+
+.mission-vision-card h3 {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: var(--text-xl);
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-bottom: var(--space-md);
+}
+
+.mission-vision-card h3 .material-symbols-outlined {
+    font-size: 28px;
+}
+
+.mission-vision-card p {
+    color: var(--text-secondary);
+    font-size: var(--text-base);
+    line-height: 1.7;
+}
+
+/* Light mode adjustments for mission card */
+[data-theme="light"] .mission-vision-card {
+    background: rgba(255, 255, 255, 0.8);
+}
+
+[data-theme="light"] .mission-vision-card h3 {
+    color: #0891b2;
+}
+
+/* ============================================
+   About Section (Nosotros)
+   ============================================ */
+.about-section {
+    padding: var(--space-5xl) 0;
+    background: var(--bg-secondary);
+    position: relative;
+}
+
+.about-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xl);
+    margin-bottom: var(--space-2xl);
+}
+
+.about-card {
+    background: var(--bg-card);
+    border: 1px solid var(--surface-border);
+    border-radius: var(--radius-xl);
+    padding: var(--space-2xl);
+    backdrop-filter: blur(10px);
+    transition: all var(--transition-base);
+}
+
+.about-card:hover {
+    border-color: var(--surface-border-hover);
+    box-shadow: var(--shadow-glow);
+    transform: translateY(-5px);
+}
+
+.about-card.about-main {
+    grid-column: span 2;
+}
+
+.about-card-icon {
+    width: 60px;
+    height: 60px;
+    background: var(--surface-glass);
+    border: 1px solid var(--surface-border);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--space-lg);
+}
+
+.about-card-icon .material-symbols-outlined {
+    font-size: 32px;
+    color: var(--color-primary);
+}
+
+.about-card-icon.mission-icon .material-symbols-outlined {
+    color: var(--color-secondary);
+}
+
+.about-card-icon.vision-icon .material-symbols-outlined {
+    color: var(--color-accent);
+}
+
+.about-card h3 {
+    font-size: var(--text-xl);
+    font-weight: 700;
+    margin-bottom: var(--space-md);
+    color: var(--text-primary);
+}
+
+.about-card p {
+    color: var(--text-secondary);
+    line-height: 1.7;
+}
+
+.about-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    margin-top: var(--space-lg);
+}
+
+.about-features span {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    background: var(--surface-glass);
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-full);
+    border: 1px solid var(--surface-border);
+}
+
+.about-features .material-symbols-outlined {
+    font-size: 16px;
+    color: var(--color-secondary);
+}
+
+.vision-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-top: var(--space-lg);
+}
+
+.vision-tags span {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: var(--text-sm);
+    color: var(--color-accent);
+    background: rgba(124, 58, 237, 0.1);
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-full);
+    border: 1px solid rgba(124, 58, 237, 0.3);
+}
+
+.vision-tags .material-symbols-outlined {
+    font-size: 16px;
+}
+
+.about-cta {
+    text-align: center;
+    margin-top: var(--space-xl);
+}
+
+/* Light mode adjustments for about section */
+[data-theme="light"] .about-card {
+    background: rgba(255, 255, 255, 0.9);
+}
+
+/* Responsive for about section */
+@media (max-width: 768px) {
+    .about-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .about-card.about-main {
+        grid-column: span 1;
+    }
+}
