@@ -7,11 +7,11 @@
     'use strict';
 
     // Configuración del Webhook n8n
-    // Para testing local (webhook de prueba)
-    const N8N_WEBHOOK_URL = 'http://localhost:5678/webhook-test/wae-contacto';
+    // URL pública via ngrok para www.waengineers.co
+    const N8N_WEBHOOK_URL = 'https://rebbecca-sniffier-teri.ngrok-free.dev/webhook-test/wae-contacto';
 
     // Para producción (cuando actives el workflow):
-    // const N8N_WEBHOOK_URL = 'http://localhost:5678/webhook/wae-contacto';
+    // const N8N_WEBHOOK_URL = 'https://rebbecca-sniffier-teri.ngrok-free.dev/webhook/wae-contacto';
 
     // Mapeo de servicios para mensajes personalizados
     const SERVICIOS_MAP = {
