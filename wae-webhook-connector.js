@@ -85,6 +85,7 @@
     async function sendToWebhook(data) {
         const response = await fetch(N8N_WEBHOOK_URL, {
             method: 'POST',
+            mode: 'cors',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
@@ -96,7 +97,14 @@
             throw new Error(`HTTP ${response.status}: ${response.statusText}`);
         }
 
-        return await response.json();
+        // n8n puede devolver texto o JSON, manejamos ambos
+        const text = await response.text();
+        try {
+            return JSON.parse(text);
+        } catch {
+            // Si no es JSON, consideramos exitoso si llegamos aquí
+            return { success: true, message: text };
+        }
     }
 
     // Validación de campos
