@@ -60,46 +60,33 @@
     </header>
 
     <main>
-        <!-- Hero Section — Split Layout -->
+        <!-- Hero Section — Full Bleed Banner -->
         <section class="hero-section" id="hero">
-            <!-- LEFT: Dark panel with text -->
-            <div class="hero-left">
-                <div class="hero-left-inner">
-                    <span class="hero-eyebrow">World AI Engineers · Bogotá, Colombia</span>
-
-                    <h1 class="hero-title">
-                        Ingeniería de datos<br>
-                        para empresas que <em>evolucionan</em>.
-                    </h1>
-
-                    <p class="hero-subtitle">
-                        Diseñamos arquitecturas de datos, pipelines escalables e infraestructura
-                        cloud-native que convierten tus datos en ventaja competitiva real.
-                    </p>
-
-                    <div class="hero-cta-group">
-                        <a href="#contacto" class="btn btn-primary" id="hero-cta-primary">
-                            <span class="material-symbols-outlined">send</span>
-                            Hablemos de tu proyecto
-                        </a>
-                        <a href="#pilares" class="btn btn-hero-secondary">
-                            <span class="material-symbols-outlined">explore</span>
-                            Ver servicios
-                        </a>
-                    </div>
-                </div>
+            <!-- Full background image -->
+            <div class="hero-bg" aria-hidden="true">
+                <img src="hero-banner.png" alt="" class="hero-bg-img">
+                <div class="hero-bg-overlay"></div>
             </div>
 
-            <!-- RIGHT: Full character image -->
-            <div class="hero-right" aria-hidden="true">
-                <img src="logo-wae.png" alt="WAE Logo" class="hero-right-logo">
-                <img src="hero-ceo.png" alt="WAE CEO" class="hero-right-img">
+            <!-- Minimal overlay CTA at bottom -->
+            <div class="hero-content-overlay">
+                <div class="hero-cta-group">
+                    <a href="#contacto" class="btn btn-primary" id="hero-cta-primary">
+                        <span class="material-symbols-outlined">send</span>
+                        Hablemos de tu proyecto
+                    </a>
+                    <a href="#pilares" class="btn btn-hero-secondary">
+                        <span class="material-symbols-outlined">explore</span>
+                        Ver servicios
+                    </a>
+                </div>
             </div>
 
             <div class="scroll-indicator" aria-hidden="true">
                 <span class="material-symbols-outlined">keyboard_arrow_down</span>
             </div>
         </section>
+
 
 
         <!-- Services Section -->

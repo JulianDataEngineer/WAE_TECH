@@ -333,82 +333,58 @@ button {
 }
 
 /* ============================================
-   Hero Section — Split Layout (left: dark/text | right: CEO image)
+   Hero Section — Full Bleed Banner Image
    ============================================ */
 .hero-section {
     position: relative;
     min-height: 100vh;
-    display: grid;
-    grid-template-columns: 55fr 45fr;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
     overflow: hidden;
 }
 
-/* LEFT — dark navy panel */
-.hero-left {
-    background: linear-gradient(145deg, #0c1829 0%, #112244 60%, #0f1e3a 100%);
-    display: flex;
-    align-items: center;
-    padding: 8rem 5vw 5rem 7vw;
-    position: relative;
-}
-
-/* Subtle grid texture on left */
-.hero-left::before {
-    content: '';
+/* Full background image */
+.hero-bg {
     position: absolute;
     inset: 0;
-    background-image:
-        linear-gradient(rgba(15, 122, 255, 0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(15, 122, 255, 0.04) 1px, transparent 1px);
-    background-size: 40px 40px;
-    pointer-events: none;
+    z-index: 0;
 }
 
-.hero-left-inner {
+.hero-bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    display: block;
+}
+
+/* Very subtle gradient at bottom so CTA buttons read clearly */
+.hero-bg-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom,
+            transparent 0%,
+            transparent 55%,
+            rgba(8, 16, 35, 0.65) 100%);
+}
+
+/* CTA bar anchored at the bottom of the hero */
+.hero-content-overlay {
     position: relative;
     z-index: 1;
     display: flex;
-    flex-direction: column;
-    gap: var(--space-lg);
-    max-width: 540px;
-}
-
-.hero-eyebrow {
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: rgba(140, 190, 255, 0.8);
-    animation: fadeInUp 0.7s ease-out both;
-}
-
-.hero-title {
-    font-size: clamp(2rem, 3.5vw, 3.25rem);
-    font-weight: 700;
-    line-height: 1.12;
-    letter-spacing: -0.025em;
-    color: #ffffff;
-    animation: fadeInUp 0.7s ease-out 0.1s both;
-}
-
-.hero-title em {
-    font-style: normal;
-    font-weight: 300;
-    color: rgba(130, 190, 255, 0.9);
-}
-
-.hero-subtitle {
-    font-size: var(--text-base);
-    color: rgba(210, 225, 255, 0.72);
-    font-weight: 400;
-    line-height: 1.75;
-    animation: fadeInUp 0.7s ease-out 0.2s both;
+    justify-content: center;
+    padding-bottom: 5rem;
+    width: 100%;
 }
 
 .hero-cta-group {
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-md);
+    justify-content: center;
     animation: fadeInUp 0.7s ease-out 0.3s both;
 }
 
@@ -423,10 +399,10 @@ button {
     font-weight: 600;
     letter-spacing: 0.02em;
     border-radius: var(--radius-md);
-    border: 1px solid rgba(255, 255, 255, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.45);
     color: #fff;
-    background: rgba(255, 255, 255, 0.07);
-    backdrop-filter: blur(8px);
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(10px);
     transition: all var(--transition-base);
     cursor: pointer;
     font-family: var(--font-primary);
@@ -437,63 +413,10 @@ button {
 }
 
 .btn-hero-secondary:hover {
-    background: rgba(255, 255, 255, 0.15);
-    border-color: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.22);
+    border-color: rgba(255, 255, 255, 0.7);
     transform: translateY(-2px);
 }
-
-/* RIGHT — CEO character panel */
-.hero-right {
-    position: relative;
-    background: linear-gradient(145deg, #0f1e3a 0%, #0c1829 100%);
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    overflow: hidden;
-}
-
-/* Radial glow behind character */
-.hero-right::before {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 90%;
-    height: 75%;
-    background: radial-gradient(ellipse at bottom center,
-            rgba(15, 122, 255, 0.2) 0%,
-            transparent 70%);
-    pointer-events: none;
-}
-
-.hero-right-logo {
-    position: absolute;
-    top: 2.5rem;
-    left: 50%;
-    transform: translateX(-50%);
-    height: 48px;
-    width: auto;
-    filter: brightness(0) invert(1);
-    opacity: 0.7;
-    animation: fadeInUp 0.7s ease-out 0.4s both;
-    z-index: 2;
-    object-fit: contain;
-}
-
-.hero-right-img {
-    position: relative;
-    z-index: 1;
-    /* Fill the full height of the panel, show complete character from feet to head */
-    width: auto;
-    height: 100%;
-    max-height: 100vh;
-    object-fit: contain;
-    object-position: bottom center;
-    display: block;
-    animation: fadeInUp 0.9s ease-out 0.2s both;
-}
-
 
 
 /* Tech stack bar below hero CTA */
