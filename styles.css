@@ -348,28 +348,46 @@ button {
     background: var(--bg-root);
 }
 
-/* Watermark: image at natural aspect ratio, not stretched */
+/* Watermark: CEO portrait, right-side, half body, blue-tinted */
 .hero-watermark {
     position: absolute;
-    inset: 0;
+    /* Anchor to the right and vertically centered */
+    right: -2%;
+    top: 0;
+    bottom: 0;
+    width: 42%;
+    max-width: 500px;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-end;
+    /* Show from the bottom — feet at base */
+    justify-content: flex-end;
     pointer-events: none;
     z-index: 0;
+    overflow: hidden;
+    /* Clips lower half of body */
 }
 
 .hero-watermark-img {
-    /* Contain at a comfortable size — no pixel stretch */
-    width: 70%;
-    max-width: 700px;
-    height: auto;
+    /* Show portrait at a height that reveals roughly head + torso */
+    width: 100%;
+    height: 130%;
+    /* Taller than container → clips at bottom */
+    object-fit: contain;
+    object-position: top center;
     display: block;
-    opacity: 0.07;
-    /* Very subtle: marca de agua */
-    filter: grayscale(20%);
-    /* Keeps it neutral on white bg */
+
+    /* WAE navy blue palette applied via CSS filters:
+       grayscale → sepia → hue-rotate to navy blue → boost saturation */
+    filter:
+        grayscale(1) sepia(1) hue-rotate(190deg) saturate(2.2) brightness(0.85);
+
+    /* Multiply removes white background, merges with off-white hero */
+    mix-blend-mode: multiply;
+
+    /* Clearly visible but still decorative */
+    opacity: 0.28;
 }
+
 
 /* All hero content sits above the watermark */
 .hero-inner {
