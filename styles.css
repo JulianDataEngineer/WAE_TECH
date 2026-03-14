@@ -19,10 +19,10 @@
     --color-accent-muted: rgba(15, 122, 255, 0.08);
 
     /* Backgrounds */
-    --bg-root: #fafaf8;
-    /* Warm off-white */
-    --bg-section-alt: #f4f4f0;
-    /* Slightly darker for alternating sections */
+    --bg-root: #f5f0e8;
+    /* Warm vanilla cream */
+    --bg-section-alt: #ede8df;
+    /* Slightly darker warm cream for alternating sections */
     --bg-card: #ffffff;
     --bg-dark: #111118;
     /* Footer / dark elements */
@@ -348,44 +348,35 @@ button {
     background: var(--bg-root);
 }
 
-/* Watermark: CEO portrait, right-side, half body, blue-tinted */
+/* Watermark: CEO portrait, right-side, full head visible, original colors */
 .hero-watermark {
     position: absolute;
-    /* Anchor to the right and vertically centered */
-    right: -2%;
+    right: 2%;
     top: 0;
     bottom: 0;
-    width: 42%;
-    max-width: 500px;
+    width: 38%;
+    max-width: 440px;
     display: flex;
-    align-items: flex-end;
-    /* Show from the bottom — feet at base */
+    align-items: flex-start;
+    /* START from top → head always visible */
     justify-content: flex-end;
     pointer-events: none;
     z-index: 0;
     overflow: hidden;
-    /* Clips lower half of body */
+    padding-top: 4rem;
+    /* Respect header height */
 }
 
 .hero-watermark-img {
-    /* Show portrait at a height that reveals roughly head + torso */
     width: 100%;
-    height: 130%;
-    /* Taller than container → clips at bottom */
+    height: 100%;
     object-fit: contain;
     object-position: top center;
+    /* Anchors head at the top */
     display: block;
-
-    /* WAE navy blue palette applied via CSS filters:
-       grayscale → sepia → hue-rotate to navy blue → boost saturation */
-    filter:
-        grayscale(1) sepia(1) hue-rotate(190deg) saturate(2.2) brightness(0.85);
-
-    /* Multiply removes white background, merges with off-white hero */
-    mix-blend-mode: multiply;
-
-    /* Clearly visible but still decorative */
-    opacity: 0.28;
+    opacity: 0.22;
+    /* Clearly visible decorative element */
+    /* Original colors — no filter */
 }
 
 
