@@ -19,10 +19,10 @@
     --color-accent-muted: rgba(15, 122, 255, 0.08);
 
     /* Backgrounds */
-    --bg-root: #f5f0e8;
-    /* Warm vanilla cream */
-    --bg-section-alt: #ede8df;
-    /* Slightly darker warm cream for alternating sections */
+    --bg-root: #f4f7fb;
+    /* Very light tech blue / ice-white (professional data feel) */
+    --bg-section-alt: #ebf0f7;
+    /* Slightly darker cool white for alternating sections */
     --bg-card: #ffffff;
     --bg-dark: #111118;
     /* Footer / dark elements */
