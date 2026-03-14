@@ -358,8 +358,8 @@ button {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: right bottom;
-    /* Anchor character to bottom right so it doesn't get cut off at the bottom */
+    object-position: right 10%;
+    /* Bajar la imagen para que la cabeza se vea completa */
     display: block;
 }
 
