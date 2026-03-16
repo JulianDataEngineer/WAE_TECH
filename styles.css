@@ -967,8 +967,9 @@ button {
     height: 40px;
     width: auto;
     margin-bottom: var(--space-md);
+    /* Remove the blank-making filter —  brightness(2)+invert gives a clean white logo on dark bg */
     filter: brightness(0) invert(1);
-    opacity: 0.85;
+    opacity: 1;
 }
 
 .footer-tagline {
@@ -1066,8 +1067,84 @@ button {
 }
 
 /* ============================================
-   Animations
+   Company Logos Ticker (auto-scroll)
    ============================================ */
+.clients-section {
+    padding: var(--space-4xl) 0;
+    background: var(--bg-root);
+    border-top: 1px solid var(--border-light);
+    overflow: hidden;
+}
+
+.clients-header {
+    text-align: center;
+    margin-bottom: var(--space-2xl);
+}
+
+.clients-title {
+    font-size: var(--text-sm);
+    font-family: var(--font-mono);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+/* The scrolling track — two copies of logos for seamless loop */
+.clients-track-wrapper {
+    position: relative;
+    overflow: hidden;
+    /* Fade out edges */
+    mask-image: linear-gradient(to right,
+            transparent 0%,
+            black 10%,
+            black 90%,
+            transparent 100%);
+    -webkit-mask-image: linear-gradient(to right,
+            transparent 0%,
+            black 10%,
+            black 90%,
+            transparent 100%);
+}
+
+.clients-track {
+    display: flex;
+    gap: var(--space-4xl);
+    align-items: center;
+    width: max-content;
+    animation: logoScroll 28s linear infinite;
+}
+
+.clients-track:hover {
+    animation-play-state: paused;
+}
+
+@keyframes logoScroll {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+.client-logo {
+    height: 52px;
+    width: auto;
+    max-width: 140px;
+    object-fit: contain;
+    flex-shrink: 0;
+    filter: grayscale(1);
+    opacity: 0.55;
+    transition: filter 0.35s ease, opacity 0.35s ease, transform 0.35s ease;
+}
+
+.client-logo:hover {
+    filter: grayscale(0);
+    opacity: 1;
+    transform: scale(1.08);
+}
+
 @keyframes fadeInUp {
     from {
         opacity: 0;
