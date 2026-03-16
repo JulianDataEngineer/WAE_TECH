@@ -1158,7 +1158,7 @@ button {
 }
 
 /* ============================================
-   Responsive
+   Responsive — Tablet (≤1024px)
    ============================================ */
 @media (max-width: 1024px) {
     .services-grid {
@@ -1177,46 +1177,78 @@ button {
         grid-template-columns: 1fr 1fr;
         gap: var(--space-xl);
     }
+
+    .hero-inner-left {
+        padding: 0 var(--space-lg);
+    }
 }
 
+/* ============================================
+   Responsive — Mobile (≤768px)
+   ============================================ */
 @media (max-width: 768px) {
 
-    /* Stack hero vertically on mobile: text top, image bottom */
+    /* ---- Hero ---- */
     .hero-section {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto;
-        padding-top: 0;
+        min-height: 100svh;
+        /* Safe viewport height on iOS */
+        padding: 7rem 0 var(--space-4xl);
     }
 
-    .hero-left {
-        padding: 7rem 1.5rem 3rem;
+    .hero-bg-img {
+        /* On narrow screens push the character more to the right
+           so the face stays in frame and text has breathing room on the left */
+        object-position: 75% top;
+    }
+
+    /* Stronger overlay on mobile to keep text readable over busy background */
+    .hero-bg-lighten {
+        background: rgba(255, 255, 255, 0.62);
+    }
+
+    .hero-inner-left {
+        padding: 0 1.5rem;
+        gap: var(--space-md);
+        max-width: 100%;
+    }
+
+    .hero-inner-left>* {
+        max-width: 100%;
+    }
+
+    .hero-title {
+        font-size: clamp(2rem, 8vw, 2.8rem);
+        line-height: 1.12;
+    }
+
+    .hero-subtitle {
+        font-size: var(--text-base);
+        line-height: 1.65;
+    }
+
+    .hero-eyebrow {
+        font-size: 0.65rem;
+    }
+
+    .hero-cta-group {
+        flex-direction: column;
         align-items: flex-start;
+        gap: var(--space-sm);
     }
 
-    .hero-right {
-        height: 50vw;
-        min-height: 240px;
-    }
-
-    .hero-right-img {
+    .hero-cta-group .btn {
         width: 100%;
-        height: 100%;
-        object-fit: contain;
-        object-position: bottom center;
-    }
-
-    .hero-right-logo {
-        height: 36px;
+        max-width: 320px;
+        justify-content: center;
+        min-height: 48px;
+        /* Comfortable touch target */
     }
 
     .scroll-indicator {
         display: none;
     }
 
-    .hero-title {
-        font-size: clamp(2rem, 7vw, 2.8rem);
-    }
-
+    /* ---- Navigation ---- */
     .nav-menu {
         display: none;
         position: fixed;
@@ -1245,52 +1277,148 @@ button {
         z-index: 201;
     }
 
-    .services-grid {
-        grid-template-columns: 1fr;
+    /* ---- Sections ---- */
+    .section-title {
+        font-size: clamp(1.6rem, 6vw, 2.2rem);
     }
 
+    .section-container {
+        padding: 0 1.5rem;
+    }
+
+    /* ---- Services ---- */
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-lg);
+    }
+
+    .service-card {
+        padding: var(--space-xl);
+    }
+
+    /* ---- About ---- */
+    .about-layout {
+        gap: var(--space-2xl);
+    }
+
+    /* ---- Contact ---- */
     .contact-grid {
         grid-template-columns: 1fr;
+        gap: var(--space-2xl);
+    }
+
+    .contact-tagline {
+        font-size: clamp(1.4rem, 5.5vw, 1.9rem);
     }
 
     .form-row {
         grid-template-columns: 1fr;
     }
 
+    /* Make inputs comfortable for touch */
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        font-size: var(--text-base);
+        min-height: 48px;
+    }
+
+    /* ---- Certifications ---- */
+    .certifications-block {
+        margin-top: var(--space-xl);
+    }
+
+    .cert-badges {
+        gap: var(--space-lg);
+    }
+
+    .badge-coin img {
+        width: 80px;
+        height: 80px;
+    }
+
+    /* ---- Clients ticker ---- */
+    .clients-section {
+        padding: var(--space-2xl) 0;
+    }
+
+    .client-logo {
+        height: 38px;
+        max-width: 100px;
+    }
+
+    .clients-track {
+        gap: var(--space-2xl);
+        /* Faster scroll on mobile for a snappier feel */
+        animation-duration: 20s;
+    }
+
+    /* ---- Footer ---- */
     .footer-top {
         grid-template-columns: 1fr;
+        gap: var(--space-xl);
     }
 
     .footer-bottom {
         flex-direction: column;
         text-align: center;
+        gap: var(--space-md);
     }
 
-    .hero-stack {
-        gap: 0.5rem;
-    }
-
-    .section-title {
-        font-size: var(--text-3xl);
-    }
-
-    .contact-tagline {
-        font-size: var(--text-xl);
+    .footer-legal {
+        justify-content: center;
     }
 }
 
+/* ============================================
+   Responsive — Small phones (≤480px)
+   ============================================ */
 @media (max-width: 480px) {
     .main-header {
-        padding: var(--space-md);
+        padding: var(--space-sm) var(--space-md);
     }
 
-    .hero-cta-group {
-        flex-direction: column;
-        align-items: center;
+    .hero-title {
+        font-size: clamp(1.75rem, 9vw, 2.4rem);
+    }
+
+    /* The background character is too distracting on very small screens,
+       push it further right so it mostly hides behind the edge */
+    .hero-bg-img {
+        object-position: 85% top;
+    }
+
+    .hero-bg-lighten {
+        background: rgba(255, 255, 255, 0.72);
+    }
+
+    .section-container {
+        padding: 0 1.25rem;
+    }
+
+    .service-card {
+        padding: var(--space-lg);
+    }
+
+    .contact-form-wrapper {
+        padding: var(--space-lg);
+    }
+
+    .certifications-block {
+        margin-top: var(--space-lg);
+    }
+
+    .cert-badges {
+        gap: var(--space-md);
+    }
+
+    .badge-coin img {
+        width: 70px;
+        height: 70px;
     }
 
     .btn {
         width: 100%;
-        max-width: 320px;
+        max-width: 340px;
     }
 }
