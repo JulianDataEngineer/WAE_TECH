@@ -419,6 +419,10 @@ button {
     font-weight: 300;
 }
 
+.hero-title-dot {
+    color: #7dd3fc; /* azul claro */
+}
+
 .hero-subtitle {
     font-size: var(--text-lg);
     color: var(--text-secondary);
