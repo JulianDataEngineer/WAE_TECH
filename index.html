@@ -67,10 +67,24 @@
         <!-- Hero Section — Portada Background -->
         <section class="hero-section" id="hero">
 
-            <!-- Full background image: Portada.png -->
+            <!-- Full background video -->
             <div class="hero-bg" aria-hidden="true">
-                <img src="Portada.png" alt="" class="hero-bg-img">
+                <video class="hero-bg-img" autoplay muted loop playsinline preload="auto" poster="Portada.png">
+                    <source src="hero-video.mp4" type="video/mp4">
+                </video>
                 <div class="hero-bg-lighten"></div>
+                <div class="hero-bg-gradient"></div>
+            </div>
+
+            <!-- Cinematic corner frame -->
+            <span class="hero-frame-corner hero-frame-corner--tl" aria-hidden="true"></span>
+            <span class="hero-frame-corner hero-frame-corner--tr" aria-hidden="true"></span>
+            <span class="hero-frame-corner hero-frame-corner--bl" aria-hidden="true"></span>
+            <span class="hero-frame-corner hero-frame-corner--br" aria-hidden="true"></span>
+
+            <div class="hero-live-badge" aria-hidden="true">
+                <span class="hero-live-dot"></span>
+                EN VIVO
             </div>
 
             <!-- Left-aligned content -->
