@@ -171,40 +171,59 @@ button {
     left: 0;
     right: 0;
     z-index: var(--z-fixed);
-    background: rgba(250, 250, 248, 0.92);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-bottom: 1px solid transparent;
-    padding: var(--space-md) var(--space-xl);
-    transition: border-color var(--transition-base), box-shadow var(--transition-base);
+    background: transparent;
+    padding: var(--space-lg) var(--space-xl) 0;
+    transition: padding var(--transition-base);
 }
 
 .main-header.scrolled {
-    border-bottom-color: var(--border-light);
-    box-shadow: var(--shadow-sm);
+    padding-top: var(--space-sm);
 }
 
 .nav-container {
-    max-width: 1280px;
+    max-width: 1180px;
     margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: var(--space-lg);
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(26, 58, 107, 0.08);
+    border-radius: var(--radius-full);
+    padding: 0.55rem 0.6rem 0.55rem 1.25rem;
+    box-shadow: 0 10px 30px -12px rgba(26, 58, 107, 0.18);
+    transition: box-shadow var(--transition-base), background var(--transition-base);
+}
+
+.main-header.scrolled .nav-container {
+    box-shadow: 0 10px 34px -10px rgba(26, 58, 107, 0.28);
+    background: rgba(255, 255, 255, 0.95);
 }
 
 .logo-link {
     display: flex;
     align-items: center;
-}
-
-.header-logo {
-    height: 44px;
-    width: auto;
+    gap: 0.55rem;
     transition: opacity var(--transition-fast);
 }
 
-.header-logo:hover {
-    opacity: 0.8;
+.logo-link:hover {
+    opacity: 0.82;
+}
+
+.header-logo {
+    height: 32px;
+    width: auto;
+}
+
+.header-logo-text {
+    font-size: var(--text-sm);
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    color: var(--color-primary);
+    white-space: nowrap;
 }
 
 .nav-menu {
@@ -1379,7 +1398,19 @@ button {
    ============================================ */
 @media (max-width: 480px) {
     .main-header {
-        padding: var(--space-sm) var(--space-md);
+        padding: var(--space-sm) var(--space-md) 0;
+    }
+
+    .nav-container {
+        padding: 0.45rem 0.45rem 0.45rem 0.9rem;
+    }
+
+    .header-logo {
+        height: 26px;
+    }
+
+    .header-logo-text {
+        display: none;
     }
 
     .hero-title {
