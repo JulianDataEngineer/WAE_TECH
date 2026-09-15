@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
     initSmoothScroll();
     initScrollAnimations();
     initContactForm();
+    initHeroScrollVideo();
 });
 
 /* ============================================
@@ -39,6 +40,40 @@ function initHeader() {
             header.classList.add('scrolled');
         } else {
             header.classList.remove('scrolled');
+        }
+    }, { passive: true });
+}
+
+/* ============================================
+   Hero Video — Scrubbed by Scroll (no autoplay)
+   Scrolling down/up moves the video forward/back
+   through the hero section's scroll range.
+   ============================================ */
+function initHeroScrollVideo() {
+    const video = document.getElementById('hero-scroll-video');
+    const heroSection = document.getElementById('hero');
+    if (!video || !heroSection) return;
+
+    let duration = video.duration || 0;
+    let ticking = false;
+
+    video.addEventListener('loadedmetadata', () => {
+        duration = video.duration;
+        scrubVideo();
+    });
+
+    function scrubVideo() {
+        ticking = false;
+        if (!duration) return;
+        const rect = heroSection.getBoundingClientRect();
+        const progress = Math.min(Math.max(-rect.top / heroSection.offsetHeight, 0), 1);
+        video.currentTime = progress * duration;
+    }
+
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            ticking = true;
+            requestAnimationFrame(scrubVideo);
         }
     }, { passive: true });
 }
