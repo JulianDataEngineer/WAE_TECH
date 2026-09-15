@@ -25,7 +25,6 @@ document.addEventListener('DOMContentLoaded', function () {
     initSmoothScroll();
     initScrollAnimations();
     initContactForm();
-    initHeroScrollVideo();
 });
 
 /* ============================================
@@ -42,60 +41,6 @@ function initHeader() {
             header.classList.remove('scrolled');
         }
     }, { passive: true });
-}
-
-/* ============================================
-   Hero Video — Scrubbed by Scroll (no autoplay)
-   The hero stays pinned (position: sticky) while its
-   taller wrapper scrolls underneath it. The wrapper's
-   height is sized from the video's own duration (a
-   fixed scroll distance per second of footage), so
-   every second of video gets a deliberate, controllable
-   chunk of scroll. Once that range is used up, the hero
-   releases and the rest of the page scrolls normally.
-   ============================================ */
-function initHeroScrollVideo() {
-    const video = document.getElementById('hero-scroll-video');
-    const wrapper = document.getElementById('hero-scroll-wrapper');
-    if (!video || !wrapper) return;
-
-    const PX_PER_SECOND = 400; // scroll distance allocated per second of video
-
-    let duration = video.duration || 0;
-    let ticking = false;
-
-    function sizeWrapper() {
-        if (!duration) return;
-        wrapper.style.height = (window.innerHeight + PX_PER_SECOND * duration) + 'px';
-    }
-
-    video.addEventListener('loadedmetadata', () => {
-        duration = video.duration;
-        sizeWrapper();
-        scrubVideo();
-    });
-
-    function scrubVideo() {
-        ticking = false;
-        if (!duration) return;
-        const scrollableDistance = wrapper.offsetHeight - window.innerHeight;
-        if (scrollableDistance <= 0) return;
-        const rect = wrapper.getBoundingClientRect();
-        const progress = Math.min(Math.max(-rect.top / scrollableDistance, 0), 1);
-        video.currentTime = progress * duration;
-    }
-
-    window.addEventListener('scroll', () => {
-        if (!ticking) {
-            ticking = true;
-            requestAnimationFrame(scrubVideo);
-        }
-    }, { passive: true });
-
-    window.addEventListener('resize', () => {
-        sizeWrapper();
-        scrubVideo();
-    });
 }
 
 /* ============================================
