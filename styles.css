@@ -229,14 +229,15 @@ button {
 .nav-menu {
     display: flex;
     align-items: center;
-    gap: var(--space-xl);
+    gap: 1.4rem;
 }
 
 .nav-link {
-    font-size: var(--text-sm);
+    font-size: 0.85rem;
     font-weight: 500;
     color: var(--text-secondary);
     letter-spacing: 0.01em;
+    white-space: nowrap;
     padding-bottom: 2px;
     position: relative;
     transition: color var(--transition-fast);
