@@ -348,8 +348,16 @@ button {
 /* ============================================
    Hero Section — Centered Minimalist + Watermark
    ============================================ */
-.hero-section {
+/* Taller than the viewport so the hero stays pinned (sticky) long enough
+   for the scroll-scrubbed video to play through before the page continues */
+.hero-scroll-wrapper {
     position: relative;
+    height: 220vh;
+}
+
+.hero-section {
+    position: sticky;
+    top: 0;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -1235,6 +1243,10 @@ button {
 @media (max-width: 768px) {
 
     /* ---- Hero ---- */
+    .hero-scroll-wrapper {
+        height: 180vh;
+    }
+
     .hero-section {
         min-height: 100svh;
         /* Safe viewport height on iOS */

@@ -46,13 +46,16 @@ function initHeader() {
 
 /* ============================================
    Hero Video — Scrubbed by Scroll (no autoplay)
-   Scrolling down/up moves the video forward/back
-   through the hero section's scroll range.
+   The hero stays pinned (position: sticky) while
+   its taller wrapper scrolls underneath it, driving
+   the video from start to end; once the wrapper's
+   scroll range is used up, the hero releases and the
+   rest of the page scrolls normally.
    ============================================ */
 function initHeroScrollVideo() {
     const video = document.getElementById('hero-scroll-video');
-    const heroSection = document.getElementById('hero');
-    if (!video || !heroSection) return;
+    const wrapper = document.getElementById('hero-scroll-wrapper');
+    if (!video || !wrapper) return;
 
     let duration = video.duration || 0;
     let ticking = false;
@@ -65,8 +68,10 @@ function initHeroScrollVideo() {
     function scrubVideo() {
         ticking = false;
         if (!duration) return;
-        const rect = heroSection.getBoundingClientRect();
-        const progress = Math.min(Math.max(-rect.top / heroSection.offsetHeight, 0), 1);
+        const scrollableDistance = wrapper.offsetHeight - window.innerHeight;
+        if (scrollableDistance <= 0) return;
+        const rect = wrapper.getBoundingClientRect();
+        const progress = Math.min(Math.max(-rect.top / scrollableDistance, 0), 1);
         video.currentTime = progress * duration;
     }
 
@@ -76,6 +81,8 @@ function initHeroScrollVideo() {
             requestAnimationFrame(scrubVideo);
         }
     }, { passive: true });
+
+    window.addEventListener('resize', scrubVideo);
 }
 
 /* ============================================
