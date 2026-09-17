@@ -1,0 +1,19 @@
+{
+  "source": "wae video final.mp4",
+  "duration": 87.678,
+  "poster": "hero-frames/poster.webp",
+  "variants": {
+    "desktop": {
+      "count": 240,
+      "pattern": "hero-frames/desktop/f%04d.webp",
+      "first": 1,
+      "bytes": 5859830
+    },
+    "mobile": {
+      "count": 120,
+      "pattern": "hero-frames/mobile/f%04d.webp",
+      "first": 1,
+      "bytes": 1538382
+    }
+  }
+}

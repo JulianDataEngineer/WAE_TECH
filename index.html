@@ -65,11 +65,14 @@
 
     <main>
         <!-- Hero Section — Portada Background -->
-        <section class="hero-section" id="hero">
+        <section class="hero-section hero-cinematic" id="hero">
 
-            <!-- Imagen de fondo del hero -->
+            <!-- Secuencia cinematográfica -->
             <div class="hero-bg" aria-hidden="true">
-                <img class="hero-bg-img" src="Portada.png" alt="" fetchpriority="high" decoding="async">
+                <img class="hero-poster" src="hero-frames/poster.webp" alt=""
+                     fetchpriority="high" decoding="async">
+                <canvas class="hero-canvas"></canvas>
+                <div class="hero-scrim"></div>
             </div>
 
             <!-- Cinematic corner frame -->
@@ -78,30 +81,53 @@
             <span class="hero-frame-corner hero-frame-corner--bl" aria-hidden="true"></span>
             <span class="hero-frame-corner hero-frame-corner--br" aria-hidden="true"></span>
 
-            <!-- Left-aligned content -->
+            <!-- Relato en tres actos, ligado al progreso del scroll -->
             <div class="hero-inner-left">
-                <span class="hero-eyebrow">Bogotá para el mundo</span>
 
-                <h1 class="hero-title">
-                    Ingeniería de datos<br>
-                    para empresas que <em>evolucionan</em><span class="hero-title-dot">.</span>
-                </h1>
-
-                <p class="hero-subtitle">
-                    Diseñamos arquitecturas de datos, pipelines escalables e infraestructura
-                    cloud-native que convierten tus datos en ventaja competitiva real.
-                </p>
-
-                <div class="hero-cta-group">
-                    <a href="#contacto" class="btn btn-primary" id="hero-cta-primary">
-                        <span class="material-symbols-outlined">send</span>
-                        Hablemos de tu proyecto
-                    </a>
-                    <a href="#pilares" class="btn btn-secondary">
-                        <span class="material-symbols-outlined">explore</span>
-                        Ver servicios
-                    </a>
+                <div class="hero-act is-on" data-from="0" data-to="0.36">
+                    <span class="hero-eyebrow">Bogotá para el mundo</span>
+                    <h1 class="hero-title">
+                        Ingeniería de datos<br>
+                        para empresas que <em>evolucionan</em><span class="hero-title-dot">.</span>
+                    </h1>
                 </div>
+
+                <div class="hero-act" data-from="0.36" data-to="0.74">
+                    <span class="hero-eyebrow">Lo que construimos</span>
+                    <h2 class="hero-title">
+                        Arquitecturas que<br>
+                        <em>sostienen</em> la operación<span class="hero-title-dot">.</span>
+                    </h2>
+                    <p class="hero-subtitle">
+                        Diseñamos pipelines escalables e infraestructura cloud-native
+                        que convierten tus datos en ventaja competitiva real.
+                    </p>
+                </div>
+
+                <div class="hero-act" data-from="0.74" data-to="1.01">
+                    <span class="hero-eyebrow">Empecemos</span>
+                    <h2 class="hero-title">
+                        Hablemos de tu<br>
+                        <em>proyecto</em><span class="hero-title-dot">.</span>
+                    </h2>
+                    <div class="hero-cta-group">
+                        <a href="#contacto" class="btn btn-primary" id="hero-cta-primary">
+                            <span class="material-symbols-outlined">send</span>
+                            Hablemos de tu proyecto
+                        </a>
+                        <a href="#pilares" class="btn btn-secondary">
+                            <span class="material-symbols-outlined">explore</span>
+                            Ver servicios
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Indicador de progreso del recorrido -->
+            <div class="hero-progress" aria-hidden="true">
+                <span class="hero-progress-num">00</span>
+                <span class="hero-progress-track"><span class="hero-progress-bar"></span></span>
             </div>
 
             <div class="scroll-indicator" aria-hidden="true">
@@ -438,6 +464,9 @@
     </footer>
 
     <!-- JavaScript -->
+    <script src="vendor/gsap.min.js"></script>
+    <script src="vendor/ScrollTrigger.min.js"></script>
+    <script src="hero-cinematic.js"></script>
     <script src="scripts.js"></script>
 </body>
 

@@ -16,9 +16,9 @@ INCLUDE=(--exclude "*"
          --include "*.html" --include "*.css" --include "*.js"
          --include "*.png"  --include "*.jpg" --include "*.jpeg"
          --include "*.webp" --include "*.svg" --include "*.ico"
-         --include "*.mp4"
+         --include "hero-frames/manifest.json"
          # y fuera lo que no pertenece al sitio publicado
-         --exclude ".*" --exclude "*/.*"
+         --exclude ".*" --exclude "*/.*" --exclude "*.mp4"
          --exclude "deploy.sh" --exclude "wae-webhook-connector.js"
          --exclude "ceo-full.png" --exclude "hero-banner.png" --exclude "hero-ceo.png")
 
@@ -33,7 +33,8 @@ echo "== 1/3  Subiendo a S3 =="
 # HTML sin caché: los cambios de contenido se ven al instante
 $AWS s3 sync . "s3://$BUCKET" --profile $PROFILE $DRY "${INCLUDE[@]}" \
   --exclude "*.css" --exclude "*.js" --exclude "*.png" --exclude "*.jpg" \
-  --exclude "*.jpeg" --exclude "*.webp" --exclude "*.svg" --exclude "*.ico" --exclude "*.mp4" \
+  --exclude "*.jpeg" --exclude "*.webp" --exclude "*.svg" --exclude "*.ico" \
+  --exclude "hero-frames/manifest.json" \
   --content-type "text/html; charset=utf-8" --cache-control "public, max-age=0, must-revalidate"
 # Estáticos con caché larga: la invalidación se encarga de refrescarlos
 $AWS s3 sync . "s3://$BUCKET" --profile $PROFILE $DRY "${INCLUDE[@]}" \

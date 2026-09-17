@@ -45,6 +45,7 @@ jobs:
             --include "*.css" --include "*.js" \
             --include "*.png" --include "*.jpg" --include "*.jpeg" \
             --include "*.webp" --include "*.svg" --include "*.ico" \
+            --include "hero-frames/manifest.json" \
             --exclude ".*" --exclude "*/.*" \
             --exclude "deploy.sh" --exclude "wae-webhook-connector.js" \
             --exclude "ceo-full.png" --exclude "hero-banner.png" --exclude "hero-ceo.png" \
