@@ -1,0 +1,68 @@
+name: Desplegar sitio
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:        # permite lanzarlo a mano desde la pestaña Actions
+
+permissions:
+  id-token: write           # necesario para OIDC: no se guardan credenciales
+  contents: read
+
+concurrency:                # si haces dos push seguidos, no se pisan
+  group: despliegue-produccion
+  cancel-in-progress: false
+
+env:
+  BUCKET: waengineers-co-site
+  DIST: E3PLMW7P5E71EH
+
+jobs:
+  desplegar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Asumir rol de AWS (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::069102306517:role/wae-github-deploy
+          aws-region: us-east-1
+
+      - name: Subir HTML (sin caché)
+        run: |
+          aws s3 sync . "s3://$BUCKET" \
+            --exclude "*" --include "*.html" \
+            --content-type "text/html; charset=utf-8" \
+            --cache-control "public, max-age=0, must-revalidate"
+
+      - name: Subir estáticos (caché de 7 días)
+        run: |
+          aws s3 sync . "s3://$BUCKET" \
+            --exclude "*" \
+            --include "*.css" --include "*.js" \
+            --include "*.png" --include "*.jpg" --include "*.jpeg" \
+            --include "*.webp" --include "*.svg" --include "*.ico" \
+            --exclude ".*" --exclude "*/.*" \
+            --exclude "deploy.sh" --exclude "wae-webhook-connector.js" \
+            --exclude "ceo-full.png" --exclude "hero-banner.png" --exclude "hero-ceo.png" \
+            --cache-control "public, max-age=604800"
+
+      - name: Invalidar caché de CloudFront
+        run: |
+          ID=$(aws cloudfront create-invalidation --distribution-id "$DIST" \
+                --paths "/*" --query 'Invalidation.Id' --output text)
+          echo "Invalidación $ID"
+          aws cloudfront wait invalidation-completed --distribution-id "$DIST" --id "$ID"
+
+      - name: Verificar que producción responde
+        run: |
+          fallo=0
+          for h in waengineers.co www.waengineers.co; do
+            code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 30 "https://$h/")
+            echo "$h -> HTTP $code"
+            [ "$code" = "200" ] || fallo=1
+          done
+          exit $fallo

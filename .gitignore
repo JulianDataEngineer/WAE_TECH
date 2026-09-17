@@ -26,3 +26,6 @@ wae_github_ed25519
 wae_github_ed25519.pub
 *.pem
 id_*
+
+# Video del hero: retirado del sitio, se conserva en local
+hero-video.mp4
