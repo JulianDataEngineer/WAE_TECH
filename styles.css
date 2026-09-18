@@ -1819,3 +1819,137 @@ button {
 .hero-cinematic .hero-eyebrow {
     text-shadow: 0 1px 10px rgba(0, 6, 16, .95), 0 1px 3px rgba(0, 6, 16, .8);
 }
+
+/* ============================================================
+   HERO · TEXTO ABAJO A LA IZQUIERDA, ENTRADA TARDÍA
+   ============================================================ */
+
+:root {
+    --hero-acento: #50b7a8;
+}
+
+/* El bloque se pega a la esquina inferior izquierda y se estrecha,
+   para dejar el video despejado el mayor tiempo posible. */
+.hero-cinematic .hero-inner-left {
+    padding-bottom: clamp(2.5rem, 6vh, 4.5rem);
+}
+
+.hero-cinematic .hero-act > * {
+    max-width: 560px;
+}
+
+/* ─── Tipografía: blanca, con el acento como único color ─── */
+.hero-cinematic .hero-eyebrow {
+    color: var(--hero-acento);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    text-shadow: 0 1px 10px rgba(0, 6, 16, .95), 0 1px 3px rgba(0, 6, 16, .8);
+}
+
+.hero-cinematic .hero-title {
+    color: #ffffff;
+    font-size: clamp(1.9rem, 3.4vw, 3rem);
+    line-height: 1.14;
+    text-shadow: 0 2px 18px rgba(0, 6, 16, .92), 0 1px 3px rgba(0, 6, 16, .8);
+}
+
+.hero-cinematic .hero-title em,
+.hero-cinematic .hero-title-dot {
+    color: var(--hero-acento);
+}
+
+/* Acto 02: párrafo corriente, no titular */
+.hero-lead {
+    color: #ffffff;
+    font-size: clamp(1rem, 1.25vw, 1.15rem);
+    font-weight: 400;
+    line-height: 1.75;
+    letter-spacing: 0.005em;
+    max-width: 560px;
+    text-shadow: 0 1px 12px rgba(0, 6, 16, .95), 0 1px 3px rgba(0, 6, 16, .8);
+}
+
+.hero-lead em {
+    font-style: normal;
+    font-weight: 500;
+    color: var(--hero-acento);
+}
+
+.hero-cinematic .btn-secondary:hover {
+    border-color: var(--hero-acento);
+}
+
+/* En pantallas estrechas los saltos de línea del titular estorban */
+@media (max-width: 720px) {
+    .hero-cinematic .hero-title br { display: none; }
+    .hero-cinematic .hero-act > *,
+    .hero-lead { max-width: 100%; }
+}
+
+/* ─── Logo más grande y más arriba ─── */
+.header-logo {
+    height: 46px;
+}
+
+.main-header {
+    padding-top: 0.85rem;
+}
+
+@media (max-width: 860px) {
+    .header-logo { height: 40px; }
+    .main-header { padding-top: 0.7rem; }
+}
+
+/* El indicador ocupaba la misma esquina que el texto. Pasa a ser una línea
+   fina al borde inferior del hero, como el scrubber de un reproductor. */
+.hero-cinematic .hero-progress {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transform: none;
+    width: 100%;
+    max-width: none;
+    padding: 0;
+    gap: 0;
+}
+
+.hero-cinematic .hero-progress-num { display: none; }
+
+.hero-cinematic .hero-progress-track {
+    width: 100%;
+    height: 3px;
+    background: rgba(255, 255, 255, .10);
+}
+
+.hero-cinematic .hero-progress-bar {
+    background: var(--hero-acento);
+    box-shadow: 0 0 12px rgba(80, 183, 168, .55);
+}
+
+/* La flecha de "sigue bajando" solo tiene sentido antes de arrancar */
+.hero-cinematic .scroll-indicator {
+    transition: opacity .45s ease;
+}
+
+.hero-cinematic.hero-avanzado .scroll-indicator {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Los tres actos comparten celda de rejilla. Sin esto, los más cortos
+   quedaban flotando arriba y el bloque saltaba de sitio entre salidas. */
+.hero-cinematic .hero-act {
+    justify-content: flex-end;
+}
+
+/* La rejilla heredaba align-items:flex-start de la regla base, así que cada
+   acto se colocaba arriba de su celda y la línea base bailaba entre salidas. */
+.hero-cinematic .hero-inner-left {
+    align-items: end;
+}
+
+/* En la versión estática el contenedor vuelve a ser flex en columna, donde
+   align-items actúa en el eje horizontal: sin esto el texto se iba a la derecha. */
+.hero-cinematic.hero-static .hero-inner-left {
+    align-items: flex-start;
+}

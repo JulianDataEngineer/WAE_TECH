@@ -135,6 +135,7 @@
 
   function pintarUI(p) {
     if (bar) bar.style.transform = 'scaleX(' + p.toFixed(4) + ')';
+    root.classList.toggle('hero-avanzado', p > 0.04);
     if (num) num.textContent = String(Math.round(p * 100)).padStart(2, '0');
     acts.forEach(a => {
       const from = parseFloat(a.dataset.from), to = parseFloat(a.dataset.to);
