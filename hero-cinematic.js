@@ -8,11 +8,14 @@
   /* ─── PARÁMETROS AJUSTABLES ─────────────────────────────── */
   const CONFIG = {
     manifest:      'hero-frames/manifest.json',
-    scrollLength:  3.4,   // duración del recorrido, en alturas de ventana
-    scrub:         0.8,   // suavizado al soltar el scroll, en segundos
+    scrollLength:  6.5,   // duración del recorrido, en alturas de ventana
+    suavizado:     0.22,  // constante de tiempo del seguimiento, en segundos
+                          // (mayor = más controlado y más lento en reaccionar)
+    maxLag:        60,    // huecos de hasta N fotogramas se recorren uno a uno;
+                          // por encima se comprimen para no arrastrar retraso
     concurrency:   6,     // descargas simultáneas
     cacheSize:     90,    // fotogramas decodificados en memoria
-    preloadAhead:  14,    // cuántos adelantar en la dirección del scroll
+    preloadAhead:  22,    // cuántos adelantar en la dirección del scroll
     focal:  { desktop: [0.50, 0.50], mobile: [0.52, 0.45] },
     mobileMaxWidth: 820,  // px; por debajo se usa la variante móvil
   };
@@ -55,7 +58,13 @@
         const img = new Image();
         img.decoding = 'async';
         const p = new Promise(res => {
-          img.onload = () => { cache.set(i, img); res(img); };
+          img.onload = () => {
+            /* Decodificar aquí y no al dibujar. Con <img> sin decodificar,
+               drawImage costaba ~8 ms de hilo principal por fotograma y el
+               recorrido se estancaba en ~20 fotogramas por segundo. */
+            const listo = img.decode ? img.decode().catch(() => {}) : Promise.resolve();
+            listo.then(() => { cache.set(i, img); res(img); });
+          };
           img.onerror = () => res(null);   // un fallo no rompe la secuencia
         }).finally(() => { active--; inflight.delete(i); pump(); });
         inflight.set(i, p);
@@ -119,28 +128,75 @@
   }
 
   /* ─────────── Progreso -> fotograma, textos e indicador ─────────── */
-  const state = { progress: 0, prev: 0 };
+  /* El scroll solo deja anotado el progreso crudo. El suavizado y el avance
+     de fotograma viven en el bucle rAF: atarlos a onUpdate limitaba el
+     dibujo a unas 20 imágenes por segundo, aunque rAF corriera a 45. */
+  const state = { crudo: 0, suave: 0, shown: 0, running: false, activo: true, t: 0 };
 
-  function render() {
-    if (!store) return;
-    const p = state.progress;
-    const idx = Math.min(store.count, Math.max(1, Math.round(p * (store.count - 1)) + 1));
-    const dir = p >= state.prev ? 1 : -1;
-    state.prev = p;
-
-    store.request(idx, dir);
-    const img = store.nearest(idx);
-    if (img && idx !== lastDrawn) { paint(img); lastDrawn = idx; }
-    store.trim(idx);
-
+  function pintarUI(p) {
     if (bar) bar.style.transform = 'scaleX(' + p.toFixed(4) + ')';
     if (num) num.textContent = String(Math.round(p * 100)).padStart(2, '0');
-
-    /* Tres actos: presentación, desarrollo y cierre */
     acts.forEach(a => {
       const from = parseFloat(a.dataset.from), to = parseFloat(a.dataset.to);
       a.classList.toggle('is-on', p >= from && p < to);
     });
+  }
+
+  function step(t) {
+    if (!store) { state.running = false; return; }
+
+    if (!state.activo) {
+      /* Al salir del tramo fijado el bucle se detiene, pero antes hay que
+         cerrar el suavizado: si no, el progreso quedaba congelado a media
+         transición y los últimos fotogramas no llegaban a dibujarse. */
+      state.suave = state.crudo;
+      pintarUI(state.suave);
+      const ult = Math.min(store.count, Math.max(1, Math.round(state.suave * (store.count - 1)) + 1));
+      if (ult !== state.shown) {
+        store.request(ult, ult > state.shown ? 1 : -1);
+        const im = store.nearest(ult);
+        if (im) { paint(im); lastDrawn = ult; }
+        state.shown = ult;
+      }
+      state.running = false;
+      return;
+    }
+
+    /* Suavizado exponencial, independiente de la tasa de refresco */
+    const dt = state.t ? Math.min(0.05, (t - state.t) / 1000) : 0.016;
+    state.t = t;
+    const resto = state.crudo - state.suave;
+    /* El suavizado exponencial se acerca al destino sin alcanzarlo nunca:
+       sin este enganche, los últimos fotogramas no llegaban a mostrarse. */
+    state.suave = Math.abs(resto) < 0.0008
+      ? state.crudo
+      : state.suave + resto * (1 - Math.exp(-dt / CONFIG.suavizado));
+
+    pintarUI(state.suave);
+
+    const target = Math.min(store.count, Math.max(1, Math.round(state.suave * (store.count - 1)) + 1));
+    const diff = target - state.shown;
+
+    if (diff !== 0) {
+      const dir = diff > 0 ? 1 : -1;
+      const gap = Math.abs(diff);
+      const salto = gap <= CONFIG.maxLag ? 1 : Math.ceil(gap / CONFIG.maxLag);
+      const idx = state.shown + dir * Math.min(salto, gap);
+      store.request(idx, dir);
+      const img = store.nearest(idx);
+      if (img) { paint(img); lastDrawn = idx; }
+      state.shown = idx;
+    } else {
+      store.trim(state.shown);
+    }
+
+    requestAnimationFrame(step);
+  }
+
+  function arrancarBucle() {
+    if (state.running) return;
+    state.running = true; state.t = 0;
+    requestAnimationFrame(step);
   }
 
   /* ─────────── Arranque ─────────── */
@@ -155,6 +211,7 @@
       const first = new Image();
       first.onload = () => {
         paint(first);
+        state.shown = 1;
         root.classList.add('hero-ready');
         if (poster) poster.setAttribute('aria-hidden', 'true');
       };
@@ -171,15 +228,17 @@
           end: () => '+=' + (window.innerHeight * CONFIG.scrollLength),
           pin: true,
           pinSpacing: true,
-          scrub: CONFIG.scrub,
+
           anticipatePin: 1,
           invalidateOnRefresh: true,
-          onUpdate: self => { state.progress = self.progress; render(); },
+          onUpdate: self => { state.crudo = self.progress; arrancarBucle(); },
+          onToggle: self => { state.activo = self.isActive; if (self.isActive) arrancarBucle(); },
         },
       });
 
-      window.addEventListener('resize', () => { resize(); render(); ScrollTrigger.refresh(); });
-      render();
+      window.addEventListener('resize', () => { resize(); ScrollTrigger.refresh(); });
+      pintarUI(0);
+      arrancarBucle();
     })
     .catch(err => {
       /* Sin manifiesto o sin fotogramas: el poster del HTML se queda y no se rompe nada */
