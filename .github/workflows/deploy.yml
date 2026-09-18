@@ -37,12 +37,18 @@ jobs:
             --exclude "*" --include "*.html" \
             --content-type "text/html; charset=utf-8" \
             --cache-control "public, max-age=0, must-revalidate"
+          # CSS y JS cambian en cada despliegue: sin caché de navegador, o el
+          # visitante arrastra la hoja vieja hasta 7 días pese a la invalidación.
+          aws s3 sync . "s3://$BUCKET" \
+            --exclude "*" --include "*.css" --include "*.js" \
+            --exclude ".*" --exclude "*/.*" --exclude "deploy.sh" \
+            --exclude "wae-webhook-connector.js" \
+            --cache-control "public, max-age=0, must-revalidate"
 
       - name: Subir estáticos (caché de 7 días)
         run: |
           aws s3 sync . "s3://$BUCKET" \
             --exclude "*" \
-            --include "*.css" --include "*.js" \
             --include "*.png" --include "*.jpg" --include "*.jpeg" \
             --include "*.webp" --include "*.svg" --include "*.ico" \
             --include "hero-frames/manifest.json" \

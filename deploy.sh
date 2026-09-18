@@ -32,13 +32,13 @@ esac
 echo "== 1/3  Subiendo a S3 =="
 # HTML sin caché: los cambios de contenido se ven al instante
 $AWS s3 sync . "s3://$BUCKET" --profile $PROFILE $DRY "${INCLUDE[@]}" \
-  --exclude "*.css" --exclude "*.js" --exclude "*.png" --exclude "*.jpg" \
+  --exclude "*.png" --exclude "*.jpg" \
   --exclude "*.jpeg" --exclude "*.webp" --exclude "*.svg" --exclude "*.ico" \
   --exclude "hero-frames/manifest.json" \
   --content-type "text/html; charset=utf-8" --cache-control "public, max-age=0, must-revalidate"
 # Estáticos con caché larga: la invalidación se encarga de refrescarlos
 $AWS s3 sync . "s3://$BUCKET" --profile $PROFILE $DRY "${INCLUDE[@]}" \
-  --exclude "*.html" --cache-control "public, max-age=604800"
+  --exclude "*.html" --exclude "*.css" --exclude "*.js" --cache-control "public, max-age=604800"
 
 [ -n "$DRY" ] && { echo "== Fin de la simulación =="; exit 0; }
 

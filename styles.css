@@ -11,25 +11,25 @@
    ============================================ */
 :root {
     /* Core Palette */
-    --color-primary: #1a3a6b;
+    --color-primary: #17345c;
     /* Deep navy — precision/trust */
-    --color-primary-light: #2a5298;
-    --color-accent: #0f7aff;
+    --color-primary-light: #214878;
+    --color-accent: #3fa89a;
     /* Electric blue accent (used sparingly) */
-    --color-accent-muted: rgba(15, 122, 255, 0.08);
+    --color-accent-muted: rgba(63, 168, 154, 0.10);
 
     /* Backgrounds */
     --bg-root: #f4f7fb;
     /* Very light tech blue / ice-white (professional data feel) */
-    --bg-section-alt: #ebf0f7;
+    --bg-section-alt: #e8f0f7;
     /* Slightly darker cool white for alternating sections */
     --bg-card: #ffffff;
-    --bg-dark: #111118;
+    --bg-dark: #0a1930;
     /* Footer / dark elements */
-    --bg-dark-secondary: #1a1a24;
+    --bg-dark-secondary: #17345c;
 
     /* Text */
-    --text-primary: #111118;
+    --text-primary: #0a1930;
     --text-secondary: #5a5a72;
     --text-tertiary: #9a9ab0;
     --text-on-dark: #f0f0ee;
@@ -38,11 +38,12 @@
     /* Borders */
     --border-light: #e8e8e2;
     --border-medium: #d0d0c8;
-    --border-accent: rgba(15, 122, 255, 0.3);
+    --border-accent: rgba(63, 168, 154, 0.35);
 
     /* Typography */
-    --font-primary: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    --font-mono: 'DM Mono', 'JetBrains Mono', 'Fira Code', monospace;
+    --font-primary: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-mono: 'IBM Plex Mono', 'JetBrains Mono', monospace;
 
     /* Scale */
     --text-xs: clamp(0.7rem, 0.65rem + 0.25vw, 0.8rem);
@@ -1952,4 +1953,48 @@ button {
    align-items actúa en el eje horizontal: sin esto el texto se iba a la derecha. */
 .hero-cinematic.hero-static .hero-inner-left {
     align-items: flex-start;
+}
+
+/* ============================================================
+   MANUAL DE MARCA · JERARQUÍA TIPOGRÁFICA
+   "Manrope lidera. Inter sostiene. IBM Plex Mono evidencia."
+   ============================================================ */
+
+body {
+    font-family: var(--font-body);   /* Inter sostiene el texto corrido */
+}
+
+h1, h2, h3, h4, h5, h6,
+.hero-title, .section-title, .btn, .nav-link, .logo-link {
+    font-family: var(--font-primary);   /* Manrope lidera */
+}
+
+.hero-eyebrow, .hero-progress-num,
+.mono, code, kbd, pre {
+    font-family: var(--font-mono);      /* IBM Plex Mono evidencia */
+}
+
+/* ── Hero: acento de marca y segunda salida más legible ── */
+:root {
+    /* Acento oficial del manual (10% de la paleta). El #50b7a8 pedido
+       queda a cuatro puntos de este valor documentado. */
+    --hero-acento: #3fa89a;
+}
+
+.hero-lead {
+    font-family: var(--font-body);
+    font-size: clamp(1.15rem, 1.55vw, 1.45rem);
+    line-height: 1.7;
+    font-weight: 400;
+    color: #ffffff;
+    max-width: 640px;
+}
+
+.hero-lead em {
+    font-weight: 600;
+    color: var(--hero-acento);
+}
+
+.hero-cinematic .hero-act > * {
+    max-width: 640px;
 }
