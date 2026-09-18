@@ -1775,3 +1775,47 @@ button {
             linear-gradient(180deg, rgba(5, 13, 24, .55) 0%, transparent 28%);
     }
 }
+
+/* ============================================================
+   AJUSTES DE HEADER Y LUMINOSIDAD DEL HERO
+   ============================================================ */
+
+/* El CTA era un <a> en línea: su relleno no contaba para la altura de la
+   caja y quedaba 2 px descentrado (11 arriba, 9 abajo). */
+.nav-link.cta-nav {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 0.65rem;   /* iguala el hueco logo->menú (2.25rem) */
+}
+
+/* Más aire dentro del pill blanco, manteniendo la simetría */
+.nav-container {
+    padding: 0.85rem 1.9rem;
+    gap: 2.25rem;
+}
+
+@media (max-width: 860px) {
+    .nav-container { padding: 0.7rem 1.1rem; }
+}
+
+/* Hero más natural: el velo pasaba de 92% de negro en el borde izquierdo.
+   Se aligera y el contraste del texto se sostiene con la sombra. */
+.hero-cinematic .hero-scrim {
+    background:
+        linear-gradient(90deg, rgba(4, 10, 20, .60) 0%, rgba(4, 10, 20, .34) 30%,
+                        rgba(4, 10, 20, .08) 58%, transparent 80%),
+        linear-gradient(0deg, rgba(4, 10, 20, .52) 0%, rgba(4, 10, 20, .06) 32%,
+                        transparent 56%);
+}
+
+.hero-cinematic .hero-title {
+    text-shadow: 0 2px 18px rgba(0, 6, 16, .92), 0 1px 3px rgba(0, 6, 16, .8);
+}
+
+.hero-cinematic .hero-subtitle {
+    text-shadow: 0 1px 12px rgba(0, 6, 16, .92), 0 1px 3px rgba(0, 6, 16, .7);
+}
+
+.hero-cinematic .hero-eyebrow {
+    text-shadow: 0 1px 10px rgba(0, 6, 16, .95), 0 1px 3px rgba(0, 6, 16, .8);
+}
