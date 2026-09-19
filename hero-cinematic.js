@@ -9,6 +9,7 @@
   const CONFIG = {
     manifest:      'hero-frames/manifest.json',
     scrollLength:  6.5,   // duración del recorrido, en alturas de ventana
+    introFade:     0.085, // tramo inicial en color plano antes del primer fotograma
     suavizado:     0.22,  // constante de tiempo del seguimiento, en segundos
                           // (mayor = más controlado y más lento en reaccionar)
     maxLag:        60,    // huecos de hasta N fotogramas se recorren uno a uno;
@@ -26,6 +27,7 @@
   const canvas = root.querySelector('.hero-canvas');
   const poster = root.querySelector('.hero-poster');
   const bar    = root.querySelector('.hero-progress-bar');
+  const intro  = root.querySelector('.hero-intro');
   const num    = root.querySelector('.hero-progress-num');
   const acts   = Array.from(root.querySelectorAll('.hero-act'));
   if (!canvas) return;
@@ -136,6 +138,13 @@
   function pintarUI(p) {
     if (bar) bar.style.transform = 'scaleX(' + p.toFixed(4) + ')';
     root.classList.toggle('hero-avanzado', p > 0.04);
+    /* Pantalla de color plano que abre el recorrido y se disuelve al bajar.
+       De paso cubre la carga de los primeros fotogramas. */
+    if (intro) {
+      const o = 1 - Math.min(1, Math.max(0, p / CONFIG.introFade));
+      intro.style.opacity = o.toFixed(3);
+      intro.style.visibility = o < 0.01 ? 'hidden' : 'visible';
+    }
     if (num) num.textContent = String(Math.round(p * 100)).padStart(2, '0');
     acts.forEach(a => {
       const from = parseFloat(a.dataset.from), to = parseFloat(a.dataset.to);
