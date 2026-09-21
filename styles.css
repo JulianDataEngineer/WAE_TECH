@@ -2306,3 +2306,54 @@ h1, h2, h3, h4, h5, h6,
 .services-head { max-width: 900px; }
 .services-title { font-size: clamp(1.9rem, 3.6vw, 2.9rem); }
 .services-sub { max-width: 640px; }
+
+/* ─── Panel de servicio: frase destacada, pie con botón y número ─── */
+.service-lead {
+    margin: 0;
+    font-family: var(--font-primary);
+    font-size: clamp(1.05rem, 1.55vw, 1.4rem);
+    font-weight: 600;
+    line-height: 1.35;
+    letter-spacing: -0.012em;
+    color: #ffffff;
+}
+
+.service-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: auto;
+    padding-top: 0.4rem;
+}
+
+/* El botón primario del sitio es navy: sobre la tarjeta navy no se veía.
+   Aquí usa el acento de la paleta con texto oscuro. */
+.service-cta {
+    background: var(--color-accent);
+    color: #0a1930;
+    border: 0;
+    border-radius: var(--radius-full);
+    padding: 0.8rem 1.6rem;
+    box-shadow: 0 10px 26px -12px rgba(63, 168, 154, 0.7);
+}
+
+.service-cta:hover {
+    background: #93d5cb;
+    color: #0a1930;
+    transform: translateY(-2px);
+}
+
+.service-cta .material-symbols-outlined {
+    font-size: 1.1rem;
+}
+
+.service-num {
+    margin-top: 0;
+}
+
+@media (max-width: 560px) {
+    .service-foot { justify-content: flex-start; }
+    .service-cta { width: 100%; justify-content: center; }
+}
