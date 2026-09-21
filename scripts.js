@@ -269,3 +269,31 @@ window.addEventListener('scroll', () => {
    ============================================ */
 console.log('%cWAE — World AI Engineers', 'font-size:18px;font-weight:700;color:#1a3a6b;');
 console.log('%cData Engineering · Cloud · IA Aplicada · Bogotá, Colombia', 'font-size:12px;color:#5a5a72;');
+
+/* ============================================================
+   Acordeón de servicios: uno abierto a la vez.
+   ============================================================ */
+(function () {
+    'use strict';
+    const items = Array.from(document.querySelectorAll('.service-item'));
+    if (!items.length) return;
+
+    function abrir(objetivo) {
+        items.forEach(it => {
+            const btn = it.querySelector('.service-head');
+            const on = it === objetivo;
+            it.classList.toggle('is-open', on);
+            if (btn) btn.setAttribute('aria-expanded', String(on));
+        });
+    }
+
+    items.forEach(it => {
+        const btn = it.querySelector('.service-head');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+            /* Volver a pulsar el abierto no lo cierra: la sección
+               siempre muestra un servicio, nunca queda vacía. */
+            if (!it.classList.contains('is-open')) abrir(it);
+        });
+    });
+})();
