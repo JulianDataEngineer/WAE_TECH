@@ -297,3 +297,36 @@ console.log('%cData Engineering · Cloud · IA Aplicada · Bogotá, Colombia', '
         });
     });
 })();
+
+/* ============================================================
+   Carrusel de proceso: scroll nativo con botones.
+   ============================================================ */
+(function () {
+    'use strict';
+    const track = document.querySelector('.process-track');
+    const arrows = Array.from(document.querySelectorAll('.process-arrow'));
+    if (!track || !arrows.length) return;
+
+    function paso() {
+        const card = track.querySelector('.process-card');
+        if (!card) return 320;
+        const gap = parseFloat(getComputedStyle(track).columnGap) || 20;
+        return card.getBoundingClientRect().width + gap;
+    }
+
+    function estado() {
+        const max = track.scrollWidth - track.clientWidth - 2;
+        arrows.forEach(b => {
+            const dir = +b.dataset.dir;
+            b.disabled = dir < 0 ? track.scrollLeft <= 2 : track.scrollLeft >= max;
+        });
+    }
+
+    arrows.forEach(b => b.addEventListener('click', () => {
+        track.scrollBy({ left: paso() * +b.dataset.dir, behavior: 'smooth' });
+    }));
+
+    track.addEventListener('scroll', estado, { passive: true });
+    window.addEventListener('resize', estado, { passive: true });
+    estado();
+})();
