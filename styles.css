@@ -608,12 +608,6 @@ button {
 /* ============================================
    Services / Pillars Section
    ============================================ */
-.pillars-section {
-    padding: var(--space-5xl) 0;
-    background: var(--bg-section-alt);
-    border-top: 1px solid var(--border-light);
-    border-bottom: 1px solid var(--border-light);
-}
 
 .services-grid {
     display: grid;
@@ -2294,3 +2288,21 @@ h1, h2, h3, h4, h5, h6,
 @media (prefers-reduced-motion: reduce) {
     .service-body, .service-item, .service-toggle { transition: none; }
 }
+
+/* El rótulo ahora es una línea de código: sin mayúsculas forzadas ni
+   tracking ancho, que romperían la lectura como tal. */
+.services-badge {
+    text-transform: none;
+    letter-spacing: 0.01em;
+    font-size: 0.8rem;
+}
+
+.services-badge i {
+    box-shadow: 0 0 0 3px rgba(63, 168, 154, 0.18);
+}
+
+/* El titular nuevo es más largo: se le da ancho para que rompa en dos
+   líneas en vez de tres, y el subtítulo se mantiene más estrecho. */
+.services-head { max-width: 900px; }
+.services-title { font-size: clamp(1.9rem, 3.6vw, 2.9rem); }
+.services-sub { max-width: 640px; }
