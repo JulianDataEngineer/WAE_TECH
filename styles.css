@@ -743,58 +743,14 @@ button {
 /* ============================================
    About Section
    ============================================ */
-.about-section {
-    padding: var(--space-5xl) 0;
-}
 
-.about-layout {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-4xl);
-    align-items: start;
-}
 
-.about-left {
-    position: sticky;
-    top: 8rem;
-}
 
-.about-right {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2xl);
-}
 
-.about-block {
-    border-top: 1px solid var(--border-light);
-    padding-top: var(--space-xl);
-}
 
-.about-block-title {
-    font-size: var(--text-sm);
-    font-family: var(--font-mono);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--text-tertiary);
-    margin-bottom: var(--space-md);
-}
 
-.about-block-text {
-    color: var(--text-secondary);
-    line-height: 1.75;
-}
 
-.about-block-text strong {
-    color: var(--text-primary);
-    font-weight: 600;
-}
 
-.about-highlights {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-top: var(--space-md);
-}
 
 .highlight-chip {
     font-size: var(--text-xs);
@@ -1212,13 +1168,7 @@ button {
         grid-template-columns: 1fr 1fr;
     }
 
-    .about-layout {
-        grid-template-columns: 1fr;
-    }
 
-    .about-left {
-        position: static;
-    }
 
     .footer-top {
         grid-template-columns: 1fr 1fr;
@@ -1362,9 +1312,6 @@ button {
     }
 
     /* ---- About ---- */
-    .about-layout {
-        gap: var(--space-2xl);
-    }
 
     /* ---- Contact ---- */
     .contact-grid {
