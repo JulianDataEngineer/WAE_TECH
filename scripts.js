@@ -326,7 +326,33 @@ console.log('%cData Engineering · Cloud · IA Aplicada · Bogotá, Colombia', '
         track.scrollBy({ left: paso() * +b.dataset.dir, behavior: 'smooth' });
     }));
 
-    track.addEventListener('scroll', estado, { passive: true });
-    window.addEventListener('resize', estado, { passive: true });
-    estado();
+    /* El carrusel se extiende hasta el borde real de la pantalla. Antes se
+       calculaba con calc(50% - 50vw), pero dentro de la rejilla ese 50% es
+       de la columna, no de la página: sobresalía cientos de píxeles y la
+       última tarjeta nunca llegaba a verse. */
+    const viewport = document.querySelector('.process-viewport');
+    const heading = document.querySelector('.process-heading');
+
+    function ajustar() {
+        if (viewport) {
+            viewport.style.marginRight = '0px';
+            const ancho = document.documentElement.clientWidth;
+            const sobra = Math.max(0, Math.round(ancho - viewport.getBoundingClientRect().right));
+            viewport.style.marginRight = (-sobra) + 'px';
+        }
+        /* Margen final simétrico con el de la izquierda de la página */
+        const margen = heading ? Math.max(16, Math.round(heading.getBoundingClientRect().left)) : 32;
+        track.style.paddingRight = margen + 'px';
+        estado();
+    }
+
+    function alMover() {
+        estado();
+        if (viewport) viewport.classList.toggle('is-scrolled', track.scrollLeft > 4);
+    }
+
+    track.addEventListener('scroll', alMover, { passive: true });
+    window.addEventListener('resize', ajustar, { passive: true });
+    window.addEventListener('load', ajustar);
+    ajustar();
 })();

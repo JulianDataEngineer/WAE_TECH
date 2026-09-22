@@ -2625,3 +2625,174 @@ h1, h2, h3, h4, h5, h6,
 @media (max-width: 900px) {
     .process-cierre { margin-top: 2rem; }
 }
+
+/* ============================================================
+   OPERATION · tarjetas a la altura del encabezado, con volumen
+   ============================================================ */
+
+/* 1. La tarjeta arranca con el rótulo y termina con los botones:
+   encabezado y pista comparten los mismos márgenes verticales. El
+   inferior deja sitio a la base de la tarjeta sin que se recorte. */
+.process-layout { align-items: stretch; }
+
+.process-heading { padding: 14px 0 46px; }
+
+.process-viewport {
+    display: flex;
+    margin-right: 0;            /* lo ajusta el JS al borde real de la pantalla */
+}
+
+.process-track {
+    align-items: stretch;
+    padding: 14px 32px 46px 14px;
+    scroll-padding-left: 14px;
+}
+
+/* 2. Profundidad como la referencia: base inferior sólida + sombra amplia */
+.process-card {
+    flex: 0 0 clamp(290px, 25vw, 370px);
+    justify-content: flex-start;
+    gap: 0;
+    padding: clamp(1.75rem, 2.4vw, 2.3rem);
+    border-radius: 26px;
+    background: linear-gradient(180deg, #ffffff 0%, #f5f8fb 100%);
+    border: 1px solid rgba(23, 52, 92, 0.06);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.9),
+        0 9px 0 0 #dbe4ee,
+        0 32px 48px -26px rgba(23, 52, 92, 0.45);
+    transition: transform .35s ease, box-shadow .35s ease;
+}
+
+.process-card:hover { transform: translateY(-4px); }
+
+/* 3. Texto más grande; icono y texto arriba, índice abajo */
+.process-card-text {
+    margin-top: 2rem;
+    font-family: var(--font-primary);
+    font-size: clamp(1.18rem, 1.45vw, 1.38rem);
+    font-weight: 600;
+    line-height: 1.42;
+    letter-spacing: -0.012em;
+    color: var(--color-primary);
+}
+
+.process-card-foot {
+    margin-top: auto;
+    padding-top: 1.25rem;
+    justify-content: flex-end;
+}
+
+.process-index {
+    font-size: clamp(2.4rem, 3.4vw, 3.2rem);
+    letter-spacing: -0.05em;
+}
+
+/* 4. Resplandor del recuadro del icono, como en la referencia */
+.process-icon {
+    box-shadow:
+        0 16px 30px -6px rgba(63, 168, 154, 0.55),
+        0 0 38px 4px rgba(63, 168, 154, 0.16);
+}
+
+/* 5. Tarjeta de cierre en el navy de marca */
+.process-card--cierre {
+    background: linear-gradient(180deg, #102443 0%, #0a1930 100%);
+    border-color: rgba(63, 168, 154, 0.3);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.07),
+        0 9px 0 0 #050e1c,
+        0 32px 48px -24px rgba(10, 25, 48, 0.7);
+}
+
+.process-card--cierre .process-card-text { color: #ffffff; }
+
+.process-card--cierre .process-card-text em {
+    font-style: normal;
+    color: var(--color-accent);
+}
+
+.process-card--cierre .process-icon {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    box-shadow:
+        0 16px 32px -6px rgba(63, 168, 154, 0.8),
+        0 0 44px 6px rgba(63, 168, 154, 0.22);
+}
+
+.process-card--cierre .process-card-foot {
+    justify-content: flex-start;
+    border-top-color: rgba(255, 255, 255, 0.12);
+}
+
+.process-firma {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #93d5cb;
+}
+
+@media (max-width: 900px) {
+    .process-heading { padding: 0; }
+    .process-card { flex-basis: min(80vw, 330px); min-height: 380px; }
+}
+
+/* ── Ajustes finos del carrusel de operation ── */
+
+/* La pista hace scroll horizontal y eso recorta las sombras en seco,
+   dibujando un rectángulo. Se le da margen suficiente para que la sombra
+   quepa entera; el encabezado usa el mismo margen para seguir alineado. */
+.process-heading { padding: 18px 0 66px; }
+
+.process-track {
+    padding: 18px 32px 66px 22px;
+    scroll-padding-left: 22px;
+}
+
+.process-card {
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.9),
+        0 9px 0 0 #dbe4ee,
+        0 26px 40px -24px rgba(23, 52, 92, 0.42);
+}
+
+.process-card--cierre {
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.07),
+        0 9px 0 0 #050e1c,
+        0 26px 40px -22px rgba(10, 25, 48, 0.65);
+}
+
+/* Texto centrado entre icono y pie: reparte el alto en vez de dejar un
+   hueco grande bajo el texto */
+.process-card-text {
+    margin: auto 0;
+    padding: 1.75rem 0;
+    font-size: clamp(1.25rem, 1.6vw, 1.5rem);
+    line-height: 1.4;
+}
+
+.process-card-foot { margin-top: 0; }
+
+/* Resplandor del icono un punto más marcado */
+.process-icon {
+    box-shadow:
+        0 18px 34px -6px rgba(63, 168, 154, 0.6),
+        0 0 42px 6px rgba(63, 168, 154, 0.18);
+}
+
+/* Fundido donde las tarjetas salen por la izquierda, solo con scroll hecho:
+   en reposo la primera tarjeta queda intacta */
+.process-viewport.is-scrolled {
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 44px);
+            mask-image: linear-gradient(90deg, transparent 0, #000 44px);
+}
+
+/* La banda de cierre pasó al carrusel: sobra aire al pie de la sección */
+.process-section { padding-bottom: clamp(2.5rem, 5vw, 4.5rem); }
+
+@media (max-width: 900px) {
+    .process-heading { padding: 0; }
+    .process-track { padding: 12px 20px 60px 2px; scroll-padding-left: 2px; }
+}
