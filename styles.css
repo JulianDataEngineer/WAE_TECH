@@ -3281,3 +3281,119 @@ h1, h2, h3, h4, h5, h6,
 @media (prefers-reduced-motion: reduce) {
     .gallery-track, .gallery-slide img, .gallery-step, .gc-pill { transition: none; }
 }
+
+/* ============================================================
+   EXPERIENCIA · pasarela de logos sobre pastillas con relieve
+   ============================================================ */
+
+.clients-section {
+    padding: clamp(4rem, 7vw, 6.5rem) 0 clamp(3rem, 5vw, 4.5rem);
+    background: var(--bg-root);
+    border-top: 1px solid rgba(23, 52, 92, 0.08);
+    overflow: hidden;
+}
+
+.clients-head {
+    text-align: center;
+    max-width: 860px;
+    margin: 0 auto clamp(2.5rem, 4.5vw, 3.5rem);
+}
+
+.clients-heading {
+    margin: 1.25rem 0 0;
+    font-family: var(--font-primary);
+    font-size: clamp(1.9rem, 3.6vw, 2.9rem);
+    font-weight: 700;
+    line-height: 1.12;
+    letter-spacing: -0.03em;
+    color: var(--color-primary);
+}
+
+.clients-sub {
+    margin: 1rem 0 0;
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 1.25vw, 1.12rem);
+    line-height: 1.6;
+    color: #4a6180;
+}
+
+.clients-track {
+    gap: clamp(1rem, 1.8vw, 1.75rem);
+    padding: 1.25rem 0 1.75rem;   /* deja respirar la sombra inferior */
+}
+
+/* Pastilla con el mismo relieve de las tarjetas del sitio */
+.client-chip {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 200px;
+    height: 96px;
+    padding: 0 2rem;
+    border-radius: 99px;
+    background: linear-gradient(180deg, #ffffff 0%, #f5f8fb 100%);
+    border: 1px solid rgba(23, 52, 92, 0.06);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.9),
+        0 6px 0 0 #dbe4ee,
+        0 20px 30px -20px rgba(23, 52, 92, 0.42);
+    transition: transform .35s ease, box-shadow .35s ease;
+}
+
+.client-chip:hover {
+    transform: translateY(-3px);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.9),
+        0 9px 0 0 #dbe4ee,
+        0 26px 38px -22px rgba(23, 52, 92, 0.45);
+}
+
+.client-logo {
+    height: 46px;
+    max-width: 136px;
+    width: auto;
+    object-fit: contain;
+    filter: grayscale(1);
+    opacity: 0.6;
+    transition: filter .35s ease, opacity .35s ease;
+}
+
+/* El logo de Indra viene con fondo oscuro: su pastilla usa el navy de marca */
+.client-chip--dark {
+    background: linear-gradient(180deg, #102443 0%, #0a1930 100%);
+    border-color: rgba(63, 168, 154, 0.3);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        0 6px 0 0 #050e1c,
+        0 20px 30px -20px rgba(10, 25, 48, 0.65);
+}
+
+.client-chip--dark:hover {
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        0 9px 0 0 #050e1c,
+        0 26px 38px -22px rgba(10, 25, 48, 0.7);
+}
+
+.client-chip--dark .client-logo {
+    filter: none;
+    opacity: 0.92;
+}
+
+.client-chip--dark:hover .client-logo { opacity: 1; }
+
+.client-chip:hover .client-logo {
+    filter: grayscale(0);
+    opacity: 1;
+    transform: none;
+}
+
+@media (max-width: 860px) {
+    .client-chip { min-width: 156px; height: 78px; padding: 0 1.5rem; }
+    .client-logo { height: 36px; max-width: 108px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .clients-track { animation: none; }
+}
