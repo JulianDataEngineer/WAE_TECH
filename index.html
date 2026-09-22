@@ -669,38 +669,59 @@
                 <div class="contact-grid">
                     <!-- Info -->
                     <div data-aos="fade-right">
-                        <span class="section-eyebrow">Contacto</span>
-                        <h2 class="contact-tagline">¿Listo para llevar<br>tus datos más lejos?</h2>
+                        <span class="services-badge"><i aria-hidden="true"></i>contacto</span>
+                        <h2 class="contact-tagline">¿Listo para llevar<br><em>tus datos más lejos</em>?</h2>
                         <p class="contact-description">
                             Cuéntanos sobre tu proyecto. Analizamos tu contexto y te proponemos
                             un plan técnico concreto — sin rodeos.
                         </p>
                         <div class="contact-methods">
                             <a href="mailto:proyectos@waengineers.co" class="contact-method">
-                                <span class="material-symbols-outlined">mail</span>
-                                <span>proyectos@waengineers.co</span>
+                                <span class="cm-icon"><span class="material-symbols-outlined">mail</span></span>
+                                <span class="cm-body">
+                                    <span class="cm-label">Correo</span>
+                                    <span class="cm-value">proyectos@waengineers.co</span>
+                                </span>
                             </a>
                             <a href="tel:+573123757140" class="contact-method">
-                                <span class="material-symbols-outlined">call</span>
-                                <span>+57 312 375 7140</span>
+                                <span class="cm-icon"><span class="material-symbols-outlined">call</span></span>
+                                <span class="cm-body">
+                                    <span class="cm-label">Teléfono</span>
+                                    <span class="cm-value">+57 312 375 7140</span>
+                                </span>
                             </a>
                             <div class="contact-method">
-                                <span class="material-symbols-outlined">location_on</span>
-                                <span>Bogotá, Colombia · Remoto</span>
+                                <span class="cm-icon"><span class="material-symbols-outlined">location_on</span></span>
+                                <span class="cm-body">
+                                    <span class="cm-label">Dónde estamos</span>
+                                    <span class="cm-value">Bogotá, Colombia · Remoto</span>
+                                </span>
                             </div>
                         </div>
 
                         <!-- Certifications -->
                         <div class="certifications-block">
-                            <p class="cert-label">CERTIFICADOS</p>
+                            <p class="cert-label">Certificados</p>
                             <div class="cert-badges">
-                                <div class="badge-coin" title="AWS Certified Cloud Practitioner">
-                                    <img src="aws-certified-cloud-practitioner.png"
-                                        alt="AWS Certified Cloud Practitioner">
+                                <div class="cert-item">
+                                    <div class="badge-coin" title="AWS Certified Cloud Practitioner">
+                                        <img src="aws-certified-cloud-practitioner.png"
+                                            alt="AWS Certified Cloud Practitioner">
+                                    </div>
+                                    <div class="cert-text">
+                                        <span class="cert-name">AWS Certified Cloud Practitioner</span>
+                                        <span class="cert-issuer">Amazon Web Services</span>
+                                    </div>
                                 </div>
-                                <div class="badge-coin" title="AWS Certified Data Engineer – Associate">
-                                    <img src="aws-certified-data-engineer-associate.png"
-                                        alt="AWS Certified Data Engineer Associate">
+                                <div class="cert-item">
+                                    <div class="badge-coin" title="AWS Certified Data Engineer – Associate">
+                                        <img src="aws-certified-data-engineer-associate.png"
+                                            alt="AWS Certified Data Engineer Associate">
+                                    </div>
+                                    <div class="cert-text">
+                                        <span class="cert-name">AWS Certified Data Engineer</span>
+                                        <span class="cert-issuer">Associate · Amazon Web Services</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -712,33 +733,33 @@
                         <form class="contact-form" id="contact-form">
                             <div class="form-row">
                                 <div class="form-group">
-                                    <label for="name">Nombre Completo</label>
+                                    <label for="name" class="field-chip"><span class="material-symbols-outlined">person</span>Nombre</label>
                                     <input type="text" id="name" name="name" placeholder="Tu nombre" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="email">Email</label>
+                                    <label for="email" class="field-chip"><span class="material-symbols-outlined">alternate_email</span>Email</label>
                                     <input type="email" id="email" name="email" placeholder="tu@empresa.com" required>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group">
-                                    <label for="company">Empresa</label>
+                                    <label for="company" class="field-chip"><span class="material-symbols-outlined">apartment</span>Empresa</label>
                                     <input type="text" id="company" name="company" placeholder="Nombre de tu empresa">
                                 </div>
                                 <div class="form-group">
-                                    <label for="service">Servicio de Interés</label>
+                                    <label for="service" class="field-chip"><span class="material-symbols-outlined">tune</span>Servicio</label>
                                     <select id="service" name="service" required>
                                         <option value="">Selecciona...</option>
                                         <option value="Data Engineering">Data Engineering</option>
-                                        <option value="Cloud & Infraestructura">Cloud & Infraestructura</option>
-                                        <option value="IA Aplicada & MLOps">IA Aplicada & MLOps</option>
+                                        <option value="Cloud &amp; Infraestructura">Cloud &amp; Infraestructura</option>
+                                        <option value="IA Aplicada &amp; MLOps">IA Aplicada &amp; MLOps</option>
                                         <option value="Co-Creación Ágil">Co-Creación Ágil</option>
                                         <option value="Todos los servicios">Todos los servicios</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="message">Cuéntanos sobre tu proyecto</label>
+                            <div class="form-group form-group--wide">
+                                <label for="message" class="field-chip"><span class="material-symbols-outlined">chat_bubble</span>Tu proyecto</label>
                                 <textarea id="message" name="message"
                                     placeholder="Describe brevemente tus necesidades o desafíos técnicos..."
                                     required></textarea>

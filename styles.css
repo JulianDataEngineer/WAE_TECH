@@ -3535,3 +3535,296 @@ h1, h2, h3, h4, h5, h6,
 @media (prefers-reduced-motion: reduce) {
     .faq-panel { transition: none; }
 }
+
+/* ============================================================
+   CONTACTO · campos hundidos con ficha de etiqueta y relieve
+   ============================================================ */
+
+.contact-section {
+    padding: clamp(4.5rem, 8vw, 7rem) 0 clamp(5rem, 9vw, 8rem);
+    background: var(--bg-root);
+    border-top: 1px solid rgba(23, 52, 92, 0.08);
+}
+
+.contact-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+    gap: clamp(2.5rem, 5vw, 4.5rem);
+}
+
+.contact-tagline {
+    margin: 1.25rem 0 1.25rem;
+    font-family: var(--font-primary);
+    font-size: clamp(1.9rem, 3.4vw, 2.75rem);
+    font-weight: 700;
+    line-height: 1.12;
+    letter-spacing: -0.03em;
+    color: var(--color-primary);
+}
+
+.contact-tagline em {
+    font-style: normal;
+    color: var(--color-accent);
+}
+
+.contact-description {
+    max-width: 44ch;
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 1.25vw, 1.08rem);
+    line-height: 1.7;
+    color: #4a6180;
+    margin-bottom: clamp(1.75rem, 3vw, 2.25rem);
+}
+
+/* ─── Datos de contacto como fichas con relieve ─── */
+.contact-methods { gap: 0.85rem; }
+
+.contact-method {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.85rem 1.25rem;
+    border-radius: 18px;
+    background: linear-gradient(180deg, #ffffff 0%, #f5f8fb 100%);
+    border: 1px solid rgba(23, 52, 92, 0.06);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.9),
+        0 5px 0 0 #dbe4ee,
+        0 16px 26px -20px rgba(23, 52, 92, 0.42);
+    transition: transform .3s ease, box-shadow .3s ease;
+}
+
+a.contact-method:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.9),
+        0 7px 0 0 #dbe4ee,
+        0 22px 32px -22px rgba(23, 52, 92, 0.45);
+}
+
+.cm-icon {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    background: #e4f5f2;
+    border: 1px solid rgba(63, 168, 154, 0.22);
+}
+
+.cm-icon .material-symbols-outlined { font-size: 20px; color: var(--color-accent); }
+
+.cm-body { display: flex; flex-direction: column; gap: 0.15rem; min-width: 0; }
+
+.cm-label {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #6f8399;
+}
+
+.cm-value {
+    font-family: var(--font-body);
+    font-size: 0.98rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    overflow-wrap: anywhere;
+}
+
+/* ─── Certificados ─── */
+.certifications-block {
+    margin-top: clamp(1.75rem, 3vw, 2.25rem);
+    padding-top: clamp(1.5rem, 2.5vw, 2rem);
+    border-top: 1px solid rgba(23, 52, 92, 0.1);
+}
+
+.cert-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #6f8399;
+    margin-bottom: 1rem;
+}
+
+.cert-badges {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.85rem;
+    align-items: stretch;
+}
+
+.cert-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.85rem 1.25rem;
+    border-radius: 18px;
+    background: linear-gradient(180deg, #ffffff 0%, #f5f8fb 100%);
+    border: 1px solid rgba(23, 52, 92, 0.06);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.9),
+        0 5px 0 0 #dbe4ee,
+        0 16px 26px -20px rgba(23, 52, 92, 0.42);
+}
+
+.cert-item .badge-coin { flex-shrink: 0; }
+.cert-item .badge-coin img { width: 64px; height: 64px; }
+
+.cert-text { display: flex; flex-direction: column; gap: 0.15rem; min-width: 0; }
+
+.cert-name {
+    font-family: var(--font-primary);
+    font-size: 0.98rem;
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--color-primary);
+}
+
+.cert-issuer {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    color: #6f8399;
+}
+
+/* ─── Formulario ─── */
+.contact-form-wrapper {
+    padding: clamp(1.5rem, 3vw, 2.5rem);
+    border-radius: 36px;
+    background: linear-gradient(180deg, #ffffff 0%, #f5f8fb 100%);
+    border: 1px solid rgba(23, 52, 92, 0.06);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.9),
+        0 9px 0 0 #dbe4ee,
+        0 30px 50px -28px rgba(23, 52, 92, 0.45);
+}
+
+.contact-form { gap: 1.35rem; }
+
+.form-row { gap: 1.35rem; }
+
+.form-group {
+    position: relative;
+    display: block;
+    padding-top: 16px;              /* deja sitio a la ficha de etiqueta */
+}
+
+/* Ficha de la etiqueta, montada sobre el borde del campo */
+.form-group .field-chip {
+    position: absolute;
+    top: 0;
+    right: 14px;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    height: 32px;
+    padding: 0 0.85rem;
+    border-radius: 99px;
+    background: linear-gradient(180deg, #ffffff 0%, #f3f7fb 100%);
+    border: 1px solid rgba(23, 52, 92, 0.07);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.9),
+        0 3px 0 0 #dde6ef,
+        0 10px 16px -10px rgba(23, 52, 92, 0.4);
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0;
+    text-transform: none;
+    white-space: nowrap;
+    color: var(--color-primary);
+    cursor: pointer;
+}
+
+.form-group .field-chip .material-symbols-outlined { font-size: 17px; color: var(--color-accent); }
+
+/* Campos hundidos */
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--color-primary);
+    background: linear-gradient(180deg, #e9eff6 0%, #f6f9fc 100%);
+    border: 1px solid rgba(23, 52, 92, 0.07);
+    border-radius: 99px;
+    padding: 1.6rem 1.4rem 1.05rem;
+    box-shadow:
+        inset 0 3px 5px -2px rgba(23, 52, 92, 0.16),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.85);
+    transition: border-color .25s ease, box-shadow .25s ease;
+    outline: none;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder { color: #8fa3b9; }
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: rgba(63, 168, 154, 0.55);
+    box-shadow:
+        inset 0 3px 5px -2px rgba(23, 52, 92, 0.16),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.85),
+        0 0 0 4px rgba(63, 168, 154, 0.16);
+}
+
+.form-group select {
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2317345c' stroke-width='2.5' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1.4rem center;
+    padding-right: 3rem;
+}
+
+.form-group textarea {
+    border-radius: 28px;
+    min-height: 150px;
+    resize: vertical;
+}
+
+/* Botón con el mismo relieve: se hunde al pulsarlo */
+.contact-form .btn-primary {
+    width: 100%;
+    margin-top: 0.35rem;
+    padding: 1.15rem 1.75rem;
+    border-radius: 99px;
+    font-family: var(--font-primary);
+    font-size: 1.02rem;
+    font-weight: 600;
+    color: #ffffff;
+    background: linear-gradient(180deg, #214878 0%, #17345c 100%);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.22),
+        0 6px 0 0 #0d2242,
+        0 20px 30px -18px rgba(23, 52, 92, 0.6);
+    transition: transform .18s ease, box-shadow .18s ease, background .3s ease;
+}
+
+.contact-form .btn-primary:hover {
+    background: linear-gradient(180deg, #2a5589 0%, #1b3d6c 100%);
+    transform: translateY(-2px);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.22),
+        0 8px 0 0 #0d2242,
+        0 26px 36px -20px rgba(23, 52, 92, 0.62);
+}
+
+.contact-form .btn-primary:active {
+    transform: translateY(4px);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.18),
+        0 2px 0 0 #0d2242,
+        0 10px 18px -14px rgba(23, 52, 92, 0.6);
+}
+
+@media (max-width: 900px) {
+    .contact-grid { grid-template-columns: minmax(0, 1fr); }
+    .form-row { grid-template-columns: minmax(0, 1fr); }
+    .contact-form-wrapper { border-radius: 28px; }
+}
