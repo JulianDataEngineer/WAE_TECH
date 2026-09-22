@@ -578,3 +578,53 @@ console.log('%cData Engineering · Cloud · IA Aplicada · Bogotá, Colombia', '
 
     ir(0);
 })();
+
+/* ─── Preguntas frecuentes: una abierta a la vez ─── */
+(function () {
+    var items = document.querySelectorAll('.faq-item');
+    if (!items.length) return;
+
+    function abrir(item, si) {
+        var boton = item.querySelector('.faq-trigger');
+        var panel = item.querySelector('.faq-panel');
+        item.classList.toggle('is-open', si);
+        boton.setAttribute('aria-expanded', si ? 'true' : 'false');
+        if (si) {
+            panel.hidden = false;
+            panel.style.height = panel.scrollHeight + 'px';
+        } else {
+            panel.style.height = panel.scrollHeight + 'px';
+            void panel.offsetHeight;          /* fija la altura antes de cerrar */
+            panel.style.height = '0px';
+        }
+    }
+
+    Array.prototype.forEach.call(items, function (item) {
+        var panel = item.querySelector('.faq-panel');
+        var abierto = item.classList.contains('is-open');
+        panel.hidden = false;
+        panel.style.height = abierto ? 'auto' : '0px';
+
+        panel.addEventListener('transitionend', function (e) {
+            if (e.propertyName !== 'height') return;
+            if (item.classList.contains('is-open')) panel.style.height = 'auto';
+            else panel.hidden = true;
+        });
+
+        item.querySelector('.faq-trigger').addEventListener('click', function () {
+            var estaAbierto = item.classList.contains('is-open');
+            Array.prototype.forEach.call(items, function (otro) {
+                if (otro !== item && otro.classList.contains('is-open')) abrir(otro, false);
+            });
+            if (estaAbierto) abrir(item, false);
+            else abrir(item, true);
+        });
+    });
+
+    /* Al cambiar el ancho, la respuesta abierta recalcula su altura sola */
+    window.addEventListener('resize', function () {
+        Array.prototype.forEach.call(items, function (item) {
+            if (item.classList.contains('is-open')) item.querySelector('.faq-panel').style.height = 'auto';
+        });
+    });
+})();

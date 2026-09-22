@@ -3397,3 +3397,141 @@ h1, h2, h3, h4, h5, h6,
 @media (prefers-reduced-motion: reduce) {
     .clients-track { animation: none; }
 }
+
+/* ============================================================
+   PREGUNTAS FRECUENTES · acordeón, una abierta a la vez
+   ============================================================ */
+
+.faq-section {
+    padding: clamp(4.5rem, 8vw, 7rem) 0 clamp(5rem, 9vw, 8rem);
+    background: var(--bg-section-alt);
+}
+
+.faq-head {
+    text-align: center;
+    max-width: 860px;
+    margin: 0 auto clamp(2.5rem, 4.5vw, 3.5rem);
+}
+
+.faq-title {
+    margin: 1.25rem 0 0;
+    font-family: var(--font-primary);
+    font-size: clamp(1.9rem, 3.6vw, 2.9rem);
+    font-weight: 700;
+    line-height: 1.12;
+    letter-spacing: -0.03em;
+    color: var(--color-primary);
+}
+
+.faq-list {
+    display: grid;
+    gap: 1rem;
+    max-width: 880px;
+    margin: 0 auto;
+}
+
+.faq-item {
+    padding: 0.35rem clamp(1.35rem, 2.6vw, 2.5rem) 0.5rem;
+    border-radius: 24px;
+    background: linear-gradient(180deg, #ffffff 0%, #f5f8fb 100%);
+    border: 1px solid rgba(23, 52, 92, 0.06);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.9),
+        0 6px 0 0 #dbe4ee,
+        0 20px 32px -22px rgba(23, 52, 92, 0.42);
+    transition: box-shadow .35s ease;
+}
+
+.faq-item.is-open {
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.9),
+        0 9px 0 0 #dbe4ee,
+        0 26px 40px -24px rgba(23, 52, 92, 0.45);
+}
+
+.faq-question { margin: 0; }
+
+.faq-trigger {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.35rem 0;
+    background: none;
+    border: 0;
+    text-align: left;
+    cursor: pointer;
+    font-family: var(--font-primary);
+    font-size: clamp(1.02rem, 1.35vw, 1.18rem);
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--color-primary);
+    transition: color .3s ease;
+}
+
+.faq-trigger:hover { color: var(--color-accent); }
+.faq-trigger:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 4px; border-radius: 10px; }
+
+/* Botón circular con el "+" que se vuelve "−" */
+.faq-icon {
+    position: relative;
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: linear-gradient(180deg, #102443 0%, #0a1930 100%);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.25),
+        inset 0 -3px 0 0 #050e1c,
+        0 3px 6px -2px rgba(10, 25, 48, 0.5);
+    transition: transform .35s ease;
+}
+
+.faq-icon::before,
+.faq-icon::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background: #ffffff;
+    transition: opacity .3s ease, transform .3s ease;
+}
+
+.faq-icon::before { width: 12px; height: 1.5px; transform: translate(-50%, -50%); }
+.faq-icon::after  { width: 1.5px; height: 12px; transform: translate(-50%, -50%); }
+
+.faq-item.is-open .faq-icon { background: linear-gradient(180deg, #3fa89a 0%, #1c706a 100%); box-shadow: inset 0 1px 0 rgba(255,255,255,.3), inset 0 -3px 0 0 #155551, 0 3px 6px -2px rgba(28,112,106,.5); }
+.faq-item.is-open .faq-icon::after { opacity: 0; transform: translate(-50%, -50%) rotate(90deg); }
+
+/* Panel: se anima la altura desde el JS */
+.faq-panel {
+    overflow: hidden;
+    height: 0;
+    transition: height .4s cubic-bezier(.4, 0, .2, 1);
+}
+
+.faq-panel[hidden] { display: block; height: 0; }
+
+.faq-answer {
+    position: relative;
+    padding: 1.75rem 0 1.5rem;
+    font-family: var(--font-body);
+    font-size: clamp(0.98rem, 1.2vw, 1.05rem);
+    line-height: 1.65;
+    color: #4a6180;
+}
+
+.faq-answer::before {
+    content: "";
+    position: absolute;
+    top: 0.5rem;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(23, 52, 92, 0) 0%, rgba(23, 52, 92, 0.18) 50%, rgba(23, 52, 92, 0) 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .faq-panel { transition: none; }
+}
