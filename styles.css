@@ -3888,3 +3888,20 @@ a.contact-method:hover {
     .footer-bottom > * { justify-content: center; text-align: center; }
     .footer-links { flex-wrap: wrap; justify-content: center; }
 }
+
+/* Columna derecha: formulario y, debajo, los certificados */
+.contact-right {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.contact-right .certifications-block {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+}
+
+.contact-right .cert-badges {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
