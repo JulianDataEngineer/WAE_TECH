@@ -3905,3 +3905,31 @@ a.contact-method:hover {
 .contact-right .cert-badges {
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 }
+
+/* El CTA del encabezado toma el relieve del resto de botones */
+.nav-link.cta-nav {
+    background: linear-gradient(180deg, #214878 0%, #17345c 100%);
+    box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.22),
+        0 4px 0 0 #0d2242,
+        0 14px 22px -12px rgba(23, 52, 92, 0.6);
+    transition: transform .18s ease, box-shadow .18s ease, background .3s ease;
+}
+
+.nav-link.cta-nav:hover {
+    background: linear-gradient(180deg, #2a5589 0%, #1b3d6c 100%);
+    transform: translateY(-2px);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.22),
+        0 6px 0 0 #0d2242,
+        0 20px 28px -14px rgba(23, 52, 92, 0.62);
+}
+
+.nav-link.cta-nav:active {
+    transform: translateY(3px);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.18),
+        0 1px 0 0 #0d2242,
+        0 8px 14px -10px rgba(23, 52, 92, 0.6);
+}
