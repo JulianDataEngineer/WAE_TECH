@@ -271,7 +271,7 @@ console.log('%cWAE — World AI Engineers', 'font-size:18px;font-weight:700;colo
 console.log('%cData Engineering · Cloud · IA Aplicada · Bogotá, Colombia', 'font-size:12px;color:#5a5a72;');
 
 /* ============================================================
-   Acordeón de servicios: uno abierto a la vez.
+   Acordeón de servicios: como mucho uno abierto; cada botón abre y cierra.
    ============================================================ */
 (function () {
     'use strict';
@@ -287,13 +287,20 @@ console.log('%cData Engineering · Cloud · IA Aplicada · Bogotá, Colombia', '
         });
     }
 
+    function cerrar(it) {
+        it.classList.remove('is-open');
+        const btn = it.querySelector('.service-head');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+    }
+
     items.forEach(it => {
         const btn = it.querySelector('.service-head');
         if (!btn) return;
+        /* El botón alterna: abre la fila (cerrando la otra) o la cierra si ya
+           estaba abierta, así ambas pueden quedar recogidas. */
         btn.addEventListener('click', () => {
-            /* Volver a pulsar el abierto no lo cierra: la sección
-               siempre muestra un servicio, nunca queda vacía. */
-            if (!it.classList.contains('is-open')) abrir(it);
+            if (it.classList.contains('is-open')) cerrar(it);
+            else abrir(it);
         });
     });
 })();

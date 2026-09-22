@@ -2796,3 +2796,66 @@ h1, h2, h3, h4, h5, h6,
     .process-heading { padding: 0; }
     .process-track { padding: 12px 20px 60px 2px; scroll-padding-left: 2px; }
 }
+
+/* ============================================================
+   SERVICIOS · abrir/cerrar limpio y profundidad del carrusel
+   ============================================================ */
+
+/* El panel ya no cambia de maqueta al abrir: la rejilla vive siempre en
+   .service-grid y solo se anima la altura. Antes la rejilla y su relleno
+   dependían de .is-open y se desarmaban de golpe al cerrar. */
+.service-item.is-open .service-inner,
+.service-inner {
+    display: block;
+    padding: 0;
+    border-top: 0;
+    gap: 0;
+}
+
+.service-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: clamp(1.5rem, 3vw, 2.75rem);
+    padding: clamp(1.4rem, 2.4vw, 2rem) clamp(1.4rem, 2.6vw, 2.4rem) clamp(1.6rem, 2.8vw, 2.4rem);
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    opacity: 0;
+    transition: opacity .25s ease;
+}
+
+.service-item.is-open .service-grid {
+    opacity: 1;
+    transition: opacity .4s ease .12s;
+}
+
+/* Misma profundidad que las tarjetas del carrusel: base sólida + sombra */
+.services-accordion { gap: 1.9rem; }
+
+.service-item {
+    border-radius: 26px;
+    background: linear-gradient(180deg, #ffffff 0%, #f5f8fb 100%);
+    border: 1px solid rgba(23, 52, 92, 0.06);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.9),
+        0 9px 0 0 #dbe4ee,
+        0 26px 40px -24px rgba(23, 52, 92, 0.42);
+}
+
+.service-item.is-open {
+    background: linear-gradient(180deg, #102443 0%, #0a1930 100%);
+    border-color: rgba(63, 168, 154, 0.3);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.07),
+        0 9px 0 0 #050e1c,
+        0 26px 40px -22px rgba(10, 25, 48, 0.65);
+}
+
+/* El botón muestra su estado: flecha → para abrir, se gira al quedar abierto */
+.service-head { cursor: pointer; }
+
+@media (max-width: 860px) {
+    .service-grid { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .service-grid { transition: none; }
+}
