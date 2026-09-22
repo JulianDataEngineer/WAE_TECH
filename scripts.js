@@ -363,3 +363,123 @@ console.log('%cData Engineering · Cloud · IA Aplicada · Bogotá, Colombia', '
     window.addEventListener('load', ajustar);
     ajustar();
 })();
+
+/* ============================================================
+   Diagrama de soluciones: conectores SVG con pulsos de luz.
+   La luz sale del logo, recorre la línea hasta cada corchete y
+   allí se reparte hacia arriba y hacia abajo hasta las tarjetas.
+   ============================================================ */
+(function () {
+    'use strict';
+    const diag = document.querySelector('.solutions-diagram');
+    if (!diag) return;
+    const svg = diag.querySelector('.sol-lines');
+    const logo = diag.querySelector('.sol-logo');
+    const NS = 'http://www.w3.org/2000/svg';
+    const reducir = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const RADIO = 18;      // curva del corchete
+    const PULSO = 46;      // largo del destello, en px
+    const CICLO = 4200;    // ms por vuelta completa
+    let animaciones = [];
+
+    const nodo = (tag, attrs) => {
+        const e = document.createElementNS(NS, tag);
+        for (const k in attrs) e.setAttribute(k, attrs[k]);
+        return e;
+    };
+
+    /* Posición respecto al diagrama sin contar transformaciones: la entrada
+       desplaza las tarjetas y getBoundingClientRect daría líneas torcidas. */
+    function caja(el) {
+        let x = 0, y = 0, n = el;
+        while (n && n !== diag) { x += n.offsetLeft; y += n.offsetTop; n = n.offsetParent; }
+        const w = el.offsetWidth, h = el.offsetHeight;
+        return { l: x, r: x + w, t: y, b: y + h, cx: x + w / 2, cy: y + h / 2 };
+    }
+
+    function dibujar() {
+        animaciones.forEach(a => a.cancel());
+        animaciones = [];
+        svg.innerHTML = '';
+        if (getComputedStyle(svg).display === 'none') return;
+
+        svg.setAttribute('viewBox', `0 0 ${diag.offsetWidth} ${diag.offsetHeight}`);
+        const L = caja(logo);
+        const tramos = [];
+        const uniones = [];
+
+        [[[1, 2, 3], -1], [[4, 5, 6], 1]].forEach(([ids, lado]) => {
+            const cards = ids.map(n => caja(diag.querySelector('.sol-' + n)));
+            const bordeCard = lado < 0 ? Math.max(...cards.map(k => k.r)) : Math.min(...cards.map(k => k.l));
+            const bordeLogo = lado < 0 ? L.l : L.r;
+            const espina = bordeCard + (bordeLogo - bordeCard) * 0.4;
+            const y0 = L.cy;
+
+            tramos.push({ d: `M${bordeLogo} ${y0} H${espina}`, fase: 'tronco' });
+            uniones.push([espina, y0]);
+
+            cards.forEach(k => {
+                const x1 = lado < 0 ? k.r : k.l;
+                const y1 = k.cy;
+                let d;
+                if (Math.abs(y1 - y0) < RADIO) {
+                    d = `M${espina} ${y0} V${y1} H${x1}`;
+                } else {
+                    const v = y1 < y0 ? 1 : -1;          // se acerca a la fila por arriba o por abajo
+                    const h = lado < 0 ? -1 : 1;         // y gira hacia la tarjeta
+                    d = `M${espina} ${y0} V${y1 + v * RADIO} Q${espina} ${y1} ${espina + h * RADIO} ${y1} H${x1}`;
+                }
+                tramos.push({ d, fase: 'rama' });
+            });
+        });
+
+        const s7 = caja(diag.querySelector('.sol-7'));
+        tramos.push({ d: `M${L.cx} ${L.b} V${s7.t}`, fase: 'vertical' });
+
+        const gBase = nodo('g', {}), gPulso = nodo('g', {}), gUnion = nodo('g', {});
+        svg.append(gBase, gPulso, gUnion);
+
+        /* Cada tramo entra en su momento del ciclo: primero el tronco hasta el
+           corchete, después las ramas hacia las tarjetas. */
+        const FASES = { tronco: [0, 0.34], rama: [0.30, 0.80], vertical: [0.04, 0.62] };
+
+        tramos.forEach(t => {
+            gBase.appendChild(nodo('path', { d: t.d, class: 'base' }));
+            if (reducir) return;
+            const p = nodo('path', { d: t.d, class: 'pulso' });
+            gPulso.appendChild(p);
+            const largo = p.getTotalLength();
+            p.style.strokeDasharray = `${PULSO} ${largo + PULSO}`;
+            p.style.strokeDashoffset = PULSO;
+            const [a, b] = FASES[t.fase];
+            animaciones.push(p.animate([
+                { strokeDashoffset: PULSO, offset: 0 },
+                { strokeDashoffset: PULSO, offset: a, easing: 'ease-in-out' },
+                { strokeDashoffset: -largo, offset: b },
+                { strokeDashoffset: -largo, offset: 1 }
+            ], { duration: CICLO, iterations: Infinity }));
+        });
+
+        uniones.forEach(([x, y]) => gUnion.appendChild(nodo('circle', { cx: x, cy: y, r: 4, class: 'nodo' })));
+    }
+
+    let pendiente = 0;
+    const redibujar = () => { cancelAnimationFrame(pendiente); pendiente = requestAnimationFrame(dibujar); };
+
+    if ('ResizeObserver' in window) new ResizeObserver(redibujar).observe(diag);
+    window.addEventListener('resize', redibujar, { passive: true });
+    window.addEventListener('load', redibujar);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(redibujar);
+    redibujar();
+
+    /* Entrada escalonada al llegar a la sección */
+    if (reducir || !('IntersectionObserver' in window)) {
+        diag.classList.add('is-visible');
+    } else {
+        const io = new IntersectionObserver(es => es.forEach(e => {
+            if (e.isIntersecting) { diag.classList.add('is-visible'); io.disconnect(); }
+        }), { threshold: 0.18 });
+        io.observe(diag);
+    }
+})();

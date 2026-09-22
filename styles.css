@@ -2859,3 +2859,232 @@ h1, h2, h3, h4, h5, h6,
 @media (prefers-reduced-motion: reduce) {
     .service-grid { transition: none; }
 }
+
+/* ============================================================
+   SOLUCIONES · diagrama de flujo con el isologo al centro
+   Las líneas se dibujan en un SVG calculado desde la posición
+   real de cada tarjeta; los pulsos recorren del logo hacia fuera.
+   ============================================================ */
+
+.solutions-section {
+    position: relative;
+    padding: clamp(4.5rem, 8vw, 7rem) 0 clamp(5rem, 9vw, 8rem);
+    background: var(--bg-root);
+    overflow: hidden;
+}
+
+.solutions-head {
+    text-align: center;
+    max-width: 860px;
+    margin: 0 auto clamp(2.75rem, 5vw, 4.25rem);
+}
+
+.solutions-title {
+    margin: 1.25rem 0 0;
+    font-family: var(--font-primary);
+    font-size: clamp(1.9rem, 3.6vw, 2.9rem);
+    font-weight: 700;
+    line-height: 1.12;
+    letter-spacing: -0.03em;
+    color: var(--color-primary);
+}
+
+/* ─── Rejilla: 3 a la izquierda, logo, 3 a la derecha, 1 abajo ─── */
+.solutions-diagram {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    grid-template-rows: repeat(3, auto) auto;
+    column-gap: clamp(96px, 10vw, 168px);
+    row-gap: 1.9rem;
+    align-items: stretch;
+    max-width: 1240px;
+    margin: 0 auto;
+}
+
+.sol-1 { grid-column: 1; grid-row: 1; }
+.sol-2 { grid-column: 1; grid-row: 2; }
+.sol-3 { grid-column: 1; grid-row: 3; }
+.sol-4 { grid-column: 3; grid-row: 1; }
+.sol-5 { grid-column: 3; grid-row: 2; }
+.sol-6 { grid-column: 3; grid-row: 3; }
+.sol-7 {
+    grid-column: 1 / -1;
+    grid-row: 4;
+    justify-self: center;
+    width: min(100%, 440px);
+    margin-top: clamp(2.5rem, 4.5vw, 3.75rem);
+}
+
+.sol-center {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+    align-self: center;
+    position: relative;
+    z-index: 2;
+}
+
+/* ─── Tarjetas: misma profundidad que las del carrusel ─── */
+.sol-card {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    padding: clamp(1.5rem, 2.2vw, 2rem);
+    border-radius: 24px;
+    background: linear-gradient(180deg, #ffffff 0%, #f5f8fb 100%);
+    border: 1px solid rgba(23, 52, 92, 0.06);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.9),
+        0 9px 0 0 #dbe4ee,
+        0 26px 40px -24px rgba(23, 52, 92, 0.42);
+    transition: transform .35s ease;
+}
+
+.sol-card:hover { transform: translateY(-4px); }
+
+.sol-icon {
+    display: grid;
+    place-items: center;
+    width: 60px;
+    height: 60px;
+    margin-bottom: 0.6rem;
+    border-radius: 16px;
+    background: #e4f5f2;
+    border: 1px solid rgba(63, 168, 154, 0.22);
+    box-shadow:
+        0 18px 34px -6px rgba(63, 168, 154, 0.6),
+        0 0 42px 6px rgba(63, 168, 154, 0.18);
+}
+
+.sol-icon img { width: 38px; height: 38px; object-fit: contain; }
+
+.sol-card-title {
+    margin: 0;
+    font-family: var(--font-primary);
+    font-size: clamp(1.1rem, 1.5vw, 1.32rem);
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 1.25;
+    color: var(--color-primary);
+}
+
+.sol-card-text {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: var(--text-secondary);
+}
+
+/* ─── Logo central ─── */
+.sol-logo {
+    display: grid;
+    place-items: center;
+    width: clamp(180px, 16vw, 224px);
+    aspect-ratio: 1.3;
+    border-radius: 32px;
+    background:
+        radial-gradient(70% 70% at 28% -10%, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0) 100%),
+        linear-gradient(180deg, #ffffff 0%, #eef6f8 100%);
+    border: 1px solid rgba(63, 168, 154, 0.3);
+    box-shadow:
+        inset 0 -3px 0 rgba(23, 52, 92, 0.06),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9),
+        0 9px 0 0 #d4e6e6,
+        0 30px 60px -18px rgba(63, 168, 154, 0.55),
+        0 0 90px 18px rgba(63, 168, 154, 0.18);
+}
+
+.sol-logo img { width: 72%; height: auto; }
+
+/* ─── Conectores ─── */
+.sol-lines {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    overflow: visible;
+    pointer-events: none;
+}
+
+.sol-lines .base {
+    fill: none;
+    stroke: #cfdae5;
+    stroke-width: 1.5;
+}
+
+.sol-lines .pulso {
+    fill: none;
+    stroke: var(--color-accent);
+    stroke-width: 2.25;
+    stroke-linecap: round;
+    filter: drop-shadow(0 0 4px rgba(63, 168, 154, 0.85));
+}
+
+.sol-lines .nodo {
+    fill: #cfdae5;
+}
+
+/* ─── Entrada: tarjetas y logo aparecen al llegar a la sección ─── */
+.solutions-diagram .sol-card,
+.solutions-diagram .sol-logo {
+    opacity: 0;
+    transform: translateY(22px);
+}
+
+.solutions-diagram .sol-logo { transform: scale(.88); }
+.solutions-diagram .sol-lines { opacity: 0; transition: opacity .9s ease .5s; }
+
+.solutions-diagram.is-visible .sol-card,
+.solutions-diagram.is-visible .sol-logo {
+    opacity: 1;
+    transform: none;
+    transition: opacity .7s ease, transform .7s cubic-bezier(.22, .61, .36, 1);
+}
+
+.solutions-diagram.is-visible .sol-lines { opacity: 1; }
+
+.solutions-diagram.is-visible .sol-1 { transition-delay: .05s; }
+.solutions-diagram.is-visible .sol-4 { transition-delay: .10s; }
+.solutions-diagram.is-visible .sol-2 { transition-delay: .15s; }
+.solutions-diagram.is-visible .sol-5 { transition-delay: .20s; }
+.solutions-diagram.is-visible .sol-3 { transition-delay: .25s; }
+.solutions-diagram.is-visible .sol-6 { transition-delay: .30s; }
+.solutions-diagram.is-visible .sol-7 { transition-delay: .40s; }
+
+.solutions-diagram.is-visible .sol-card:hover { transform: translateY(-4px); transition-delay: 0s; }
+
+/* ─── Pantallas medianas y móvil: sin conectores, en columna ─── */
+@media (max-width: 1024px) {
+    .solutions-diagram {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        grid-template-rows: none;
+        column-gap: 1.25rem;
+        row-gap: 1.75rem;
+    }
+    .sol-lines { display: none; }
+    .sol-center { grid-column: 1 / -1; grid-row: 1; justify-self: center; margin-bottom: 1rem; }
+    .sol-1, .sol-2, .sol-3, .sol-4, .sol-5, .sol-6 { grid-column: auto; grid-row: auto; }
+    .sol-7 { grid-column: 1 / -1; grid-row: auto; margin-top: 0; width: min(100%, 520px); }
+}
+
+@media (max-width: 640px) {
+    .solutions-diagram { grid-template-columns: minmax(0, 1fr); }
+    .sol-7 { width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .solutions-diagram .sol-card,
+    .solutions-diagram .sol-logo,
+    .solutions-diagram .sol-lines { opacity: 1; transform: none; transition: none; }
+}
+
+/* El logo se ancla a la fila del medio, no al bloque de tres: si una fila
+   es más alta que otra, el centro del bloque no coincide con el de la fila
+   central y la línea del logo entraba en escalón a esa tarjeta. */
+@media (min-width: 1025px) {
+    .sol-center { grid-row: 2; }
+}
