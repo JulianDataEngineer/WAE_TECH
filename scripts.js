@@ -483,3 +483,98 @@ console.log('%cData Engineering · Cloud · IA Aplicada · Bogotá, Colombia', '
         io.observe(diag);
     }
 })();
+
+/* ─── Método: pasarela con CTA que sigue al cursor ─── */
+(function () {
+    var stage = document.querySelector('.gallery-stage');
+    if (!stage) return;
+
+    var track  = stage.querySelector('.gallery-track');
+    var slides = stage.querySelectorAll('.gallery-slide');
+    var cursor = stage.querySelector('.gallery-cursor');
+    var label  = cursor.querySelector('.gc-label');
+    var dots   = document.querySelectorAll('.gallery-dot');
+    var steps  = document.querySelectorAll('.gallery-step');
+    var total  = slides.length;
+    var actual = 0;
+
+    function ir(i) {
+        actual = (i + total) % total;
+        track.style.transform = 'translateX(' + (-actual * 100) + '%)';
+        for (var k = 0; k < total; k++) {
+            var on = k === actual;
+            slides[k].classList.toggle('is-active', on);
+            dots[k].classList.toggle('is-active', on);
+            dots[k].setAttribute('aria-selected', on ? 'true' : 'false');
+            dots[k].tabIndex = on ? 0 : -1;
+            steps[k].classList.toggle('is-active', on);
+            if (on) steps[k].removeAttribute('aria-hidden');
+            else steps[k].setAttribute('aria-hidden', 'true');
+        }
+    }
+
+    Array.prototype.forEach.call(dots, function (d, k) {
+        d.addEventListener('click', function () { ir(k); });
+    });
+
+    stage.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowRight') { ir(actual + 1); e.preventDefault(); }
+        else if (e.key === 'ArrowLeft') { ir(actual - 1); e.preventDefault(); }
+    });
+
+    /* Mitad izquierda retrocede, mitad derecha avanza */
+    var atras = false;
+    function lado(x) {
+        var r = stage.getBoundingClientRect();
+        atras = x - r.left < r.width / 2;
+        cursor.classList.toggle('is-prev', atras);
+        label.textContent = atras ? 'Anterior' : 'Siguiente';
+    }
+
+    /* El CTA persigue al puntero con un leve retardo */
+    var px = 0, py = 0, cx = 0, cy = 0, raf = 0;
+    function paso() {
+        cx += (px - cx) * 0.2;
+        cy += (py - cy) * 0.2;
+        cursor.style.transform = 'translate3d(' + cx + 'px,' + cy + 'px,0)';
+        raf = (Math.abs(px - cx) > 0.3 || Math.abs(py - cy) > 0.3) ? requestAnimationFrame(paso) : 0;
+    }
+    function apuntar(e, saltar) {
+        var r = stage.getBoundingClientRect();
+        px = e.clientX - r.left;
+        py = e.clientY - r.top;
+        if (saltar) { cx = px; cy = py; }
+        lado(e.clientX);
+        if (!raf) raf = requestAnimationFrame(paso);
+    }
+
+    stage.addEventListener('pointerenter', function (e) {
+        if (e.pointerType !== 'mouse') return;
+        stage.classList.add('has-mouse');
+        apuntar(e, true);
+        stage.classList.add('is-hover');
+    });
+    stage.addEventListener('pointermove', function (e) {
+        if (e.pointerType !== 'mouse') return;
+        if (!stage.classList.contains('is-hover')) { stage.classList.add('has-mouse', 'is-hover'); apuntar(e, true); }
+        else apuntar(e, false);
+    });
+    stage.addEventListener('pointerleave', function () { stage.classList.remove('is-hover'); });
+
+    /* Clic con ratón o deslizamiento en táctil */
+    var x0 = null, y0 = 0;
+    stage.addEventListener('pointerdown', function (e) { x0 = e.clientX; y0 = e.clientY; });
+    stage.addEventListener('pointerup', function (e) {
+        if (x0 === null) return;
+        var dx = e.clientX - x0, dy = e.clientY - y0;
+        x0 = null;
+        if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) { ir(actual + (dx < 0 ? 1 : -1)); return; }
+        if (Math.abs(dx) < 8 && Math.abs(dy) < 8) {
+            if (e.pointerType === 'mouse') { lado(e.clientX); ir(actual + (atras ? -1 : 1)); }
+            else ir(actual + 1);
+        }
+    });
+    stage.addEventListener('pointercancel', function () { x0 = null; });
+
+    ir(0);
+})();

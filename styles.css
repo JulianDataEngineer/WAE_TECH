@@ -3035,3 +3035,249 @@ h1, h2, h3, h4, h5, h6,
 @media (min-width: 1025px) {
     .sol-center { grid-row: 2; }
 }
+
+/* ============================================================
+   MÉTODO · pasarela de imágenes
+   Tarjeta con marco, imagen con CTA que sigue al cursor, puntos
+   de posición y el texto de cada etapa debajo.
+   ============================================================ */
+
+.gallery-section {
+    padding: clamp(4.5rem, 8vw, 7rem) 0 clamp(5rem, 9vw, 8rem);
+    background: var(--bg-section-alt);
+}
+
+.gallery-head {
+    text-align: center;
+    max-width: 860px;
+    margin: 0 auto clamp(2.5rem, 4.5vw, 3.75rem);
+}
+
+.gallery-title {
+    margin: 1.25rem 0 0;
+    font-family: var(--font-primary);
+    font-size: clamp(1.9rem, 3.6vw, 2.9rem);
+    font-weight: 700;
+    line-height: 1.12;
+    letter-spacing: -0.03em;
+    color: var(--color-primary);
+}
+
+/* Marco con la misma profundidad del resto del sitio */
+.gallery-card {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 12px;
+    border-radius: 40px;
+    background: linear-gradient(180deg, #ffffff 0%, #f5f8fb 100%);
+    border: 1px solid rgba(23, 52, 92, 0.06);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.9),
+        0 9px 0 0 #dbe4ee,
+        0 30px 50px -28px rgba(23, 52, 92, 0.45);
+}
+
+/* ─── Escenario y pista de imágenes ─── */
+.gallery-stage {
+    position: relative;
+    overflow: hidden;
+    border-radius: 30px;
+    aspect-ratio: 1.93;
+    background: #0a1930;
+    outline: none;
+    isolation: isolate;
+    touch-action: pan-y;          /* el gesto horizontal lo gestiona la pasarela */
+    user-select: none;
+}
+
+.gallery-stage:focus-visible { box-shadow: 0 0 0 3px var(--color-accent); }
+
+.gallery-track {
+    display: flex;
+    height: 100%;
+    transition: transform .85s cubic-bezier(.65, 0, .35, 1);
+    will-change: transform;
+}
+
+.gallery-slide {
+    flex: 0 0 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+.gallery-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.08);
+    transition: transform 1.4s cubic-bezier(.22, .61, .36, 1);
+    -webkit-user-drag: none;
+    pointer-events: none;
+}
+
+.gallery-slide.is-active img { transform: scale(1); }
+
+/* ─── CTA móvil: misma translucidez y desenfoque que la referencia ─── */
+/* Por defecto (táctil) la píldora queda fija abajo como pista */
+.gallery-cursor {
+    position: absolute;
+    left: 1.1rem;
+    bottom: 1.1rem;
+    z-index: 3;
+    pointer-events: none;
+}
+
+/* Con ratón detectado pasa a seguir al puntero */
+.gallery-stage.has-mouse { cursor: none; }
+.gallery-stage.has-mouse .gallery-cursor {
+    left: 0;
+    top: 0;
+    bottom: auto;
+    will-change: transform;
+}
+
+.gc-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    height: 64px;
+    padding: 0 1.9rem;
+    border-radius: 99px;
+    background: rgba(10, 25, 48, 0.2);
+    -webkit-backdrop-filter: blur(44px);
+            backdrop-filter: blur(44px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #ffffff;
+    font-family: var(--font-primary);
+    font-size: 1.08rem;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: opacity .3s ease, transform .35s cubic-bezier(.22, .61, .36, 1);
+}
+
+.gallery-stage:not(.has-mouse) .gc-pill { height: 46px; padding: 0 1.15rem; font-size: .95rem; }
+
+.gallery-stage.has-mouse .gc-pill {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(.8);
+}
+
+.gallery-stage.has-mouse.is-hover .gc-pill {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.gc-icon { font-size: 1.25rem; color: #93d5cb; }
+.gc-prev { display: none; }
+.gallery-cursor.is-prev .gc-prev { display: inline-block; }
+.gallery-cursor.is-prev .gc-next { display: none; }
+
+/* ─── Puntos de posición ─── */
+.gallery-info {
+    padding: clamp(1.5rem, 2.6vw, 2.2rem) clamp(1.5rem, 3vw, 2.6rem) clamp(1.4rem, 2.4vw, 2rem);
+}
+
+.gallery-dots { display: flex; gap: 10px; }
+
+.gallery-dot {
+    width: 12px;
+    height: 12px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: #cfdae5;
+    cursor: pointer;
+    transition: background .3s ease, transform .3s ease, box-shadow .3s ease;
+}
+
+.gallery-dot:hover { background: #9fb3c6; }
+
+.gallery-dot.is-active {
+    background: var(--color-accent);
+    transform: scale(1.1);
+    box-shadow: 0 0 0 4px rgba(63, 168, 154, 0.16);
+}
+
+.gallery-dot:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; }
+
+/* ─── Texto de cada etapa: todas en el HTML, se muestra la activa ─── */
+.gallery-steps {
+    display: grid;
+    margin-top: clamp(1.2rem, 2vw, 1.6rem);
+    padding-top: clamp(1.2rem, 2vw, 1.6rem);
+    border-top: 1px solid rgba(23, 52, 92, 0.1);
+}
+
+.gallery-step {
+    grid-area: 1 / 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
+    gap: clamp(1.25rem, 3vw, 3rem);
+    align-items: start;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(12px);
+    transition: opacity .45s ease, transform .45s ease, visibility 0s linear .45s;
+}
+
+.gallery-step.is-active {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition-delay: .15s, .15s, 0s;
+}
+
+.gallery-step-title {
+    margin: 0;
+    font-family: var(--font-primary);
+    font-size: clamp(1.8rem, 3.4vw, 2.7rem);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: var(--color-primary);
+}
+
+.gallery-meta {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: clamp(1.25rem, 3vw, 3rem);
+}
+
+.gm-item { display: flex; flex-direction: column; gap: 0.4rem; }
+
+.gm-label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #6f8399;
+}
+
+.gm-value {
+    font-family: var(--font-body);
+    font-size: clamp(0.98rem, 1.2vw, 1.1rem);
+    font-weight: 600;
+    line-height: 1.55;
+    color: var(--color-primary);
+}
+
+.gm-etapa .gm-value {
+    font-family: var(--font-mono);
+    font-weight: 500;
+    color: var(--color-accent);
+    white-space: nowrap;
+}
+
+@media (max-width: 860px) {
+    .gallery-card { border-radius: 32px; }
+    .gallery-stage { aspect-ratio: 1.3; border-radius: 24px; }
+    .gallery-step { grid-template-columns: minmax(0, 1fr); gap: 1rem; }
+    .gallery-meta { grid-template-columns: minmax(0, 1fr); gap: 0.9rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .gallery-track, .gallery-slide img, .gallery-step, .gc-pill { transition: none; }
+}
