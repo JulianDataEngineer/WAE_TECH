@@ -24,6 +24,13 @@
 
   const root   = document.getElementById('hero');
   if (!root) return;
+
+  /* Al recargar, el navegador restaura la posición anterior. Como el hero se
+     ancla con ScrollTrigger, esa restauración deja un hueco en blanco encima.
+     Arrancamos siempre arriba, salvo que la URL traiga un enlace a una sección. */
+  const ancla = location.hash.length > 1 ? document.querySelector(location.hash) : null;
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  if (!ancla) window.scrollTo(0, 0);
   const canvas = root.querySelector('.hero-canvas');
   const poster = root.querySelector('.hero-poster');
   const bar    = root.querySelector('.hero-progress-bar');
@@ -245,6 +252,19 @@
           onToggle: self => { state.activo = self.isActive; if (self.isActive) arrancarBucle(); },
         },
       });
+
+      /* El anclaje cambia la altura de la página: recalculamos ya medido todo
+         y, si venía un enlace a una sección, volvemos a llevar el foco ahí. */
+      ScrollTrigger.clearScrollMemory('manual');
+      const asentar = () => {
+        ScrollTrigger.refresh();
+        if (ancla) ancla.scrollIntoView();
+        else window.scrollTo(0, 0);
+      };
+      /* La secuencia se resuelve de forma asíncrona: puede llegar antes o
+         después del evento load, así que cubrimos los dos casos. */
+      if (document.readyState === 'complete') asentar();
+      else window.addEventListener('load', asentar, { once: true });
 
       window.addEventListener('resize', () => { resize(); ScrollTrigger.refresh(); });
       pintarUI(0);
