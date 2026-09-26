@@ -576,6 +576,20 @@ console.log('%cData Engineering · Cloud · IA Aplicada · Bogotá, Colombia', '
     });
     stage.addEventListener('pointercancel', function () { x0 = null; });
 
+    /* Las láminas fuera de pantalla son lazy: al acercarse la sección las
+       pedimos todas, así el paso de una a otra no parpadea. */
+    if ('IntersectionObserver' in window) {
+        var vigia = new IntersectionObserver(function (entradas) {
+            if (!entradas[0].isIntersecting) return;
+            Array.prototype.forEach.call(slides, function (s) {
+                var img = s.querySelector('img');
+                if (img) img.loading = 'eager';
+            });
+            vigia.disconnect();
+        }, { rootMargin: '600px' });
+        vigia.observe(stage);
+    }
+
     ir(0);
 })();
 
