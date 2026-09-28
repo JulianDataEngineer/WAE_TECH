@@ -4119,3 +4119,43 @@ button.sol-logo:focus-visible {
     .gallery-bar { justify-content: center; }
     .gallery-cta { width: 100%; justify-content: center; }
 }
+
+/* ============================================================
+   PÁGINAS INTERNAS · portada de sección
+   ============================================================ */
+
+.pagina-interna { background: var(--bg-root); }
+
+.page-hero {
+    padding: calc(clamp(7rem, 11vw, 9.5rem)) 0 clamp(3rem, 6vw, 5rem);
+    background: linear-gradient(180deg, #e8f0f7 0%, var(--bg-root) 100%);
+    border-bottom: 1px solid rgba(23, 52, 92, 0.08);
+}
+
+.page-hero-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.page-hero-title {
+    margin: 1.25rem 0 0;
+    font-family: var(--font-primary);
+    font-size: clamp(2.2rem, 4.6vw, 3.6rem);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    color: var(--color-primary);
+}
+
+.page-hero-sub {
+    margin: 1.25rem auto 0;
+    max-width: 58ch;
+    font-family: var(--font-body);
+    font-size: clamp(1.02rem, 1.3vw, 1.15rem);
+    line-height: 1.7;
+    color: #4a6180;
+}
+
+/* Pestaña activa del menú */
+.nav-link.is-current { color: var(--color-accent); }
