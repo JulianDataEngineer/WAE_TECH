@@ -4159,3 +4159,152 @@ button.sol-logo:focus-visible {
 
 /* Pestaña activa del menú */
 .nav-link.is-current { color: var(--color-accent); }
+
+/* ============================================================
+   PARTNERS · hero en navy que se funde con el fondo del sitio
+   ============================================================ */
+
+.partners-hero {
+    position: relative;
+    padding: clamp(8.5rem, 13vw, 12rem) 0 clamp(7rem, 12vw, 10rem);
+    background:
+        linear-gradient(180deg,
+            #0a1930 0%,
+            #0a1930 58%,
+            #10233f 72%,
+            #22395c 82%,
+            #64809f 90%,
+            #b9c9dc 95%,
+            #e6edf5 98%,
+            var(--bg-root) 100%);
+}
+
+/* Brillo suave detrás del título, como en el hero del inicio */
+.partners-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(60% 45% at 50% 28%, rgba(63, 168, 154, 0.16) 0%, rgba(63, 168, 154, 0) 70%);
+    pointer-events: none;
+}
+
+.partners-hero-inner {
+    position: relative;
+    max-width: 980px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.partners-eyebrow {
+    margin: 0 0 1.5rem;
+    font-family: var(--font-mono);
+    font-size: clamp(0.72rem, 0.95vw, 0.82rem);
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #50b7a8;
+}
+
+.partners-hero-title {
+    margin: 0;
+    font-family: var(--font-primary);
+    font-size: clamp(2.1rem, 4.6vw, 3.6rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: #ffffff;
+}
+
+.partners-hero-title em {
+    font-style: normal;
+    color: #50b7a8;
+}
+
+.partners-hero-sub {
+    max-width: 62ch;
+    margin: clamp(1.5rem, 2.5vw, 2rem) auto 0;
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 1.3vw, 1.12rem);
+    line-height: 1.75;
+    color: rgba(232, 240, 247, 0.78);
+}
+
+.partners-hero-acciones {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: clamp(2rem, 3.5vw, 2.75rem);
+}
+
+/* ─── Botones con relieve, versión acento y versión clara ─── */
+.btn-relieve {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 1.05rem 1.9rem;
+    border: 0;
+    border-radius: 99px;
+    cursor: pointer;
+    font-family: var(--font-primary);
+    font-size: 1rem;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: transform .18s ease, box-shadow .18s ease, background .3s ease;
+}
+
+.btn-relieve .material-symbols-outlined { font-size: 20px; }
+
+.btn-relieve--acento {
+    color: #06231f;
+    background: linear-gradient(180deg, #4fc0b0 0%, #3fa89a 100%);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.45),
+        0 6px 0 0 #1c706a,
+        0 22px 32px -18px rgba(28, 112, 106, 0.75);
+}
+
+.btn-relieve--acento:hover {
+    background: linear-gradient(180deg, #5ccdbc 0%, #46b4a5 100%);
+    transform: translateY(-2px);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.45),
+        0 8px 0 0 #1c706a,
+        0 28px 38px -20px rgba(28, 112, 106, 0.8);
+}
+
+.btn-relieve--claro {
+    color: var(--color-primary);
+    background: linear-gradient(180deg, #ffffff 0%, #eef3f9 100%);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.9),
+        0 6px 0 0 #b9c6d6,
+        0 22px 32px -18px rgba(5, 14, 28, 0.7);
+}
+
+.btn-relieve--claro:hover {
+    background: linear-gradient(180deg, #ffffff 0%, #e6edf6 100%);
+    transform: translateY(-2px);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.9),
+        0 8px 0 0 #b9c6d6,
+        0 28px 38px -20px rgba(5, 14, 28, 0.75);
+}
+
+.btn-relieve--acento:active,
+.btn-relieve--claro:active { transform: translateY(4px); }
+
+.btn-relieve--acento:active {
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.4), 0 2px 0 0 #1c706a, 0 10px 18px -12px rgba(28,112,106,.7);
+}
+
+.btn-relieve--claro:active {
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.85), 0 2px 0 0 #b9c6d6, 0 10px 18px -12px rgba(5,14,28,.65);
+}
+
+.btn-relieve:focus-visible { outline: 3px solid #50b7a8; outline-offset: 4px; }
+
+@media (max-width: 600px) {
+    .partners-hero-acciones { flex-direction: column; align-items: stretch; }
+    .btn-relieve { justify-content: center; white-space: normal; text-align: center; }
+}
