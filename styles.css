@@ -4166,47 +4166,16 @@ button.sol-logo:focus-visible {
 
 .partners-hero {
     position: relative;
-    padding: clamp(8.5rem, 13vw, 12rem) 0 clamp(12rem, 21vw, 20rem);
-    /* La fusión es una capa propia anclada al borde inferior, con altura fija:
-       así siempre tiene el mismo recorrido y nunca alcanza al texto. La rampa
-       se calculó mezclando en luz lineal, con la curva plana en los extremos,
-       que es como se apaga la luz de verdad. */
-    background:
-        linear-gradient(180deg,
-            #0a1930 0.0%,
-            #0d1b31 5.0%,
-            #1b2437 10.0%,
-            #2e3442 15.0%,
-            #424752 20.0%,
-            #575b65 25.0%,
-            #6a6f79 30.0%,
-            #7d828e 35.0%,
-            #8e94a2 40.0%,
-            #9ea5b6 45.0%,
-            #abb4c9 50.0%,
-            #bbc3d5 55.0%,
-            #c8d0df 60.0%,
-            #d4dbe8 65.0%,
-            #dee4ee 70.0%,
-            #e6ebf3 75.0%,
-            #ecf0f7 80.0%,
-            #f1f4f9 85.0%,
-            #f3f6fa 90.0%,
-            #f4f7fb 95.0%,
-            #f4f7fb 100.0%
-) 0 100% / 100% clamp(320px, 34vw, 470px) no-repeat,
-        #0a1930;
-}
-
-/* Grano muy leve: rompe las franjas que deja cualquier degradado largo */
-.partners-hero::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
-    opacity: 0.035;
-    mix-blend-mode: overlay;
-    pointer-events: none;
+    z-index: 1;                 /* su sombra cae sobre la sección siguiente */
+    padding: clamp(8.5rem, 13vw, 12rem) 0 clamp(5.5rem, 9vw, 8rem);
+    background: #0a1930;
+    /* El borde donde termina el hero lleva el mismo relieve de las tarjetas:
+       canto sólido más oscuro y sombra proyectada hacia abajo. */
+    border-radius: 0 0 clamp(28px, 3.4vw, 44px) clamp(28px, 3.4vw, 44px);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        0 10px 0 0 #050e1c,
+        0 38px 56px -26px rgba(10, 25, 48, 0.65);
 }
 
 /* Brillo suave detrás del título, como en el hero del inicio */
@@ -4214,6 +4183,7 @@ button.sol-logo:focus-visible {
     content: "";
     position: absolute;
     inset: 0;
+    border-radius: inherit;
     background: radial-gradient(60% 45% at 50% 28%, rgba(63, 168, 154, 0.16) 0%, rgba(63, 168, 154, 0) 70%);
     pointer-events: none;
 }
@@ -4361,7 +4331,7 @@ button.sol-logo:focus-visible {
 }
 
 /* ─── Bloque 02: cita editorial sobre navy ─── */
-.editorial-section { padding: clamp(4rem, 7vw, 6rem) 0 clamp(4rem, 7vw, 6rem); }
+.editorial-section { padding: clamp(5rem, 8vw, 7rem) 0 clamp(4rem, 7vw, 6rem); }
 
 .editorial-card {
     position: relative;
