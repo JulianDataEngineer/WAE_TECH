@@ -4579,18 +4579,21 @@ button.sol-logo:focus-visible {
 .alcance-grid {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-rows: auto 1fr;      /* fila 1: cabeceras · fila 2: listas */
     gap: clamp(1.25rem, 2.2vw, 1.75rem);
-    align-items: stretch;
 }
 
+/* Cada columna hereda las filas del contenedor: así las cabeceras y el
+   arranque de las listas quedan a la misma altura en las dos tarjetas. */
 .alcance-col {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-row: span 2;
+    grid-template-rows: subgrid;
+    gap: 0;
     padding: clamp(1.75rem, 3vw, 2.75rem);
     border-radius: 40px;
 }
 
-/* Columna del sí: clara, con el relieve de las cajas */
 .alcance-col--si {
     background: linear-gradient(180deg, #ffffff 0%, #f5f8fb 100%);
     border: 1px solid rgba(23, 52, 92, 0.06);
@@ -4601,7 +4604,6 @@ button.sol-logo:focus-visible {
         0 26px 40px -26px rgba(23, 52, 92, 0.45);
 }
 
-/* Columna del no: navy, para que la diferencia se lea de un vistazo */
 .alcance-col--no {
     background: linear-gradient(180deg, #102443 0%, #0a1930 100%);
     border: 1px solid rgba(63, 168, 154, 0.22);
@@ -4615,6 +4617,7 @@ button.sol-logo:focus-visible {
     display: flex;
     align-items: center;
     gap: 1.1rem;
+    min-height: 112px;                 /* reserva para títulos de dos líneas */
     padding-bottom: clamp(1.25rem, 2vw, 1.75rem);
     margin-bottom: clamp(1.25rem, 2vw, 1.75rem);
     border-bottom: 1px solid rgba(23, 52, 92, 0.1);
@@ -4628,29 +4631,28 @@ button.sol-logo:focus-visible {
     flex-shrink: 0;
     display: grid;
     place-items: center;
-    width: 58px;
-    height: 58px;
+    width: 66px;
+    height: 66px;
     border-radius: 18px;
-    font-size: 28px;
 }
+
+.alcance-sello img { width: 34px; height: 34px; object-fit: contain; display: block; }
 
 .alcance-sello--si {
     background: #e4f5f2;
     border: 1px solid rgba(63, 168, 154, 0.22);
-    color: var(--color-accent);
     box-shadow: 0 14px 26px -8px rgba(63, 168, 154, 0.45);
 }
 
 .alcance-sello--no {
-    background: rgba(156, 184, 212, 0.12);
+    background: rgba(156, 184, 212, 0.1);
     border: 1px solid rgba(156, 184, 212, 0.22);
-    color: #9cb8d4;
 }
 
 .alcance-titulo {
     margin: 0;
     font-family: var(--font-primary);
-    font-size: clamp(1.35rem, 2.2vw, 1.85rem);
+    font-size: clamp(1.3rem, 2vw, 1.7rem);
     font-weight: 700;
     line-height: 1.2;
     letter-spacing: -0.02em;
@@ -4659,9 +4661,12 @@ button.sol-logo:focus-visible {
 
 .alcance-titulo--claro { color: #ffffff; }
 
+/* Las fichas reparten el alto disponible: las dos columnas empiezan y
+   terminan a la misma altura aunque tengan distinto número de puntos. */
 .alcance-lista {
     display: grid;
-    gap: 0.6rem;
+    grid-auto-rows: 1fr;               /* todas las fichas miden exactamente igual */
+    gap: 0.65rem;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -4669,9 +4674,10 @@ button.sol-logo:focus-visible {
 
 .alcance-lista li {
     display: flex;
-    align-items: flex-start;
-    gap: 0.85rem;
-    padding: 0.8rem 1.1rem;
+    align-items: center;
+    gap: 0.9rem;
+    min-height: 60px;
+    padding: 0.75rem 1.15rem;
     border-radius: 16px;
     font-family: var(--font-body);
     font-size: clamp(0.95rem, 1.15vw, 1.02rem);
@@ -4703,7 +4709,6 @@ button.sol-logo:focus-visible {
     place-items: center;
     width: 26px;
     height: 26px;
-    margin-top: 1px;
     border-radius: 50%;
     font-size: 17px;
 }
@@ -4721,6 +4726,8 @@ button.sol-logo:focus-visible {
 }
 
 @media (max-width: 900px) {
-    .alcance-grid { grid-template-columns: minmax(0, 1fr); }
-    .alcance-col { border-radius: 30px; }
+    .alcance-grid { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; }
+    .alcance-col { grid-row: auto; grid-template-rows: auto 1fr; border-radius: 30px; }
+    .alcance-head { min-height: 0; }
+    .alcance-lista { grid-auto-rows: auto; }
 }
