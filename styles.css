@@ -4308,3 +4308,261 @@ button.sol-logo:focus-visible {
     .partners-hero-acciones { flex-direction: column; align-items: stretch; }
     .btn-relieve { justify-content: center; white-space: normal; text-align: center; }
 }
+
+/* ============================================================
+   PARTNERS · bloques editorial, oferta y comparador
+   ============================================================ */
+
+/* Encabezado común a las secciones de la página */
+.seccion-head {
+    text-align: center;
+    max-width: 880px;
+    margin: 0 auto clamp(2.5rem, 4.5vw, 3.5rem);
+}
+
+.seccion-title {
+    margin: 1.25rem 0 0;
+    font-family: var(--font-primary);
+    font-size: clamp(1.9rem, 3.6vw, 2.9rem);
+    font-weight: 700;
+    line-height: 1.12;
+    letter-spacing: -0.03em;
+    color: var(--color-primary);
+}
+
+/* ─── Bloque 02: cita editorial sobre navy ─── */
+.editorial-section { padding: clamp(4rem, 7vw, 6rem) 0 clamp(4rem, 7vw, 6rem); }
+
+.editorial-card {
+    position: relative;
+    overflow: hidden;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: clamp(2.25rem, 4.5vw, 3.75rem);
+    border-radius: 40px;
+    background: linear-gradient(180deg, #102443 0%, #0a1930 100%);
+    border: 1px solid rgba(63, 168, 154, 0.28);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        0 9px 0 0 #050e1c,
+        0 34px 54px -26px rgba(10, 25, 48, 0.7);
+}
+
+.editorial-text {
+    position: relative;
+    z-index: 1;
+    margin: 0;
+    font-family: var(--font-primary);
+    font-size: clamp(1.15rem, 1.9vw, 1.6rem);
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+    color: #ffffff;
+}
+
+.editorial-text--cierre {
+    margin-top: clamp(1.25rem, 2.2vw, 1.75rem);
+    color: rgba(232, 240, 247, 0.82);
+}
+
+.editorial-text em { font-style: normal; color: #50b7a8; }
+
+.editorial-comillas {
+    position: absolute;
+    right: clamp(1.5rem, 3vw, 2.75rem);
+    bottom: clamp(-2.5rem, -3vw, -2rem);
+    font-family: var(--font-primary);
+    font-size: clamp(9rem, 15vw, 14rem);
+    font-weight: 800;
+    line-height: 1;
+    color: rgba(255, 255, 255, 0.07);
+    pointer-events: none;
+}
+
+/* ─── Cajas con relieve, al estilo de la referencia ─── */
+.caja-relieve {
+    padding: clamp(1.75rem, 3vw, 3rem);
+    border-radius: 40px;
+    background: linear-gradient(180deg, #ffffff 0%, #f5f8fb 100%);
+    border: 1px solid rgba(23, 52, 92, 0.06);
+    box-shadow:
+        inset 0 4px 0 0 rgba(255, 255, 255, 0.9),
+        inset 0 -8px 0 0 rgba(23, 52, 92, 0.05),
+        0 8px 16px rgba(23, 52, 92, 0.06),
+        0 26px 40px -26px rgba(23, 52, 92, 0.45);
+}
+
+.caja-titulo {
+    margin: 0 0 1rem;
+    font-family: var(--font-primary);
+    font-size: clamp(1.35rem, 2.2vw, 1.85rem);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--color-primary);
+}
+
+.caja-titulo--sm { font-size: clamp(1.15rem, 1.7vw, 1.4rem); }
+
+.caja-etiqueta {
+    margin: 0 0 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #6f8399;
+}
+
+.caja-texto {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 1.25vw, 1.08rem);
+    line-height: 1.7;
+    color: #4a6180;
+}
+
+/* ─── Bloque 03: la oferta ─── */
+.pod-section { padding: clamp(4rem, 7vw, 6rem) 0; background: var(--bg-section-alt); }
+
+.pod-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: clamp(1.25rem, 2.2vw, 1.75rem);
+    align-items: stretch;
+}
+
+.pod-principal { display: flex; flex-direction: column; justify-content: center; }
+
+.pod-nota {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    padding: clamp(1.4rem, 2.2vw, 2rem) clamp(1.75rem, 3vw, 3rem);
+}
+
+.pod-nota-icono {
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    background: #e4f5f2;
+    border: 1px solid rgba(63, 168, 154, 0.22);
+    color: var(--color-accent);
+    font-size: 26px;
+}
+
+.pod-lista {
+    display: grid;
+    gap: 0.75rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.pod-lista li {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.85rem 1.25rem;
+    border-radius: 16px;
+    background: linear-gradient(180deg, #ffffff 0%, #f3f7fb 100%);
+    border: 1px solid rgba(23, 52, 92, 0.06);
+    box-shadow:
+        inset 0 2px 0 0 rgba(255, 255, 255, 0.9),
+        inset 0 -4px 0 0 rgba(23, 52, 92, 0.05),
+        0 6px 14px rgba(23, 52, 92, 0.07);
+    font-family: var(--font-body);
+    font-size: clamp(0.96rem, 1.15vw, 1.02rem);
+    font-weight: 600;
+    color: var(--color-primary);
+}
+
+.pod-check {
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: linear-gradient(180deg, #4fc0b0 0%, #3fa89a 100%);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), 0 3px 6px -2px rgba(28, 112, 106, 0.55);
+    color: #ffffff;
+    font-size: 18px;
+}
+
+/* ─── Bloque 04: comparador ─── */
+.compara-section { padding: clamp(4rem, 7vw, 6rem) 0 clamp(5rem, 9vw, 7rem); }
+
+.compara-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(1.25rem, 2.2vw, 1.75rem);
+    align-items: stretch;
+}
+
+.compara-imagen {
+    margin: 0;
+    overflow: hidden;
+    border-radius: 40px;
+    min-height: 340px;
+    background: #0a1930;
+    border: 1px solid rgba(23, 52, 92, 0.06);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.9),
+        0 9px 0 0 #dbe4ee,
+        0 30px 50px -28px rgba(23, 52, 92, 0.45);
+}
+
+.compara-imagen img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.compara-columna {
+    display: grid;
+    gap: clamp(1.25rem, 2.2vw, 1.75rem);
+    align-content: stretch;
+}
+
+.compara-item { display: flex; flex-direction: column; justify-content: center; }
+
+.caja-relieve--acento {
+    background: linear-gradient(180deg, #ffffff 0%, #eef8f6 100%);
+    border-color: rgba(63, 168, 154, 0.28);
+    box-shadow:
+        inset 0 4px 0 0 rgba(255, 255, 255, 0.9),
+        inset 0 -8px 0 0 rgba(63, 168, 154, 0.12),
+        0 8px 16px rgba(23, 52, 92, 0.06),
+        0 26px 40px -26px rgba(28, 112, 106, 0.42);
+}
+
+.compara-clave {
+    margin-top: clamp(1.25rem, 2.2vw, 1.75rem);
+    padding: clamp(1.75rem, 3vw, 2.75rem) clamp(1.75rem, 3.5vw, 3.25rem);
+    border-radius: 40px;
+    background: linear-gradient(180deg, #102443 0%, #0a1930 100%);
+    border: 1px solid rgba(63, 168, 154, 0.28);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        0 9px 0 0 #050e1c,
+        0 30px 48px -26px rgba(10, 25, 48, 0.7);
+}
+
+.caja-etiqueta--clara { color: #7fa0b8; }
+
+.compara-clave-texto {
+    margin: 0;
+    font-family: var(--font-primary);
+    font-size: clamp(1.1rem, 1.7vw, 1.45rem);
+    font-weight: 500;
+    line-height: 1.5;
+    color: #ffffff;
+}
+
+.compara-clave-texto em { font-style: normal; color: #50b7a8; }
+
+@media (max-width: 900px) {
+    .pod-grid, .compara-grid { grid-template-columns: minmax(0, 1fr); }
+    .editorial-card, .caja-relieve, .compara-imagen, .compara-clave { border-radius: 30px; }
+    .compara-imagen { min-height: 240px; }
+}
