@@ -5168,3 +5168,120 @@ button.sol-logo:focus-visible {
 }
 
 .cta-banda-boton { margin-top: clamp(1.75rem, 3vw, 2.5rem); }
+
+/* ============================================================
+   ENCABEZADO · submenú de Partners
+   ============================================================ */
+
+.nav-item-menu {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.15rem;
+}
+
+.nav-caret {
+    display: grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: none;
+    cursor: pointer;
+    color: var(--text-secondary);
+    transition: transform .25s ease, color .25s ease;
+}
+
+.nav-caret .material-symbols-outlined { font-size: 18px; }
+.nav-caret:hover { color: var(--color-accent); }
+.nav-caret:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+
+.nav-item-menu:hover .nav-caret,
+.nav-item-menu.is-open .nav-caret { transform: rotate(180deg); color: var(--color-accent); }
+
+/* Panel desplegable, con el relieve del sitio */
+.nav-submenu {
+    position: absolute;
+    top: calc(100% + 0.9rem);
+    left: 50%;
+    z-index: 5;
+    display: grid;
+    gap: 0.15rem;
+    min-width: 230px;
+    padding: 0.5rem;
+    border-radius: 20px;
+    background: linear-gradient(180deg, #ffffff 0%, #f5f8fb 100%);
+    border: 1px solid rgba(23, 52, 92, 0.06);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.9),
+        0 6px 0 0 #dbe4ee,
+        0 26px 40px -20px rgba(23, 52, 92, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(-50%, -8px);
+    transition: opacity .25s ease, transform .25s ease, visibility 0s linear .25s;
+}
+
+.nav-item-menu:hover .nav-submenu,
+.nav-item-menu:focus-within .nav-submenu,
+.nav-item-menu.is-open .nav-submenu {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0);
+    transition-delay: 0s;
+}
+
+/* Puente invisible para que el puntero no pierda el menú al bajar */
+.nav-submenu::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -0.9rem;
+    height: 0.9rem;
+}
+
+.nav-submenu a {
+    display: block;
+    padding: 0.7rem 0.95rem;
+    border-radius: 14px;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 600;
+    white-space: nowrap;
+    color: var(--color-primary);
+    transition: background .25s ease, color .25s ease;
+}
+
+.nav-submenu a:hover { background: #e8f0f7; color: var(--color-accent); }
+
+.nav-submenu a[aria-current="page"] { color: var(--color-accent); background: #e4f5f2; }
+
+/* En el menú de celular el submenú se despliega en línea */
+@media (max-width: 768px) {
+    .nav-item-menu { flex-direction: column; gap: 0.5rem; }
+
+    .nav-submenu {
+        position: static;
+        transform: none;
+        min-width: 0;
+        display: none;
+        text-align: center;
+    }
+
+    .nav-item-menu.is-open .nav-submenu { display: grid; transform: none; }
+    .nav-submenu::before { display: none; }
+    .nav-caret { width: 30px; height: 30px; }
+}
+
+/* El desenfoque del encabezado creaba un bloque contenedor y dejaba el menú
+   de celular encerrado dentro de la píldora, en vez de cubrir la pantalla. */
+@media (max-width: 768px) {
+    .nav-container {
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        background: rgba(255, 255, 255, 0.94);
+    }
+}

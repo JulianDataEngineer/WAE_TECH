@@ -694,3 +694,29 @@ console.log('%cData Engineering · Cloud · IA Aplicada · Bogotá, Colombia', '
 
     ir(0);
 })();
+
+/* ─── Encabezado: submenú de Partners ─── */
+(function () {
+    var item = document.querySelector('.nav-item-menu');
+    if (!item) return;
+
+    var boton = item.querySelector('.nav-caret');
+
+    function abrir(si) {
+        item.classList.toggle('is-open', si);
+        boton.setAttribute('aria-expanded', si ? 'true' : 'false');
+    }
+
+    boton.addEventListener('click', function (e) {
+        e.stopPropagation();
+        abrir(!item.classList.contains('is-open'));
+    });
+
+    document.addEventListener('click', function (e) {
+        if (!item.contains(e.target)) abrir(false);
+    });
+
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && item.classList.contains('is-open')) { abrir(false); boton.focus(); }
+    });
+})();

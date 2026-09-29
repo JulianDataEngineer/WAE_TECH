@@ -41,11 +41,20 @@
     <header class="main-header" id="header">
         <nav class="nav-container">
             <a href="/" class="logo-link">
-                <img src="logo-wae-icon.png" alt="WAE" class="header-logo">
+                <img src="/logo-wae-icon.png" alt="WAE" class="header-logo">
             </a>
             <ul class="nav-menu" id="nav-menu">
                 <li><a href="/#servicios" class="nav-link">Soluciones</a></li>
-                <li><a href="/partners.html" class="nav-link is-current" aria-current="page">Partners</a></li>
+                <li class="nav-item-menu">
+                    <a href="/partners.html" class="nav-link is-current" aria-current="page">Partners</a>
+                    <button class="nav-caret" type="button" aria-expanded="false" aria-controls="submenu-partners" aria-label="Ver páginas de Partners">
+                        <span class="material-symbols-outlined" aria-hidden="true">expand_more</span>
+                    </button>
+                    <div class="nav-submenu" id="submenu-partners">
+                        <a href="/partners.html" aria-current="page">WAE para partners</a>
+                        <a href="/partners/pod-administrado">Pod Administrado</a>
+                    </div>
+                </li>
                 <li><a href="/#clientes" class="nav-link">Empresas</a></li>
                 <li><a href="#" class="nav-link">Cómo trabajamos</a></li>
                 <li><a href="#" class="nav-link">Experiencia</a></li>
