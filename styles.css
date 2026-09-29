@@ -5350,3 +5350,58 @@ button.sol-logo:focus-visible {
 @media (max-width: 900px) {
     .pod-acordeon .service-media img { min-height: 200px; }
 }
+
+/* El botón manda en su fila: centrado y con el relieve de acento */
+.pod-acordeon .service-foot {
+    position: relative;
+    justify-content: center;
+}
+
+.pod-acordeon .service-cta {
+    padding: 1.1rem 2.1rem;
+    border-radius: 99px;
+    font-family: var(--font-primary);
+    font-size: clamp(1rem, 1.2vw, 1.08rem);
+    font-weight: 600;
+    color: #06231f;
+    background: linear-gradient(180deg, #4fc0b0 0%, #3fa89a 100%);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.45),
+        0 6px 0 0 #1c706a,
+        0 22px 32px -18px rgba(28, 112, 106, 0.75);
+    transition: transform .18s ease, box-shadow .18s ease, background .3s ease;
+}
+
+.pod-acordeon .service-cta:hover {
+    background: linear-gradient(180deg, #5ccdbc 0%, #46b4a5 100%);
+    transform: translateY(-2px);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.45),
+        0 8px 0 0 #1c706a,
+        0 28px 38px -20px rgba(28, 112, 106, 0.8);
+}
+
+.pod-acordeon .service-cta:active {
+    transform: translateY(4px);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.4),
+        0 2px 0 0 #1c706a,
+        0 10px 18px -12px rgba(28, 112, 106, 0.7);
+}
+
+/* El número deja de empujar al botón: pasa a marca de agua en la esquina */
+.pod-acordeon .service-num {
+    position: absolute;
+    right: 0;
+    bottom: -0.35rem;
+    font-family: var(--font-mono);
+    font-size: clamp(2.4rem, 4vw, 3.4rem);
+    line-height: 1;
+    color: rgba(156, 184, 212, 0.14);
+    pointer-events: none;
+}
+
+@media (max-width: 600px) {
+    .pod-acordeon .service-cta { width: 100%; justify-content: center; text-align: center; }
+    .pod-acordeon .service-num { display: none; }
+}
