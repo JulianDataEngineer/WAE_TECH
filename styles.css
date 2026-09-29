@@ -5122,57 +5122,31 @@ button.sol-logo:focus-visible {
 }
 
 /* ============================================================
-   PARTNERS · banda de conversión que cierra la página
+   PARTNERS · cierre de la página, sin caja ni color de fondo
    ============================================================ */
 
 .cta-banda {
     position: relative;
-    z-index: 1;
-    padding: clamp(4rem, 7vw, 6rem) 0 clamp(4.5rem, 8vw, 6.5rem);
-    /* Cierre en el verde de marca: hace de contrapeso al hero navy */
-    background: linear-gradient(160deg, #3fa89a 0%, #2c8b80 55%, #1c706a 100%);
-    border-radius: clamp(28px, 3.4vw, 44px) clamp(28px, 3.4vw, 44px) 0 0;
-    box-shadow:
-        inset 0 2px 0 rgba(255, 255, 255, 0.28),
-        0 -10px 0 0 #17615c,
-        0 -34px 54px -28px rgba(10, 25, 48, 0.5);
-    overflow: hidden;
+    padding: clamp(4.5rem, 8vw, 7rem) 0 clamp(5rem, 9vw, 7.5rem);
+    background: var(--bg-root);
 }
 
-/* Trama sutil de puntos, como la del isologo */
-.cta-banda::after {
+/* Filete difuminado como única separación con la sección anterior */
+.cta-banda::before {
     content: "";
     position: absolute;
-    inset: 0;
-    background-image: radial-gradient(rgba(255, 255, 255, 0.16) 1px, transparent 1px);
-    background-size: 22px 22px;
-    opacity: 0.5;
-    pointer-events: none;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(23, 52, 92, 0) 0%, rgba(23, 52, 92, 0.16) 50%, rgba(23, 52, 92, 0) 100%);
 }
 
 .cta-banda-inner {
-    position: relative;
-    z-index: 1;
-    max-width: 880px;
+    max-width: 860px;
     margin: 0 auto;
     text-align: center;
 }
-
-.cta-banda-sello {
-    display: grid;
-    place-items: center;
-    width: 86px;
-    height: 72px;
-    margin: 0 auto 1.75rem;
-    border-radius: 22px;
-    background: rgba(255, 255, 255, 0.92);
-    box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.9),
-        0 8px 0 0 rgba(23, 97, 92, 0.85),
-        0 26px 38px -18px rgba(10, 25, 48, 0.5);
-}
-
-.cta-banda-sello img { width: 52px; height: auto; display: block; }
 
 .cta-banda-titulo {
     margin: 0;
@@ -5181,7 +5155,7 @@ button.sol-logo:focus-visible {
     font-weight: 700;
     line-height: 1.14;
     letter-spacing: -0.03em;
-    color: #ffffff;
+    color: var(--color-primary);
 }
 
 .cta-banda-texto {
@@ -5190,27 +5164,7 @@ button.sol-logo:focus-visible {
     font-family: var(--font-body);
     font-size: clamp(1rem, 1.3vw, 1.12rem);
     line-height: 1.75;
-    color: rgba(255, 255, 255, 0.88);
+    color: #4a6180;
 }
 
-.cta-banda-boton {
-    margin-top: clamp(1.75rem, 3vw, 2.5rem);
-    box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.9),
-        0 6px 0 0 #17615c,
-        0 24px 34px -18px rgba(10, 25, 48, 0.55);
-}
-
-.cta-banda-boton:hover {
-    box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.9),
-        0 8px 0 0 #17615c,
-        0 30px 40px -20px rgba(10, 25, 48, 0.6);
-}
-
-.cta-banda-boton:active {
-    box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.85),
-        0 2px 0 0 #17615c,
-        0 12px 20px -14px rgba(10, 25, 48, 0.55);
-}
+.cta-banda-boton { margin-top: clamp(1.75rem, 3vw, 2.5rem); }
