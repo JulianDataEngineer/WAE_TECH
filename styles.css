@@ -5285,3 +5285,37 @@ button.sol-logo:focus-visible {
         background: rgba(255, 255, 255, 0.94);
     }
 }
+
+/* ============================================================
+   POD · acordeón de la página, sobre el patrón del inicio
+   ============================================================ */
+
+.pod-acordeon .services-head { margin-bottom: clamp(1.75rem, 3vw, 2.5rem); }
+
+/* Las listas dentro del acordeón van sobre fondo oscuro */
+.service-lista { margin-bottom: 1.25rem; }
+
+.service-lista li {
+    color: rgba(232, 240, 247, 0.92);
+    font-weight: 500;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.03) 100%);
+    border-color: rgba(156, 184, 212, 0.16);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        inset 0 -3px 0 0 rgba(5, 14, 28, 0.45);
+}
+
+.service-nota {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+    margin: 0 0 1.5rem;
+    padding-top: 1.1rem;
+    border-top: 1px solid rgba(156, 184, 212, 0.18);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: rgba(232, 240, 247, 0.7);
+}
+
+.service-nota .material-symbols-outlined { flex-shrink: 0; font-size: 19px; color: #50b7a8; }
