@@ -323,6 +323,100 @@
             -->
         </section>
 
+        <!-- Bloque 05 · formulario -->
+        <section class="solicitud-section" id="solicitud">
+            <div class="section-container">
+                <div class="seccion-head">
+                    <span class="services-badge"><i aria-hidden="true"></i>formulario</span>
+                    <h2 class="seccion-title">Solicita una evaluación de capacidad</h2>
+                </div>
+
+                <div class="contact-form-wrapper solicitud-caja">
+                    <form class="contact-form" id="pod-form" novalidate>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="pod-nombre" class="field-chip"><span class="material-symbols-outlined">person</span>Nombre y apellido</label>
+                                <input type="text" id="pod-nombre" name="nombre" placeholder="Tu nombre y apellido" autocomplete="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="pod-empresa" class="field-chip"><span class="material-symbols-outlined">apartment</span>Empresa</label>
+                                <input type="text" id="pod-empresa" name="empresa" placeholder="Nombre de tu empresa" autocomplete="organization" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="pod-cargo" class="field-chip"><span class="material-symbols-outlined">badge</span>Cargo</label>
+                                <input type="text" id="pod-cargo" name="cargo" placeholder="Tu cargo" autocomplete="organization-title">
+                            </div>
+                            <div class="form-group">
+                                <label for="pod-correo" class="field-chip"><span class="material-symbols-outlined">alternate_email</span>Correo corporativo</label>
+                                <input type="email" id="pod-correo" name="correo" placeholder="tu@empresa.com" autocomplete="email" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="pod-pais" class="field-chip"><span class="material-symbols-outlined">public</span>País y zona horaria</label>
+                                <input type="text" id="pod-pais" name="pais" placeholder="Colombia · GMT-5">
+                            </div>
+                            <div class="form-group">
+                                <label for="pod-inicio" class="field-chip"><span class="material-symbols-outlined">event</span>Fecha esperada de inicio</label>
+                                <input type="date" id="pod-inicio" name="inicio">
+                            </div>
+                        </div>
+
+                        <div class="form-group form-group--wide">
+                            <label for="pod-proyecto" class="field-chip"><span class="material-symbols-outlined">lan</span>Proyecto o backlog</label>
+                            <textarea id="pod-proyecto" name="proyecto" placeholder="Describe el proyecto o el backlog que necesita capacidad..." required></textarea>
+                        </div>
+
+                        <div class="form-group form-group--wide">
+                            <label for="pod-roles" class="field-chip"><span class="material-symbols-outlined">code</span>Roles y tecnologías</label>
+                            <textarea id="pod-roles" name="roles" placeholder="Roles requeridos, seniority y tecnologías: Spark, Airflow, Snowflake, AWS..."></textarea>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="pod-dedicacion" class="field-chip"><span class="material-symbols-outlined">schedule</span>Dedicación estimada</label>
+                                <input type="text" id="pod-dedicacion" name="dedicacion" placeholder="Tiempo completo, medio tiempo, horas/semana...">
+                            </div>
+                            <div class="form-group">
+                                <label for="pod-presupuesto" class="field-chip"><span class="material-symbols-outlined">payments</span>Presupuesto aprobado</label>
+                                <select id="pod-presupuesto" name="presupuesto" required>
+                                    <option value="">Selecciona...</option>
+                                    <option value="Sí">Sí</option>
+                                    <option value="En evaluación">En evaluación</option>
+                                    <option value="No todavía">No todavía</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <label class="casilla" for="pod-privacidad">
+                            <input type="checkbox" id="pod-privacidad" name="privacidad" required>
+                            <span class="casilla-marca" aria-hidden="true">
+                                <span class="material-symbols-outlined">check</span>
+                            </span>
+                            <span class="casilla-texto">
+                                Autorizo a WAE a usar estos datos para evaluar mi solicitud y contactarme.
+                            </span>
+                        </label>
+
+                        <button type="submit" class="btn btn-primary btn-full" id="pod-enviar">
+                            <span class="material-symbols-outlined">send</span>
+                            Solicitar evaluación de capacidad
+                        </button>
+
+                        <p class="solicitud-apoyo">
+                            Responderemos con preguntas de ajuste y, si aplica, una reunión de configuración.
+                            Enviar el formulario no reserva capacidad ni constituye una propuesta.
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+
 
 
     </main>

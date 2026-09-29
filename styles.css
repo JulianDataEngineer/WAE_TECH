@@ -5688,3 +5688,113 @@ body.visor-abierto { overflow: hidden; }
 }
 
 .modelo-precio strong { color: var(--color-accent); font-weight: 600; }
+
+/* ============================================================
+   POD · formulario de solicitud
+   ============================================================ */
+
+.solicitud-section {
+    padding: clamp(4rem, 7vw, 6rem) 0 clamp(5rem, 9vw, 7rem);
+    background: var(--bg-root);
+}
+
+.solicitud-caja { max-width: 860px; margin: 0 auto; }
+
+.solicitud-apoyo {
+    margin: 1.25rem 0 0;
+    text-align: center;
+    font-family: var(--font-body);
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: #6f8399;
+}
+
+/* Casilla de privacidad, con el mismo relieve de los campos */
+.casilla {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    margin-top: 0.35rem;
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: #4a6180;
+}
+
+.casilla input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.casilla-marca {
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    margin-top: 1px;
+    border-radius: 9px;
+    background: linear-gradient(180deg, #e9eff6 0%, #f6f9fc 100%);
+    border: 1px solid rgba(23, 52, 92, 0.1);
+    box-shadow: inset 0 2px 4px -1px rgba(23, 52, 92, 0.18);
+    transition: background .25s ease, border-color .25s ease;
+}
+
+.casilla-marca .material-symbols-outlined {
+    font-size: 18px;
+    color: #ffffff;
+    opacity: 0;
+    transform: scale(.6);
+    transition: opacity .2s ease, transform .2s ease;
+}
+
+.casilla input:checked + .casilla-marca {
+    background: linear-gradient(180deg, #4fc0b0 0%, #3fa89a 100%);
+    border-color: rgba(28, 112, 106, 0.6);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), 0 3px 6px -2px rgba(28, 112, 106, 0.55);
+}
+
+.casilla input:checked + .casilla-marca .material-symbols-outlined { opacity: 1; transform: scale(1); }
+
+.casilla input:focus-visible + .casilla-marca { outline: 3px solid var(--color-accent); outline-offset: 3px; }
+
+/* Un campo marcado en rojo cuando falta */
+.form-group.falta input,
+.form-group.falta select,
+.form-group.falta textarea {
+    border-color: rgba(200, 70, 70, 0.6);
+    box-shadow:
+        inset 0 3px 5px -2px rgba(23, 52, 92, 0.16),
+        0 0 0 4px rgba(200, 70, 70, 0.12);
+}
+
+.casilla.falta .casilla-marca { border-color: rgba(200, 70, 70, 0.7); }
+
+/* El formulario nuevo reutiliza el botón del de contacto */
+#pod-form .btn-primary {
+    width: 100%;
+    margin-top: 0.35rem;
+    padding: 1.15rem 1.75rem;
+    border-radius: 99px;
+    font-family: var(--font-primary);
+    font-size: 1.02rem;
+    font-weight: 600;
+    color: #ffffff;
+    background: linear-gradient(180deg, #214878 0%, #17345c 100%);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.22),
+        0 6px 0 0 #0d2242,
+        0 20px 30px -18px rgba(23, 52, 92, 0.6);
+    transition: transform .18s ease, box-shadow .18s ease, background .3s ease;
+}
+
+#pod-form .btn-primary:hover {
+    background: linear-gradient(180deg, #2a5589 0%, #1b3d6c 100%);
+    transform: translateY(-2px);
+}
+
+#pod-form .btn-primary:active { transform: translateY(4px); }
+#pod-form .btn-primary[disabled] { opacity: .7; cursor: progress; transform: none; }

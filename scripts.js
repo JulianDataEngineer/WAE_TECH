@@ -146,10 +146,16 @@ function initContactForm() {
         try {
             // Check if URL has been configured
             if (GOOGLE_SHEETS_URL.includes('PLACEHOLDER_REPLACE_THIS')) {
-                // Simulate success for demo — remove once URL is configured
-                await new Promise(r => setTimeout(r, 1200));
-                showNotification('¡Mensaje enviado! Te contactaremos muy pronto. 🚀', 'success');
-                form.reset();
+                // Sin destino configurado no hay envío posible: en vez de fingir
+                // que se envió (y perder el mensaje), abrimos el correo del
+                // visitante con todo escrito.
+                const cuerpo = 'Nombre: ' + data.name + '\nEmail: ' + data.email +
+                    '\nEmpresa: ' + (data.company || '—') + '\nServicio: ' + data.service +
+                    '\n\n' + data.message;
+                window.location.href = 'mailto:proyectos@waengineers.co?subject=' +
+                    encodeURIComponent('Contacto desde la web · ' + data.service) +
+                    '&body=' + encodeURIComponent(cuerpo);
+                showNotification('Abrimos tu correo con el mensaje listo para enviar.', 'success');
             } else {
                 // Real submission to Google Sheets
                 const payload = {
@@ -771,5 +777,104 @@ console.log('%cData Engineering · Cloud · IA Aplicada · Bogotá, Colombia', '
         if (e.key === 'Escape') cerrar();
         else if (e.key === 'ArrowRight') mostrar(actual + 1);
         else if (e.key === 'ArrowLeft') mostrar(actual - 1);
+    });
+})();
+
+/* ─── Pod: formulario de solicitud de capacidad ───────────────
+   El envío pasa por Formspree. Mientras no esté configurado, abrimos
+   el correo del visitante con todo el contenido ya escrito: así ninguna
+   solicitud se pierde en silencio.
+   ------------------------------------------------------------ */
+(function () {
+    /* ⬇ Pega aquí la dirección que te da Formspree, algo como
+         https://formspree.io/f/xxxxxxx   */
+    var FORMSPREE = '';
+    var CORREO_WAE = 'proyectos@waengineers.co';
+
+    var form = document.getElementById('pod-form');
+    if (!form) return;
+
+    var campos = [
+        ['pod-nombre', 'Nombre y apellido', true],
+        ['pod-empresa', 'Empresa', true],
+        ['pod-cargo', 'Cargo', false],
+        ['pod-correo', 'Correo corporativo', true],
+        ['pod-pais', 'País y zona horaria', false],
+        ['pod-inicio', 'Fecha esperada de inicio', false],
+        ['pod-proyecto', 'Proyecto o backlog', true],
+        ['pod-roles', 'Roles y tecnologías', false],
+        ['pod-dedicacion', 'Dedicación estimada', false],
+        ['pod-presupuesto', 'Presupuesto aprobado', true]
+    ];
+
+    function marcar(el, falta) {
+        var caja = el.closest('.form-group') || el.closest('.casilla');
+        if (caja) caja.classList.toggle('falta', falta);
+    }
+
+    /* La marca roja desaparece en cuanto la persona corrige */
+    form.addEventListener('input', function (e) { marcar(e.target, false); });
+    form.addEventListener('change', function (e) {
+        if (e.target.id === 'pod-privacidad') e.target.closest('.casilla').classList.remove('falta');
+        else marcar(e.target, false);
+    });
+
+    form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        var datos = {};
+        var primerFallo = null;
+
+        campos.forEach(function (c) {
+            var el = document.getElementById(c[0]);
+            var valor = (el.value || '').trim();
+            var falta = c[2] && !valor;
+            if (c[0] === 'pod-correo' && valor && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valor)) falta = true;
+            marcar(el, falta);
+            if (falta && !primerFallo) primerFallo = el;
+            datos[c[1]] = valor || '—';
+        });
+
+        var privacidad = document.getElementById('pod-privacidad');
+        var faltaPriv = !privacidad.checked;
+        privacidad.closest('.casilla').classList.toggle('falta', faltaPriv);
+        if (faltaPriv && !primerFallo) primerFallo = privacidad;
+
+        if (primerFallo) {
+            showNotification('Revisa los campos marcados antes de enviar.', 'error');
+            primerFallo.focus();
+            return;
+        }
+
+        var boton = document.getElementById('pod-enviar');
+        var original = boton.innerHTML;
+        boton.disabled = true;
+        boton.innerHTML = '<span class="material-symbols-outlined">hourglass_empty</span> Enviando...';
+
+        try {
+            if (FORMSPREE) {
+                var r = await fetch(FORMSPREE, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify(Object.assign({ _subject: 'Solicitud de evaluación de capacidad · Pod Administrado' }, datos))
+                });
+                if (!r.ok) throw new Error('respuesta ' + r.status);
+                showNotification('Solicitud enviada. Te responderemos con preguntas de ajuste.', 'success');
+                form.reset();
+            } else {
+                /* Sin destino configurado: abrimos el correo con todo listo */
+                var cuerpo = campos.map(function (c) { return c[1] + ': ' + datos[c[1]]; }).join('\n');
+                window.location.href = 'mailto:' + CORREO_WAE +
+                    '?subject=' + encodeURIComponent('Solicitud de evaluación de capacidad · Pod Administrado') +
+                    '&body=' + encodeURIComponent(cuerpo);
+                showNotification('Abrimos tu correo con la solicitud lista para enviar.', 'success');
+            }
+        } catch (err) {
+            console.error('[WAE] envío del formulario:', err);
+            showNotification('No pudimos enviar la solicitud. Escríbenos a ' + CORREO_WAE + '.', 'error');
+        } finally {
+            boton.disabled = false;
+            boton.innerHTML = original;
+        }
     });
 })();
