@@ -214,6 +214,89 @@
             </div>
         </section>
 
+        <!-- Bloque 03 · entregables en imágenes -->
+        <section class="docs-section" id="entregables">
+            <div class="section-container">
+                <div class="services-head">
+                    <span class="services-badge"><i aria-hidden="true"></i>entregables</span>
+                </div>
+
+                <div class="docs-fila">
+                    <button class="doc-card" type="button" data-doc="0" aria-label="Ampliar: Matriz RACI">
+                        <span class="doc-lamina">
+                            <img src="/assets-pod/raci.webp" alt="Matriz RACI. Roles y responsabilidades en el pod." loading="lazy" decoding="async">
+                            <span class="doc-lupa" aria-hidden="true">
+                                <span class="material-symbols-outlined">zoom_in</span>
+                            </span>
+                        </span>
+                        <span class="doc-pie">
+                            <span class="doc-num" aria-hidden="true">01</span>
+                            <span class="doc-texto">
+                                <span class="doc-titulo">Matriz RACI</span>
+                                <span class="doc-sub">Roles y responsabilidades en el pod</span>
+                            </span>
+                        </span>
+                    </button>
+
+                    <button class="doc-card" type="button" data-doc="1" aria-label="Ampliar: Registro de decisiones">
+                        <span class="doc-lamina">
+                            <img src="/assets-pod/decisiones.webp" alt="Registro de decisiones. Trazabilidad y contexto de las decisiones." loading="lazy" decoding="async">
+                            <span class="doc-lupa" aria-hidden="true">
+                                <span class="material-symbols-outlined">zoom_in</span>
+                            </span>
+                        </span>
+                        <span class="doc-pie">
+                            <span class="doc-num" aria-hidden="true">02</span>
+                            <span class="doc-texto">
+                                <span class="doc-titulo">Registro de decisiones</span>
+                                <span class="doc-sub">Trazabilidad y contexto de las decisiones</span>
+                            </span>
+                        </span>
+                    </button>
+
+                    <button class="doc-card" type="button" data-doc="2" aria-label="Ampliar: Documentación técnica">
+                        <span class="doc-lamina">
+                            <img src="/assets-pod/documentacion.webp" alt="Documentación técnica. Diseño y configuración de la solución." loading="lazy" decoding="async">
+                            <span class="doc-lupa" aria-hidden="true">
+                                <span class="material-symbols-outlined">zoom_in</span>
+                            </span>
+                        </span>
+                        <span class="doc-pie">
+                            <span class="doc-num" aria-hidden="true">03</span>
+                            <span class="doc-texto">
+                                <span class="doc-titulo">Documentación técnica</span>
+                                <span class="doc-sub">Diseño y configuración de la solución</span>
+                            </span>
+                        </span>
+                    </button>
+                </div>
+
+                <p class="docs-pista">
+                    <span class="material-symbols-outlined" aria-hidden="true">touch_app</span>
+                    Toca cualquiera para verlo en grande.
+                </p>
+            </div>
+
+            <!-- Visor -->
+            <div class="doc-visor" id="doc-visor" hidden>
+                <div class="doc-visor-fondo" data-cerrar></div>
+                <div class="doc-visor-caja" role="dialog" aria-modal="true" aria-label="Documento ampliado">
+                    <img class="doc-visor-img" src="" alt="">
+                    <p class="doc-visor-pie"></p>
+                    <button class="doc-visor-cerrar" type="button" data-cerrar aria-label="Cerrar">
+                        <span class="material-symbols-outlined" aria-hidden="true">close</span>
+                    </button>
+                    <button class="doc-visor-flecha doc-visor-flecha--prev" type="button" data-dir="-1" aria-label="Anterior">
+                        <span class="material-symbols-outlined" aria-hidden="true">arrow_back</span>
+                    </button>
+                    <button class="doc-visor-flecha doc-visor-flecha--next" type="button" data-dir="1" aria-label="Siguiente">
+                        <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+
     </main>
 
     <footer class="main-footer" id="footer">

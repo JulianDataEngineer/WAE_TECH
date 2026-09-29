@@ -720,3 +720,56 @@ console.log('%cData Engineering · Cloud · IA Aplicada · Bogotá, Colombia', '
         if (e.key === 'Escape' && item.classList.contains('is-open')) { abrir(false); boton.focus(); }
     });
 })();
+
+/* ─── Pod: visor de los documentos entregables ─── */
+(function () {
+    var visor = document.getElementById('doc-visor');
+    if (!visor) return;
+
+    var tarjetas = Array.prototype.slice.call(document.querySelectorAll('.doc-card'));
+    var img = visor.querySelector('.doc-visor-img');
+    var pie = visor.querySelector('.doc-visor-pie');
+    var actual = 0;
+    var origen = null;           /* para devolver el foco al cerrar */
+
+    function mostrar(i) {
+        actual = (i + tarjetas.length) % tarjetas.length;
+        var t = tarjetas[actual];
+        var fuente = t.querySelector('img');
+        img.src = fuente.getAttribute('src');
+        img.alt = fuente.getAttribute('alt');
+        pie.textContent = t.querySelector('.doc-titulo').textContent + ' · ' +
+                          t.querySelector('.doc-sub').textContent;
+    }
+
+    function abrir(i, disparador) {
+        origen = disparador || null;
+        mostrar(i);
+        visor.hidden = false;
+        document.body.classList.add('visor-abierto');
+        visor.querySelector('.doc-visor-cerrar').focus();
+    }
+
+    function cerrar() {
+        visor.hidden = true;
+        document.body.classList.remove('visor-abierto');
+        if (origen) origen.focus();
+    }
+
+    tarjetas.forEach(function (t, i) {
+        t.addEventListener('click', function () { abrir(i, t); });
+    });
+
+    visor.addEventListener('click', function (e) {
+        if (e.target.closest('[data-cerrar]')) { cerrar(); return; }
+        var flecha = e.target.closest('[data-dir]');
+        if (flecha) mostrar(actual + Number(flecha.dataset.dir));
+    });
+
+    document.addEventListener('keydown', function (e) {
+        if (visor.hidden) return;
+        if (e.key === 'Escape') cerrar();
+        else if (e.key === 'ArrowRight') mostrar(actual + 1);
+        else if (e.key === 'ArrowLeft') mostrar(actual - 1);
+    });
+})();
