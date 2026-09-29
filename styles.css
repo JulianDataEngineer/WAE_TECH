@@ -5646,84 +5646,45 @@ body.visor-abierto { overflow: hidden; }
    ============================================================ */
 
 .modelo-section {
-    /* el aire va como relleno, no como margen de la tarjeta: así el fondo no
-       se corta entre las dos secciones */
-    padding: clamp(2.5rem, 4.5vw, 3.5rem) 0 clamp(5rem, 9vw, 7rem);
+    padding: clamp(3rem, 5vw, 4.5rem) 0 clamp(5rem, 9vw, 7rem);
     background: var(--bg-section-alt);   /* mismo fondo: las dos leen como una */
 }
 
-.modelo-card {
-    position: relative;
-    max-width: 1000px;
+.modelo-bloque {
+    max-width: 780px;
     margin: 0 auto;
-    padding: clamp(1.9rem, 3.2vw, 3rem);
-    border-radius: 40px;
-    background: linear-gradient(180deg, #102443 0%, #0a1930 100%);
-    border: 1px solid rgba(63, 168, 154, 0.26);
-    box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.1),
-        0 9px 0 0 #050e1c,
-        0 34px 54px -26px rgba(10, 25, 48, 0.7);
+    text-align: center;
 }
 
 .modelo-lead {
-    margin: 0 0 1.5rem;
+    margin: 0 0 1.1rem;
     font-family: var(--font-primary);
-    font-size: clamp(1.5rem, 2.6vw, 2.1rem);
+    font-size: clamp(1.6rem, 2.8vw, 2.3rem);
     font-weight: 700;
     line-height: 1.15;
     letter-spacing: -0.02em;
-    color: #ffffff;
+    color: var(--color-primary);
 }
 
 .modelo-texto {
-    margin: 0 0 1.1rem;
-    font-family: var(--font-body);
-    font-size: clamp(1rem, 1.25vw, 1.08rem);
-    line-height: 1.7;
-    color: rgba(232, 240, 247, 0.78);
-}
-
-/* Cada cosa que el SOW define, como una ficha suelta */
-.modelo-lista {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.6rem;
     margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
-.modelo-lista li {
-    padding: 0.7rem 1.15rem;
-    border-radius: 99px;
     font-family: var(--font-body);
-    font-size: clamp(0.92rem, 1.1vw, 1rem);
-    font-weight: 600;
-    color: rgba(232, 240, 247, 0.92);
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
-    border: 1px solid rgba(156, 184, 212, 0.18);
-    box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.08),
-        inset 0 -3px 0 0 rgba(5, 14, 28, 0.45);
-    transition: border-color .3s ease, transform .3s ease;
+    font-size: clamp(1rem, 1.3vw, 1.12rem);
+    line-height: 1.75;
+    color: #4a6180;
 }
-
-.modelo-lista li:hover { border-color: rgba(63, 168, 154, 0.45); transform: translateY(-2px); }
 
 /* Preparado por si se aprueba publicar el rango de precio */
 .modelo-precio {
-    margin: clamp(1.5rem, 2.5vw, 2rem) 0 0;
+    max-width: 780px;
+    margin: clamp(1.5rem, 2.5vw, 2rem) auto 0;
     padding-top: clamp(1.25rem, 2vw, 1.6rem);
-    border-top: 1px solid rgba(156, 184, 212, 0.18);
+    border-top: 1px solid rgba(23, 52, 92, 0.12);
+    text-align: center;
     font-family: var(--font-body);
     font-size: clamp(1rem, 1.25vw, 1.08rem);
     line-height: 1.7;
-    color: rgba(232, 240, 247, 0.78);
+    color: #4a6180;
 }
 
-.modelo-precio strong { color: #50b7a8; font-weight: 600; }
-
-@media (max-width: 900px) {
-    .modelo-card { border-radius: 28px; }
-}
+.modelo-precio strong { color: var(--color-accent); font-weight: 600; }
