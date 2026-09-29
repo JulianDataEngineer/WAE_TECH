@@ -4925,3 +4925,198 @@ button.sol-logo:focus-visible {
 @media (prefers-reduced-motion: reduce) {
     .secuencia-track, .secuencia-lamina img, .secuencia-paso { transition: none; }
 }
+
+/* ============================================================
+   PARTNERS · controles del delivery system y métricas
+   ============================================================ */
+
+.controles-section {
+    padding: clamp(4rem, 7vw, 6rem) 0 clamp(5rem, 9vw, 7rem);
+    background: var(--bg-section-alt);
+}
+
+.controles-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));   /* 2 x 2, sin huérfanas */
+    gap: clamp(1.25rem, 2.2vw, 1.75rem);
+}
+
+.control-card {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    gap: 1.25rem;
+    padding: clamp(1.6rem, 2.6vw, 2.25rem);
+    border-radius: 32px;
+    background: linear-gradient(180deg, #ffffff 0%, #f5f8fb 100%);
+    border: 1px solid rgba(23, 52, 92, 0.06);
+    box-shadow:
+        inset 0 4px 0 0 rgba(255, 255, 255, 0.9),
+        0 9px 0 0 #dbe4ee,
+        0 30px 48px -26px rgba(23, 52, 92, 0.45);
+    transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.control-card:hover {
+    transform: translateY(-3px);
+    box-shadow:
+        inset 0 4px 0 0 rgba(255, 255, 255, 0.9),
+        0 12px 0 0 #dbe4ee,
+        0 38px 56px -28px rgba(23, 52, 92, 0.5);
+}
+
+.control-icono {
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    width: 64px;
+    height: 64px;
+    border-radius: 18px;
+    background: #e4f5f2;
+    border: 1px solid rgba(63, 168, 154, 0.22);
+    box-shadow: 0 16px 30px -10px rgba(63, 168, 154, 0.5);
+}
+
+.control-icono img { width: 34px; height: 34px; object-fit: contain; display: block; }
+
+.control-cuerpo { min-width: 0; }
+
+.control-titulo {
+    margin: 0 0 0.6rem;
+    font-family: var(--font-primary);
+    font-size: clamp(1.15rem, 1.8vw, 1.4rem);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--color-primary);
+}
+
+.control-texto {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: clamp(0.98rem, 1.2vw, 1.05rem);
+    line-height: 1.65;
+    color: #4a6180;
+}
+
+/* El número queda como marca de agua, sin robar atención */
+.control-indice {
+    position: absolute;
+    right: 1.25rem;
+    bottom: 0.25rem;
+    font-family: var(--font-mono);
+    font-size: clamp(3rem, 6vw, 4.5rem);
+    font-weight: 500;
+    line-height: 1;
+    color: rgba(23, 52, 92, 0.055);
+    pointer-events: none;
+}
+
+/* ─── Panel de métricas ─── */
+.medimos-panel {
+    position: relative;
+    overflow: hidden;
+    margin-top: clamp(1.75rem, 3vw, 2.5rem);
+    padding: clamp(1.9rem, 3.2vw, 3rem);
+    border-radius: 40px;
+    background: linear-gradient(180deg, #102443 0%, #0a1930 100%);
+    border: 1px solid rgba(63, 168, 154, 0.26);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        0 9px 0 0 #050e1c,
+        0 34px 54px -26px rgba(10, 25, 48, 0.7);
+}
+
+/* Isologo al fondo, apenas insinuado */
+.medimos-panel::after {
+    content: "";
+    position: absolute;
+    right: -3%;
+    bottom: -18%;
+    width: clamp(180px, 26vw, 340px);
+    aspect-ratio: 1.3;
+    background: url("assets-iconos/wae-isologo.webp?v=3") center / contain no-repeat;
+    opacity: 0.06;
+    pointer-events: none;
+}
+
+.medimos-head { position: relative; z-index: 1; margin-bottom: clamp(1.5rem, 2.5vw, 2rem); }
+
+.medimos-titulo {
+    margin: 0;
+    font-family: var(--font-primary);
+    font-size: clamp(1.5rem, 2.6vw, 2.1rem);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+}
+
+.medimos-lista {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 0.75rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.medimos-lista li {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.85rem 1.15rem;
+    border-radius: 16px;
+    font-family: var(--font-body);
+    font-size: clamp(0.95rem, 1.15vw, 1.02rem);
+    font-weight: 500;
+    line-height: 1.4;
+    color: rgba(232, 240, 247, 0.92);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.03) 100%);
+    border: 1px solid rgba(156, 184, 212, 0.16);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        inset 0 -3px 0 0 rgba(5, 14, 28, 0.45);
+    transition: border-color .3s ease, transform .3s ease;
+}
+
+.medimos-lista li:hover { border-color: rgba(63, 168, 154, 0.45); transform: translateY(-2px); }
+
+.medimos-num {
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    background: rgba(63, 168, 154, 0.16);
+    border: 1px solid rgba(63, 168, 154, 0.3);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: #93d5cb;
+}
+
+.medimos-nota {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin: clamp(1.5rem, 2.5vw, 2rem) 0 0;
+    padding-top: clamp(1.25rem, 2vw, 1.5rem);
+    border-top: 1px solid rgba(156, 184, 212, 0.18);
+    font-family: var(--font-body);
+    font-size: clamp(0.95rem, 1.15vw, 1.02rem);
+    line-height: 1.65;
+    color: rgba(232, 240, 247, 0.72);
+}
+
+.medimos-nota .material-symbols-outlined { flex-shrink: 0; font-size: 20px; color: #50b7a8; }
+
+@media (max-width: 900px) {
+    .controles-grid { grid-template-columns: minmax(0, 1fr); }
+    .control-card, .medimos-panel { border-radius: 28px; }
+    .control-card { flex-direction: column; gap: 1rem; }
+}
