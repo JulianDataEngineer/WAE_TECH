@@ -5405,3 +5405,12 @@ button.sol-logo:focus-visible {
     .pod-acordeon .service-cta { width: 100%; justify-content: center; text-align: center; }
     .pod-acordeon .service-num { display: none; }
 }
+
+/* El pie quedó fuera de la rejilla, que es quien lleva el relleno: le damos
+   sus propios márgenes para que el botón no toque el borde del panel. */
+.pod-acordeon .service-grid { padding-bottom: clamp(1rem, 1.8vw, 1.5rem); }
+
+.pod-acordeon .service-foot {
+    margin: 0 clamp(1.4rem, 2.6vw, 2.4rem) clamp(2.1rem, 3.4vw, 3rem);
+    padding-top: clamp(1.25rem, 2vw, 1.6rem);
+}
