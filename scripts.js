@@ -642,3 +642,55 @@ console.log('%cData Engineering · Cloud · IA Aplicada · Bogotá, Colombia', '
         });
     });
 })();
+
+/* ─── Partners: secuencia con imágenes sincronizadas ─── */
+(function () {
+    var media = document.querySelector('.secuencia-media');
+    if (!media) return;
+
+    var track  = media.querySelector('.secuencia-track');
+    var laminas = media.querySelectorAll('.secuencia-lamina');
+    var contador = media.querySelector('.secuencia-contador');
+    var pasos  = document.querySelectorAll('.secuencia-paso');
+    var puntos = document.querySelectorAll('.secuencia-punto');
+    var flechas = document.querySelectorAll('.secuencia-flecha');
+    var total = laminas.length;
+    var actual = 0;
+
+    function ir(i) {
+        actual = (i + total) % total;
+        track.style.transform = 'translateX(' + (-actual * 100) + '%)';
+        for (var k = 0; k < total; k++) {
+            var on = k === actual;
+            laminas[k].classList.toggle('is-active', on);
+            puntos[k].classList.toggle('is-active', on);
+            puntos[k].setAttribute('aria-selected', on ? 'true' : 'false');
+            puntos[k].tabIndex = on ? 0 : -1;
+            pasos[k].classList.toggle('is-active', on);
+            if (on) pasos[k].removeAttribute('aria-hidden');
+            else pasos[k].setAttribute('aria-hidden', 'true');
+        }
+        if (contador) contador.innerHTML = '<b>' + ('0' + (actual + 1)).slice(-2) + '</b>/' + ('0' + total).slice(-2);
+    }
+
+    Array.prototype.forEach.call(puntos, function (p, k) {
+        p.addEventListener('click', function () { ir(k); });
+    });
+
+    Array.prototype.forEach.call(flechas, function (f) {
+        f.addEventListener('click', function () { ir(actual + Number(f.dataset.dir)); });
+    });
+
+    /* Deslizar sobre la imagen */
+    var x0 = null, y0 = 0;
+    media.addEventListener('pointerdown', function (e) { x0 = e.clientX; y0 = e.clientY; });
+    media.addEventListener('pointerup', function (e) {
+        if (x0 === null) return;
+        var dx = e.clientX - x0, dy = e.clientY - y0;
+        x0 = null;
+        if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) ir(actual + (dx < 0 ? 1 : -1));
+    });
+    media.addEventListener('pointercancel', function () { x0 = null; });
+
+    ir(0);
+})();
