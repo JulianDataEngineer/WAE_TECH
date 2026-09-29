@@ -4166,17 +4166,47 @@ button.sol-logo:focus-visible {
 
 .partners-hero {
     position: relative;
-    padding: clamp(8.5rem, 13vw, 12rem) 0 clamp(7rem, 12vw, 10rem);
+    padding: clamp(8.5rem, 13vw, 12rem) 0 clamp(12rem, 21vw, 20rem);
+    /* La fusión es una capa propia anclada al borde inferior, con altura fija:
+       así siempre tiene el mismo recorrido y nunca alcanza al texto. La rampa
+       se calculó mezclando en luz lineal, con la curva plana en los extremos,
+       que es como se apaga la luz de verdad. */
     background:
         linear-gradient(180deg,
-            #0a1930 0%,
-            #0a1930 58%,
-            #10233f 72%,
-            #22395c 82%,
-            #64809f 90%,
-            #b9c9dc 95%,
-            #e6edf5 98%,
-            var(--bg-root) 100%);
+            #0a1930 0.0%,
+            #0d1b31 5.0%,
+            #1b2437 10.0%,
+            #2e3442 15.0%,
+            #424752 20.0%,
+            #575b65 25.0%,
+            #6a6f79 30.0%,
+            #7d828e 35.0%,
+            #8e94a2 40.0%,
+            #9ea5b6 45.0%,
+            #abb4c9 50.0%,
+            #bbc3d5 55.0%,
+            #c8d0df 60.0%,
+            #d4dbe8 65.0%,
+            #dee4ee 70.0%,
+            #e6ebf3 75.0%,
+            #ecf0f7 80.0%,
+            #f1f4f9 85.0%,
+            #f3f6fa 90.0%,
+            #f4f7fb 95.0%,
+            #f4f7fb 100.0%
+) 0 100% / 100% clamp(320px, 34vw, 470px) no-repeat,
+        #0a1930;
+}
+
+/* Grano muy leve: rompe las franjas que deja cualquier degradado largo */
+.partners-hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+    opacity: 0.035;
+    mix-blend-mode: overlay;
+    pointer-events: none;
 }
 
 /* Brillo suave detrás del título, como en el hero del inicio */
