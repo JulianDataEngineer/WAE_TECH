@@ -6737,3 +6737,25 @@ body.visor-abierto { overflow: hidden; }
     .ajuste-card { grid-row: auto; grid-template-rows: auto 1fr; border-radius: 26px; }
     .ajuste-head { min-height: 0; }
 }
+
+/* La segunda entrega editorial invierte el orden: texto e imagen cambian de lado */
+.revista-section--alt { background: var(--bg-root); padding-top: clamp(1rem, 2vw, 2rem); }
+
+.revista-grid--invertido .revista-imagen { order: 2; }
+.revista-grid--invertido .revista-texto { order: 1; }
+
+.revista-destacado {
+    margin: clamp(1.25rem, 2vw, 1.75rem) 0 0;
+    font-family: var(--font-primary);
+    font-size: clamp(1.15rem, 1.8vw, 1.45rem);
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--color-primary);
+}
+
+.revista-destacado + .revista-parrafo { margin-top: 0.9rem; }
+
+@media (max-width: 900px) {
+    .revista-grid--invertido .revista-imagen { order: 1; }
+    .revista-grid--invertido .revista-texto { order: 2; }
+}
