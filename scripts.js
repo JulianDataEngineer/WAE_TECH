@@ -878,3 +878,16 @@ console.log('%cData Engineering · Cloud · IA Aplicada · Bogotá, Colombia', '
         }
     });
 })();
+
+/* ─── Empresas: la ruta aparece al llegar a la sección ─── */
+(function () {
+    var flujo = document.querySelector('.ruta-flujo');
+    if (!flujo || !('IntersectionObserver' in window)) {
+        if (flujo) flujo.classList.add('is-visible');
+        return;
+    }
+    var io = new IntersectionObserver(function (e) {
+        if (e[0].isIntersecting) { flujo.classList.add('is-visible'); io.disconnect(); }
+    }, { threshold: 0.2 });
+    io.observe(flujo);
+})();

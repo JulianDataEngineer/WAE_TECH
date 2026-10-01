@@ -5934,3 +5934,147 @@ body.visor-abierto { overflow: hidden; }
 @media (max-width: 600px) {
     .oferta-pie .btn-relieve { width: 100%; justify-content: center; }
 }
+
+/* ============================================================
+   EMPRESAS · ruta del diagnóstico, paso a paso
+   ============================================================ */
+
+.ruta-section {
+    padding: clamp(4rem, 7vw, 6rem) 0 clamp(5rem, 9vw, 7rem);
+    background: var(--bg-root);
+}
+
+.ruta-flujo {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(1rem, 2vw, 1.6rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* Riel que une los cuatro nodos */
+.ruta-riel {
+    position: absolute;
+    top: 29px;
+    left: 12.5%;
+    right: 12.5%;
+    height: 2px;
+    overflow: hidden;
+    border-radius: 2px;
+    background: linear-gradient(90deg, rgba(63, 168, 154, 0.25) 0%, rgba(63, 168, 154, 0.45) 50%, rgba(63, 168, 154, 0.25) 100%);
+}
+
+/* Luz que recorre el riel en el sentido del avance */
+.ruta-pulso {
+    position: absolute;
+    top: 0;
+    left: -30%;
+    width: 30%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(80, 183, 168, 0) 0%, #50b7a8 50%, rgba(80, 183, 168, 0) 100%);
+    animation: rutaAvanza 3.6s linear infinite;
+}
+
+@keyframes rutaAvanza {
+    from { transform: translateX(0); }
+    to   { transform: translateX(433%); }
+}
+
+.ruta-paso {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(1rem, 1.8vw, 1.4rem);
+}
+
+/* Nodo numerado, por encima del riel */
+.ruta-nodo {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(180deg, #ffffff 0%, #f3f7fb 100%);
+    border: 1px solid rgba(63, 168, 154, 0.3);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.9),
+        0 5px 0 0 #dbe4ee,
+        0 18px 26px -14px rgba(23, 52, 92, 0.45),
+        0 0 0 8px var(--bg-root);
+    font-family: var(--font-mono);
+    font-size: 1.05rem;
+    color: var(--color-accent);
+}
+
+.ruta-card {
+    flex: 1;
+    width: 100%;
+    padding: clamp(1.4rem, 2.2vw, 1.9rem);
+    border-radius: 28px;
+}
+
+.ruta-dias {
+    margin: 0 0 0.6rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+}
+
+.ruta-card .caja-titulo { margin-bottom: 0.75rem; }
+
+/* Entrada escalonada al llegar a la sección */
+.ruta-flujo .ruta-paso { opacity: 0; transform: translateY(18px); }
+
+.ruta-flujo.is-visible .ruta-paso {
+    opacity: 1;
+    transform: none;
+    transition: opacity .6s ease, transform .6s cubic-bezier(.22, .61, .36, 1);
+}
+
+.ruta-flujo.is-visible .ruta-paso:nth-child(2) { transition-delay: .08s; }
+.ruta-flujo.is-visible .ruta-paso:nth-child(3) { transition-delay: .16s; }
+.ruta-flujo.is-visible .ruta-paso:nth-child(4) { transition-delay: .24s; }
+.ruta-flujo.is-visible .ruta-paso:nth-child(5) { transition-delay: .32s; }
+
+@media (max-width: 900px) {
+    /* En vertical: el riel baja por la izquierda y las tarjetas se apilan */
+    .ruta-flujo { grid-template-columns: minmax(0, 1fr); gap: 1.25rem; }
+
+    .ruta-riel {
+        top: 30px;
+        bottom: 30px;
+        left: 29px;
+        right: auto;
+        width: 2px;
+        height: auto;
+        background: linear-gradient(180deg, rgba(63, 168, 154, 0.25) 0%, rgba(63, 168, 154, 0.45) 50%, rgba(63, 168, 154, 0.25) 100%);
+    }
+
+    .ruta-pulso {
+        left: 0;
+        top: -30%;
+        width: 100%;
+        height: 30%;
+        background: linear-gradient(180deg, rgba(80, 183, 168, 0) 0%, #50b7a8 50%, rgba(80, 183, 168, 0) 100%);
+        animation-name: rutaBaja;
+    }
+
+    @keyframes rutaBaja {
+        from { transform: translateY(0); }
+        to   { transform: translateY(433%); }
+    }
+
+    .ruta-paso { flex-direction: row; align-items: flex-start; gap: 1rem; }
+    .ruta-nodo { width: 58px; height: 58px; flex-shrink: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ruta-pulso { animation: none; opacity: .5; }
+    .ruta-flujo .ruta-paso { opacity: 1; transform: none; }
+}
