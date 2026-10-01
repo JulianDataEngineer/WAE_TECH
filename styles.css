@@ -5960,26 +5960,33 @@ body.visor-abierto { overflow: hidden; }
     top: 29px;
     left: 12.5%;
     right: 12.5%;
-    height: 2px;
+    height: 3px;
     overflow: hidden;
-    border-radius: 2px;
-    background: linear-gradient(90deg, rgba(63, 168, 154, 0.25) 0%, rgba(63, 168, 154, 0.45) 50%, rgba(63, 168, 154, 0.25) 100%);
+    border-radius: 3px;
+    background: linear-gradient(90deg, rgba(23, 52, 92, 0.12) 0%, rgba(23, 52, 92, 0.2) 50%, rgba(23, 52, 92, 0.12) 100%);
 }
 
-/* Luz que recorre el riel en el sentido del avance */
+/* La luz recorre el riel en el azul oscuro de WAE */
 .ruta-pulso {
     position: absolute;
-    top: 0;
-    left: -30%;
-    width: 30%;
-    height: 100%;
-    background: linear-gradient(90deg, rgba(80, 183, 168, 0) 0%, #50b7a8 50%, rgba(80, 183, 168, 0) 100%);
-    animation: rutaAvanza 3.6s linear infinite;
+    top: -3px;
+    left: -25%;
+    width: 25%;
+    height: calc(100% + 6px);
+    border-radius: 6px;
+    background: linear-gradient(90deg,
+        rgba(10, 25, 48, 0) 0%,
+        rgba(10, 25, 48, 0.55) 35%,
+        #0a1930 50%,
+        rgba(10, 25, 48, 0.55) 65%,
+        rgba(10, 25, 48, 0) 100%);
+    box-shadow: 0 0 18px 4px rgba(10, 25, 48, 0.35);
+    animation: rutaAvanza 5.4s linear infinite;
 }
 
 @keyframes rutaAvanza {
     from { transform: translateX(0); }
-    to   { transform: translateX(433%); }
+    to   { transform: translateX(600%); }
 }
 
 .ruta-paso {
@@ -5989,7 +5996,7 @@ body.visor-abierto { overflow: hidden; }
     gap: clamp(1rem, 1.8vw, 1.4rem);
 }
 
-/* Nodo numerado, por encima del riel */
+/* El nodo arranca en azul oscuro y vuelve a su color al pasar la luz */
 .ruta-nodo {
     position: relative;
     z-index: 1;
@@ -5998,17 +6005,64 @@ body.visor-abierto { overflow: hidden; }
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    background: linear-gradient(180deg, #ffffff 0%, #f3f7fb 100%);
-    border: 1px solid rgba(63, 168, 154, 0.3);
-    box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.9),
-        0 5px 0 0 #dbe4ee,
-        0 18px 26px -14px rgba(23, 52, 92, 0.45),
-        0 0 0 8px var(--bg-root);
     font-family: var(--font-mono);
     font-size: 1.05rem;
-    color: var(--color-accent);
+    animation: nodoPasa 5.4s linear infinite;
 }
+
+@keyframes nodoPasa {
+    0%, 9% {
+        color: #93d5cb;
+        background: linear-gradient(180deg, #102443 0%, #0a1930 100%);
+        border: 1px solid rgba(63, 168, 154, 0.35);
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.12),
+            0 5px 0 0 #050e1c,
+            0 18px 26px -14px rgba(10, 25, 48, 0.7),
+            0 0 0 8px var(--bg-root);
+        transform: scale(1);
+    }
+    13% {
+        color: #ffffff;
+        background: linear-gradient(180deg, #1c3f6e 0%, #0d2242 100%);
+        border: 1px solid rgba(63, 168, 154, 0.6);
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.2),
+            0 5px 0 0 #050e1c,
+            0 18px 30px -12px rgba(10, 25, 48, 0.75),
+            0 0 0 8px var(--bg-root),
+            0 0 26px 6px rgba(63, 168, 154, 0.45);
+        transform: scale(1.1);
+    }
+    22%, 94% {
+        color: var(--color-accent);
+        background: linear-gradient(180deg, #ffffff 0%, #f3f7fb 100%);
+        border: 1px solid rgba(63, 168, 154, 0.3);
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.9),
+            0 5px 0 0 #dbe4ee,
+            0 18px 26px -14px rgba(23, 52, 92, 0.45),
+            0 0 0 8px var(--bg-root);
+        transform: scale(1);
+    }
+    100% {
+        color: #93d5cb;
+        background: linear-gradient(180deg, #102443 0%, #0a1930 100%);
+        border: 1px solid rgba(63, 168, 154, 0.35);
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.12),
+            0 5px 0 0 #050e1c,
+            0 18px 26px -14px rgba(10, 25, 48, 0.7),
+            0 0 0 8px var(--bg-root);
+        transform: scale(1);
+    }
+}
+
+/* Cada nodo cambia justo cuando la luz llega a él */
+.ruta-paso:nth-child(2) .ruta-nodo { animation-delay: 0s; }
+.ruta-paso:nth-child(3) .ruta-nodo { animation-delay: -3.95s; }
+.ruta-paso:nth-child(4) .ruta-nodo { animation-delay: -2.55s; }
+.ruta-paso:nth-child(5) .ruta-nodo { animation-delay: -1.1s; }
 
 .ruta-card {
     flex: 1;
@@ -6057,17 +6111,22 @@ body.visor-abierto { overflow: hidden; }
     }
 
     .ruta-pulso {
-        left: 0;
-        top: -30%;
-        width: 100%;
-        height: 30%;
-        background: linear-gradient(180deg, rgba(80, 183, 168, 0) 0%, #50b7a8 50%, rgba(80, 183, 168, 0) 100%);
+        left: -3px;
+        top: -25%;
+        width: calc(100% + 6px);
+        height: 25%;
+        background: linear-gradient(180deg,
+            rgba(10, 25, 48, 0) 0%,
+            rgba(10, 25, 48, 0.55) 35%,
+            #0a1930 50%,
+            rgba(10, 25, 48, 0.55) 65%,
+            rgba(10, 25, 48, 0) 100%);
         animation-name: rutaBaja;
     }
 
     @keyframes rutaBaja {
         from { transform: translateY(0); }
-        to   { transform: translateY(433%); }
+        to   { transform: translateY(600%); }
     }
 
     .ruta-paso { flex-direction: row; align-items: flex-start; gap: 1rem; }
@@ -6076,5 +6135,6 @@ body.visor-abierto { overflow: hidden; }
 
 @media (prefers-reduced-motion: reduce) {
     .ruta-pulso { animation: none; opacity: .5; }
+    .ruta-nodo { animation: none; color: var(--color-accent); background: linear-gradient(180deg, #ffffff 0%, #f3f7fb 100%); border: 1px solid rgba(63,168,154,.3); box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 5px 0 0 #dbe4ee, 0 18px 26px -14px rgba(23,52,92,.45), 0 0 0 8px var(--bg-root); }
     .ruta-flujo .ruta-paso { opacity: 1; transform: none; }
 }
