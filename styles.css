@@ -5887,3 +5887,50 @@ body.visor-abierto { overflow: hidden; }
     .empresas-uno .alcance-grid { grid-template-rows: none; }
     .empresas-uno .alcance-col { grid-row: auto; grid-template-rows: auto 1fr auto; }
 }
+
+/* ============================================================
+   EMPRESAS · oferta de entrada
+   ============================================================ */
+
+.promesa { display: flex; flex-direction: column; justify-content: center; }
+
+/* El plazo manda en la tarjeta */
+.promesa-cifra {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    margin: 0 0 1.5rem;
+}
+
+.promesa-cifra b {
+    font-family: var(--font-primary);
+    font-size: clamp(3.6rem, 7vw, 5.4rem);
+    font-weight: 800;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    background: linear-gradient(180deg, #4fc0b0 0%, #1c706a 100%);
+    -webkit-background-clip: text;
+            background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.promesa-cifra span {
+    font-family: var(--font-mono);
+    font-size: clamp(0.9rem, 1.2vw, 1.05rem);
+    line-height: 1.25;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #6f8399;
+}
+
+.promesa-lista li { font-size: clamp(0.92rem, 1.1vw, 0.98rem); }
+
+.oferta-pie {
+    display: flex;
+    justify-content: center;
+    margin-top: clamp(1.75rem, 3vw, 2.5rem);
+}
+
+@media (max-width: 600px) {
+    .oferta-pie .btn-relieve { width: 100%; justify-content: center; }
+}
