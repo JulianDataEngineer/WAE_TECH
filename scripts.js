@@ -703,27 +703,36 @@ console.log('%cData Engineering · Cloud · IA Aplicada · Bogotá, Colombia', '
 
 /* ─── Encabezado: submenú de Partners ─── */
 (function () {
-    var item = document.querySelector('.nav-item-menu');
-    if (!item) return;
+    var items = Array.prototype.slice.call(document.querySelectorAll('.nav-item-menu'));
+    if (!items.length) return;
 
-    var boton = item.querySelector('.nav-caret');
-
-    function abrir(si) {
+    function abrir(item, si) {
         item.classList.toggle('is-open', si);
-        boton.setAttribute('aria-expanded', si ? 'true' : 'false');
+        item.querySelector('.nav-caret').setAttribute('aria-expanded', si ? 'true' : 'false');
     }
 
-    boton.addEventListener('click', function (e) {
-        e.stopPropagation();
-        abrir(!item.classList.contains('is-open'));
+    function cerrarTodos(salvo) {
+        items.forEach(function (i) { if (i !== salvo) abrir(i, false); });
+    }
+
+    items.forEach(function (item) {
+        item.querySelector('.nav-caret').addEventListener('click', function (e) {
+            e.stopPropagation();
+            var abierto = item.classList.contains('is-open');
+            cerrarTodos(item);
+            abrir(item, !abierto);
+        });
     });
 
     document.addEventListener('click', function (e) {
-        if (!item.contains(e.target)) abrir(false);
+        items.forEach(function (i) { if (!i.contains(e.target)) abrir(i, false); });
     });
 
     document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && item.classList.contains('is-open')) { abrir(false); boton.focus(); }
+        if (e.key !== 'Escape') return;
+        items.forEach(function (i) {
+            if (i.classList.contains('is-open')) { abrir(i, false); i.querySelector('.nav-caret').focus(); }
+        });
     });
 })();
 

@@ -6402,3 +6402,228 @@ body.visor-abierto { overflow: hidden; }
 @media (max-width: 600px) {
     .etapas-grid { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* ============================================================
+   DIAGNÓSTICO · banda oscura de entregables y bloque editorial
+   ============================================================ */
+
+.entregables-banda {
+    position: relative;
+    z-index: 1;
+    padding: clamp(3.5rem, 6vw, 5.5rem) 0 clamp(4rem, 7vw, 6rem);
+    background: #0a1930;
+    border-radius: clamp(28px, 3.4vw, 44px);
+    margin: clamp(3rem, 5vw, 4.5rem) auto;
+    max-width: calc(1400px);
+    width: calc(100% - clamp(1.5rem, 4vw, 3rem));
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        0 10px 0 0 #050e1c,
+        0 38px 56px -26px rgba(10, 25, 48, 0.65);
+}
+
+/* Resplandor suave, como en el hero */
+.entregables-banda::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(60% 45% at 50% 0%, rgba(63, 168, 154, 0.16) 0%, rgba(63, 168, 154, 0) 70%);
+    pointer-events: none;
+}
+
+.entregables-banda > .section-container { position: relative; z-index: 1; }
+
+.banda-head {
+    text-align: center;
+    max-width: 820px;
+    margin: 0 auto clamp(2.5rem, 4.5vw, 3.5rem);
+}
+
+/* La etiqueta sobre fondo oscuro */
+.services-badge--oscuro {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(156, 184, 212, 0.25);
+    color: #93d5cb;
+}
+
+.banda-titulo {
+    margin: 1.25rem 0 0;
+    font-family: var(--font-primary);
+    font-size: clamp(1.8rem, 3.4vw, 2.7rem);
+    font-weight: 700;
+    line-height: 1.14;
+    letter-spacing: -0.03em;
+    color: #ffffff;
+}
+
+.banda-sub {
+    margin: 1.1rem auto 0;
+    max-width: 62ch;
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 1.25vw, 1.08rem);
+    line-height: 1.7;
+    color: rgba(232, 240, 247, 0.78);
+}
+
+/* Cuatro grupos, en dos columnas */
+.ent-grupos {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1.5rem, 3vw, 2.5rem) clamp(1.75rem, 3.5vw, 3rem);
+}
+
+.ent-grupo-titulo {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    margin: 0 0 1.1rem;
+    padding-bottom: 0.9rem;
+    border-bottom: 1px solid rgba(156, 184, 212, 0.2);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #93d5cb;
+}
+
+.ent-grupo-titulo span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    box-shadow: 0 0 0 4px rgba(63, 168, 154, 0.18);
+}
+
+.ent-lista { display: grid; gap: 0.6rem; margin: 0; padding: 0; list-style: none; }
+
+.ent-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.9rem;
+    padding: 0.95rem 1.15rem;
+    border-radius: 18px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.03) 100%);
+    border: 1px solid rgba(156, 184, 212, 0.16);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        inset 0 -3px 0 0 rgba(5, 14, 28, 0.45);
+    transition: border-color .3s ease, transform .3s ease;
+}
+
+.ent-item:hover { border-color: rgba(63, 168, 154, 0.45); transform: translateY(-2px); }
+
+.ent-num {
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    background: rgba(63, 168, 154, 0.16);
+    border: 1px solid rgba(63, 168, 154, 0.3);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: #93d5cb;
+}
+
+.ent-titulo {
+    margin: 0 0 0.25rem;
+    font-family: var(--font-primary);
+    font-size: clamp(1rem, 1.25vw, 1.08rem);
+    font-weight: 700;
+    line-height: 1.25;
+    color: #ffffff;
+}
+
+.ent-texto {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: clamp(0.9rem, 1.05vw, 0.96rem);
+    line-height: 1.55;
+    color: rgba(232, 240, 247, 0.72);
+}
+
+.banda-nota {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin: clamp(1.75rem, 3vw, 2.5rem) 0 0;
+    padding-top: clamp(1.25rem, 2vw, 1.6rem);
+    border-top: 1px solid rgba(156, 184, 212, 0.18);
+    font-family: var(--font-body);
+    font-size: clamp(0.92rem, 1.1vw, 1rem);
+    line-height: 1.65;
+    color: rgba(232, 240, 247, 0.72);
+}
+
+.banda-nota b { color: #ffffff; font-weight: 600; }
+.banda-nota .material-symbols-outlined { flex-shrink: 0; font-size: 20px; color: #50b7a8; }
+
+/* ─── Bloque editorial a media página ─── */
+.revista-section {
+    padding: clamp(4rem, 7vw, 6rem) 0 clamp(5rem, 9vw, 7rem);
+    background: var(--bg-section-alt);
+}
+
+.revista-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(2rem, 4vw, 4rem);
+    align-items: center;
+}
+
+.revista-imagen {
+    margin: 0;
+    overflow: hidden;
+    border-radius: 40px;
+    aspect-ratio: 0.95;
+    background: #0a1930;
+    border: 1px solid rgba(23, 52, 92, 0.06);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.9),
+        0 9px 0 0 #dbe4ee,
+        0 34px 54px -28px rgba(23, 52, 92, 0.5);
+}
+
+.revista-imagen img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.revista-titulo {
+    margin: 1.25rem 0 0;
+    font-family: var(--font-primary);
+    font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+    font-weight: 700;
+    line-height: 1.14;
+    letter-spacing: -0.03em;
+    color: var(--color-primary);
+}
+
+/* Capitular, como en una revista */
+.revista-parrafo {
+    margin: clamp(1.25rem, 2vw, 1.75rem) 0 0;
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 1.3vw, 1.12rem);
+    line-height: 1.8;
+    color: #4a6180;
+}
+
+.revista-parrafo:first-of-type::first-letter {
+    float: left;
+    margin: 0.1em 0.12em 0 0;
+    font-family: var(--font-primary);
+    font-size: 3.4em;
+    font-weight: 700;
+    line-height: 0.82;
+    color: var(--color-accent);
+}
+
+.revista-parrafo b { color: var(--color-primary); font-weight: 600; }
+
+.revista-boton { margin-top: clamp(1.75rem, 3vw, 2.25rem); }
+
+@media (max-width: 900px) {
+    .entregables-banda { border-radius: 28px; }
+    .ent-grupos { grid-template-columns: minmax(0, 1fr); }
+    .revista-grid { grid-template-columns: minmax(0, 1fr); gap: 1.75rem; }
+    .revista-imagen { aspect-ratio: 1.4; border-radius: 28px; }
+}
