@@ -5798,3 +5798,92 @@ body.visor-abierto { overflow: hidden; }
 
 #pod-form .btn-primary:active { transform: translateY(4px); }
 #pod-form .btn-primary[disabled] { opacity: .7; cursor: progress; transform: none; }
+
+/* ============================================================
+   EMPRESAS · banner y comparativa
+   ============================================================ */
+
+.empresas-uno {
+    padding: clamp(4rem, 7vw, 6rem) 0 clamp(5rem, 9vw, 7rem);
+    background: var(--bg-section-alt);
+}
+
+/* Banner ancho con el relieve del sitio */
+.banner-ancho {
+    position: relative;
+    overflow: hidden;
+    margin: 0 0 clamp(1.75rem, 3vw, 2.75rem);
+    border-radius: 40px;
+    aspect-ratio: 3;
+    background: #0a1930;
+    border: 1px solid rgba(23, 52, 92, 0.06);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.9),
+        0 9px 0 0 #dbe4ee,
+        0 34px 54px -28px rgba(23, 52, 92, 0.5);
+}
+
+.banner-ancho img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Velo inferior para que el sello se lea sobre cualquier foto */
+.banner-ancho::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 55%;
+    background: linear-gradient(180deg, rgba(10, 25, 48, 0) 0%, rgba(10, 25, 48, 0.75) 100%);
+    pointer-events: none;
+}
+
+.banner-sello {
+    position: absolute;
+    left: clamp(1.25rem, 2.6vw, 2.25rem);
+    bottom: clamp(1.25rem, 2.6vw, 2.25rem);
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.8rem 1.4rem;
+    border-radius: 99px;
+    background: rgba(10, 25, 48, 0.42);
+    -webkit-backdrop-filter: blur(22px);
+            backdrop-filter: blur(22px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    font-family: var(--font-primary);
+    font-size: clamp(0.9rem, 1.2vw, 1.05rem);
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.banner-sello .material-symbols-outlined { font-size: 20px; color: #93d5cb; }
+
+/* Esta comparativa lleva una nota al pie: la retícula necesita su fila */
+.empresas-uno .alcance-grid { grid-template-rows: auto 1fr auto; }
+.empresas-uno .alcance-col { grid-row: span 3; }
+
+/* Nota al cierre de una columna */
+.alcance-nota {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+    margin: clamp(1.1rem, 2vw, 1.5rem) 0 0;
+    padding-top: clamp(1rem, 1.8vw, 1.35rem);
+    border-top: 1px solid rgba(23, 52, 92, 0.12);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #6f8399;
+}
+
+.alcance-nota .material-symbols-outlined { flex-shrink: 0; font-size: 19px; color: var(--color-accent); }
+
+@media (max-width: 900px) {
+    .banner-ancho { aspect-ratio: 1.9; border-radius: 28px; }
+    .empresas-uno .alcance-grid { grid-template-rows: none; }
+    .empresas-uno .alcance-col { grid-row: auto; grid-template-rows: auto 1fr auto; }
+}

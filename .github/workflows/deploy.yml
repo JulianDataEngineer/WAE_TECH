@@ -50,7 +50,7 @@ jobs:
           # /partners/pod-administrado se sirve desde un objeto con ese mismo
           # nombre: CloudFront no añade index.html en subcarpetas, así que el
           # archivo se sube aparte declarando su tipo de contenido.
-          for p in partners/pod-administrado; do
+          for p in partners/pod-administrado empresas; do
             aws s3 cp "$p.html" "s3://$BUCKET/$p" \
               --content-type "text/html; charset=utf-8" \
               --cache-control "public, max-age=0, must-revalidate"
