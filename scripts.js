@@ -789,114 +789,143 @@ console.log('%cData Engineering · Cloud · IA Aplicada · Bogotá, Colombia', '
     });
 })();
 
-/* ─── Pod: formulario de solicitud de capacidad ───────────────
-   El envío pasa por Formspree. Mientras no esté configurado, abrimos
-   el correo del visitante con todo el contenido ya escrito: así ninguna
-   solicitud se pierde en silencio.
+/* ─── Envío de formularios: un solo punto de configuración ───
+   Cuando tengas la dirección de Formspree, pégala en FORMSPREE y los
+   formularios del sitio empiezan a enviar sin tocar nada más. Mientras
+   esté vacía, se abre el correo del visitante con todo escrito.
    ------------------------------------------------------------ */
-(function () {
-    /* ⬇ Pega aquí la dirección que te da Formspree, algo como
-         https://formspree.io/f/xxxxxxx   */
-    var FORMSPREE = '';
-    var CORREO_WAE = 'proyectos@waengineers.co';
+window.WAE_ENVIO = {
+    FORMSPREE: '',
+    CORREO: 'proyectos@waengineers.co',
 
-    var form = document.getElementById('pod-form');
-    if (!form) return;
+    async enviar(datos, asunto) {
+        if (this.FORMSPREE) {
+            var r = await fetch(this.FORMSPREE, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                body: JSON.stringify(Object.assign({ _subject: asunto }, datos))
+            });
+            if (!r.ok) throw new Error('respuesta ' + r.status);
+            return 'enviado';
+        }
+        var cuerpo = Object.keys(datos).map(function (k) { return k + ': ' + datos[k]; }).join('\n');
+        window.location.href = 'mailto:' + this.CORREO +
+            '?subject=' + encodeURIComponent(asunto) +
+            '&body=' + encodeURIComponent(cuerpo);
+        return 'correo';
+    },
 
-    var campos = [
-        ['pod-nombre', 'Nombre y apellido', true],
-        ['pod-empresa', 'Empresa', true],
-        ['pod-cargo', 'Cargo', false],
-        ['pod-correo', 'Correo corporativo', true],
-        ['pod-pais', 'País y zona horaria', false],
-        ['pod-inicio', 'Fecha esperada de inicio', false],
-        ['pod-proyecto', 'Proyecto o backlog', true],
-        ['pod-roles', 'Roles y tecnologías', false],
-        ['pod-dedicacion', 'Dedicación estimada', false],
-        ['pod-presupuesto', 'Presupuesto aprobado', true]
-    ];
+    /* Valida, envía y cuida el estado del botón */
+    conectar: function (opciones) {
+        var form = document.getElementById(opciones.form);
+        if (!form) return;
+        var boton = document.getElementById(opciones.boton);
+        var privacidad = document.getElementById(opciones.privacidad);
+        var yo = this;
 
-    function marcar(el, falta) {
-        var caja = el.closest('.form-group') || el.closest('.casilla');
-        if (caja) caja.classList.toggle('falta', falta);
-    }
+        function marcar(el, falta) {
+            var caja = el.closest('.form-group') || el.closest('.casilla');
+            if (caja) caja.classList.toggle('falta', falta);
+        }
 
-    /* La marca roja desaparece en cuanto la persona corrige */
-    form.addEventListener('input', function (e) { marcar(e.target, false); });
-    form.addEventListener('change', function (e) {
-        if (e.target.id === 'pod-privacidad') e.target.closest('.casilla').classList.remove('falta');
-        else marcar(e.target, false);
-    });
-
-    form.addEventListener('submit', async function (e) {
-        e.preventDefault();
-
-        var datos = {};
-        var primerFallo = null;
-
-        campos.forEach(function (c) {
-            var el = document.getElementById(c[0]);
-            var valor = (el.value || '').trim();
-            var falta = c[2] && !valor;
-            if (c[0] === 'pod-correo' && valor && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valor)) falta = true;
-            marcar(el, falta);
-            if (falta && !primerFallo) primerFallo = el;
-            datos[c[1]] = valor || '—';
+        form.addEventListener('input', function (e) { marcar(e.target, false); });
+        form.addEventListener('change', function (e) {
+            if (e.target === privacidad) privacidad.closest('.casilla').classList.remove('falta');
+            else marcar(e.target, false);
         });
 
-        var privacidad = document.getElementById('pod-privacidad');
-        var faltaPriv = !privacidad.checked;
-        privacidad.closest('.casilla').classList.toggle('falta', faltaPriv);
-        if (faltaPriv && !primerFallo) primerFallo = privacidad;
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault();
 
-        if (primerFallo) {
-            showNotification('Revisa los campos marcados antes de enviar.', 'error');
-            primerFallo.focus();
-            return;
-        }
+            var datos = {}, primerFallo = null;
+            opciones.campos.forEach(function (c) {
+                var el = document.getElementById(c[0]);
+                var valor = (el.value || '').trim();
+                var falta = c[2] && !valor;
+                if (c[0] === opciones.correo && valor && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valor)) falta = true;
+                marcar(el, falta);
+                if (falta && !primerFallo) primerFallo = el;
+                datos[c[1]] = valor || '—';
+            });
 
-        var boton = document.getElementById('pod-enviar');
-        var original = boton.innerHTML;
-        boton.disabled = true;
-        boton.innerHTML = '<span class="material-symbols-outlined">hourglass_empty</span> Enviando...';
+            var faltaPriv = !privacidad.checked;
+            privacidad.closest('.casilla').classList.toggle('falta', faltaPriv);
+            if (faltaPriv && !primerFallo) primerFallo = privacidad;
 
-        try {
-            if (FORMSPREE) {
-                var r = await fetch(FORMSPREE, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-                    body: JSON.stringify(Object.assign({ _subject: 'Solicitud de evaluación de capacidad · Pod Administrado' }, datos))
-                });
-                if (!r.ok) throw new Error('respuesta ' + r.status);
-                showNotification('Solicitud enviada. Te responderemos con preguntas de ajuste.', 'success');
-                form.reset();
-            } else {
-                /* Sin destino configurado: abrimos el correo con todo listo */
-                var cuerpo = campos.map(function (c) { return c[1] + ': ' + datos[c[1]]; }).join('\n');
-                window.location.href = 'mailto:' + CORREO_WAE +
-                    '?subject=' + encodeURIComponent('Solicitud de evaluación de capacidad · Pod Administrado') +
-                    '&body=' + encodeURIComponent(cuerpo);
-                showNotification('Abrimos tu correo con la solicitud lista para enviar.', 'success');
+            if (primerFallo) {
+                showNotification('Revisa los campos marcados antes de enviar.', 'error');
+                primerFallo.focus();
+                return;
             }
-        } catch (err) {
-            console.error('[WAE] envío del formulario:', err);
-            showNotification('No pudimos enviar la solicitud. Escríbenos a ' + CORREO_WAE + '.', 'error');
-        } finally {
-            boton.disabled = false;
-            boton.innerHTML = original;
-        }
-    });
-})();
 
-/* ─── Empresas: la ruta aparece al llegar a la sección ─── */
-(function () {
-    var flujo = document.querySelector('.ruta-flujo');
-    if (!flujo || !('IntersectionObserver' in window)) {
-        if (flujo) flujo.classList.add('is-visible');
-        return;
+            var original = boton.innerHTML;
+            boton.disabled = true;
+            boton.innerHTML = '<span class="material-symbols-outlined">hourglass_empty</span> Enviando...';
+
+            try {
+                var via = await yo.enviar(datos, opciones.asunto);
+                if (via === 'enviado') {
+                    showNotification(opciones.exito, 'success');
+                    form.reset();
+                } else {
+                    showNotification('Abrimos tu correo con la solicitud lista para enviar.', 'success');
+                }
+            } catch (err) {
+                console.error('[WAE] envío del formulario:', err);
+                showNotification('No pudimos enviar la solicitud. Escríbenos a ' + yo.CORREO + '.', 'error');
+            } finally {
+                boton.disabled = false;
+                boton.innerHTML = original;
+            }
+        });
     }
-    var io = new IntersectionObserver(function (e) {
-        if (e[0].isIntersecting) { flujo.classList.add('is-visible'); io.disconnect(); }
-    }, { threshold: 0.2 });
-    io.observe(flujo);
+};
+
+/* Formulario de precalificación · Diagnóstico Operativo */
+window.WAE_ENVIO.conectar({
+    form: 'precal-form',
+    boton: 'precal-enviar',
+    privacidad: 'pc-privacidad',
+    correo: 'pc-correo',
+    asunto: 'Precalificación · Diagnóstico Operativo',
+    exito: 'Proceso enviado. Revisaremos el ajuste y te responderemos.',
+    campos: [
+        ['pc-nombre', 'Nombre y apellido', true],
+        ['pc-empresa', 'Empresa y cargo', true],
+        ['pc-correo', 'Correo corporativo', true],
+        ['pc-pais', 'País', false],
+        ['pc-area', 'Área responsable del proceso', false],
+        ['pc-frecuencia', 'Frecuencia', false],
+        ['pc-proceso', 'El proceso en una frase', true],
+        ['pc-sistemas', 'Sistemas que intervienen', false],
+        ['pc-impacto', 'Principal impacto', true],
+        ['pc-responsable', 'Responsable interno', true],
+        ['pc-decision', 'Cuándo deciden', true],
+        ['pc-presupuesto', 'Presupuesto', true]
+    ]
+});
+
+/* ─── Pod: formulario de solicitud de capacidad ─── */
+(function () {
+    if (!document.getElementById('pod-form')) return;
+    window.WAE_ENVIO.conectar({
+        form: 'pod-form',
+        boton: 'pod-enviar',
+        privacidad: 'pod-privacidad',
+        correo: 'pod-correo',
+        asunto: 'Solicitud de evaluación de capacidad · Pod Administrado',
+        exito: 'Solicitud enviada. Te responderemos con preguntas de ajuste.',
+        campos: [
+            ['pod-nombre', 'Nombre y apellido', true],
+            ['pod-empresa', 'Empresa', true],
+            ['pod-cargo', 'Cargo', false],
+            ['pod-correo', 'Correo corporativo', true],
+            ['pod-pais', 'País y zona horaria', false],
+            ['pod-inicio', 'Fecha esperada de inicio', false],
+            ['pod-proyecto', 'Proyecto o backlog', true],
+            ['pod-roles', 'Roles y tecnologías', false],
+            ['pod-dedicacion', 'Dedicación estimada', false],
+            ['pod-presupuesto', 'Presupuesto aprobado', true]
+        ]
+    });
 })();

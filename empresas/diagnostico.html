@@ -355,6 +355,128 @@
             </div>
         </section>
 
+
+        <!-- Bloque 08 · formulario de precalificación -->
+        <section class="solicitud-section" id="precalificacion">
+            <div class="section-container">
+                <div class="seccion-head">
+                    <span class="services-badge"><i aria-hidden="true"></i>formulario</span>
+                    <h2 class="seccion-title">Formulario de precalificación</h2>
+                </div>
+
+                <div class="contact-form-wrapper solicitud-caja">
+                    <form class="contact-form" id="precal-form" novalidate>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="pc-nombre" class="field-chip"><span class="material-symbols-outlined">person</span>Nombre y apellido</label>
+                                <input type="text" id="pc-nombre" name="nombre" placeholder="Tu nombre y apellido" autocomplete="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="pc-empresa" class="field-chip"><span class="material-symbols-outlined">apartment</span>Empresa y cargo</label>
+                                <input type="text" id="pc-empresa" name="empresa" placeholder="Empresa · tu cargo" autocomplete="organization" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="pc-correo" class="field-chip"><span class="material-symbols-outlined">alternate_email</span>Correo corporativo</label>
+                                <input type="email" id="pc-correo" name="correo" placeholder="tu@empresa.com" autocomplete="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="pc-pais" class="field-chip"><span class="material-symbols-outlined">public</span>País</label>
+                                <input type="text" id="pc-pais" name="pais" placeholder="Colombia" autocomplete="country-name">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="pc-area" class="field-chip"><span class="material-symbols-outlined">groups</span>Área responsable</label>
+                                <input type="text" id="pc-area" name="area" placeholder="Finanzas, operaciones, TI...">
+                            </div>
+                            <div class="form-group">
+                                <label for="pc-frecuencia" class="field-chip"><span class="material-symbols-outlined">repeat</span>Frecuencia</label>
+                                <input type="text" id="pc-frecuencia" name="frecuencia" placeholder="Diaria, semanal, mensual...">
+                            </div>
+                        </div>
+
+                        <div class="form-group form-group--wide">
+                            <label for="pc-proceso" class="field-chip"><span class="material-symbols-outlined">lan</span>El proceso en una frase</label>
+                            <textarea id="pc-proceso" name="proceso" placeholder="Describe el proceso en una frase..." required></textarea>
+                        </div>
+
+                        <div class="form-group form-group--wide">
+                            <label for="pc-sistemas" class="field-chip"><span class="material-symbols-outlined">dns</span>Sistemas que intervienen</label>
+                            <textarea id="pc-sistemas" name="sistemas" placeholder="¿Qué sistemas, archivos o aplicaciones intervienen?"></textarea>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="pc-impacto" class="field-chip"><span class="material-symbols-outlined">bolt</span>Principal impacto hoy</label>
+                                <select id="pc-impacto" name="impacto" required>
+                                    <option value="">Selecciona...</option>
+                                    <option value="Tiempo">Tiempo</option>
+                                    <option value="Error">Error</option>
+                                    <option value="Costo">Costo</option>
+                                    <option value="Riesgo">Riesgo</option>
+                                    <option value="Falta de trazabilidad">Falta de trazabilidad</option>
+                                    <option value="Otro">Otro</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pc-responsable" class="field-chip"><span class="material-symbols-outlined">badge</span>Responsable interno</label>
+                                <select id="pc-responsable" name="responsable" required>
+                                    <option value="">Selecciona...</option>
+                                    <option value="Sí">Sí</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="pc-decision" class="field-chip"><span class="material-symbols-outlined">event</span>Cuándo deciden</label>
+                                <select id="pc-decision" name="decision" required>
+                                    <option value="">Selecciona...</option>
+                                    <option value="0–30 días">0–30 días</option>
+                                    <option value="31–90 días">31–90 días</option>
+                                    <option value="Más adelante">Más adelante</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pc-presupuesto" class="field-chip"><span class="material-symbols-outlined">payments</span>Presupuesto</label>
+                                <select id="pc-presupuesto" name="presupuesto" required>
+                                    <option value="">Selecciona...</option>
+                                    <option value="Aprobado">Aprobado</option>
+                                    <option value="En evaluación">En evaluación</option>
+                                    <option value="No definido">No definido</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <label class="casilla" for="pc-privacidad">
+                            <input type="checkbox" id="pc-privacidad" name="privacidad" required>
+                            <span class="casilla-marca" aria-hidden="true">
+                                <span class="material-symbols-outlined">check</span>
+                            </span>
+                            <span class="casilla-texto">
+                                Autorizo a WAE a usar estos datos para evaluar mi solicitud y contactarme.
+                            </span>
+                        </label>
+
+                        <button type="submit" class="btn btn-primary btn-full" id="precal-enviar">
+                            <span class="material-symbols-outlined">send</span>
+                            Enviar proceso para evaluación
+                        </button>
+
+                        <p class="solicitud-apoyo">
+                            La precalificación confirma ajuste y alcance. No incluye una solución
+                            técnica gratuita.
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <footer class="main-footer" id="footer">
