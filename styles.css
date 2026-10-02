@@ -6851,3 +6851,59 @@ body.visor-abierto { overflow: hidden; }
 
 .sol-indice-ir .material-symbols-outlined { font-size: 19px; transition: transform .3s ease; }
 .sol-indice-card:hover .sol-indice-ir .material-symbols-outlined { transform: translateX(4px); }
+
+/* ============================================================
+   ENCABEZADO · el menú de celular entra antes
+   Con tres desplegables la barra ya no cabe por debajo de ~1000 px:
+   los enlaces se salían de la píldora. El menú completo aparece ahora
+   desde 1024 px hacia abajo, no desde 768.
+   ============================================================ */
+@media (max-width: 1024px) {
+    .nav-menu {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: var(--bg-root);
+        flex-direction: column;
+        align-items: center;
+        /* centrado solo si cabe: con los submenús abiertos debe poder
+           desplazarse sin que se recorte la parte de arriba */
+        justify-content: flex-start;
+        gap: clamp(1.25rem, 3vw, 2rem);
+        overflow-y: auto;
+        padding: 7rem 1.5rem 4rem;
+        z-index: 200;
+    }
+
+    .nav-menu > li { flex-shrink: 0; }
+
+    .nav-menu.active { display: flex; }
+
+    .nav-link { font-size: var(--text-xl); }
+
+    .header-actions { display: flex; }
+
+    .mobile-menu-btn { display: block; z-index: 201; }
+
+    /* el desenfoque crearía un bloque contenedor y encerraría el menú */
+    .nav-container {
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        background: rgba(255, 255, 255, 0.94);
+    }
+
+    /* los submenús se despliegan en línea */
+    .nav-item-menu { flex-direction: column; gap: 0.5rem; }
+
+    .nav-submenu {
+        position: static;
+        transform: none;
+        min-width: 0;
+        display: none;
+        text-align: center;
+    }
+
+    .nav-item-menu.is-open .nav-submenu { display: grid; transform: none; }
+    .nav-submenu::before { display: none; }
+    .nav-caret { width: 30px; height: 30px; }
+}
