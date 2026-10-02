@@ -7392,3 +7392,41 @@ body.visor-abierto { overflow: hidden; }
     letter-spacing: -0.01em;
     color: var(--color-primary);
 }
+
+/* ============================================================
+   SOLUCIÓN · modernización: capacidades, principio y métricas
+   ============================================================ */
+
+.capacidades-section {
+    padding: clamp(4rem, 7vw, 6rem) 0;
+    background: var(--bg-root);
+}
+
+.capacidades-card { max-width: 1000px; margin: 0 auto; }
+
+.capacidades-lista {
+    grid-template-rows: repeat(4, minmax(0, 1fr));
+}
+
+/* El principio cierra con una frase, no con una lista */
+.principio-texto {
+    max-width: 58ch;
+    margin: clamp(1.5rem, 2.5vw, 2rem) auto 0;
+    font-family: var(--font-body);
+    font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+    line-height: 1.75;
+    color: rgba(232, 240, 247, 0.82);
+}
+
+.principio-texto em { font-style: normal; color: #50b7a8; font-weight: 600; }
+
+/* Métricas como etiquetas sueltas */
+.metricas-section {
+    padding: clamp(4rem, 7vw, 6rem) 0 clamp(5rem, 9vw, 7rem);
+    background: var(--bg-section-alt);
+}
+
+.metricas-tags li {
+    padding: 0.8rem 1.5rem;
+    font-size: clamp(0.95rem, 1.15vw, 1.05rem);
+}
