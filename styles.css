@@ -7443,3 +7443,45 @@ body.visor-abierto { overflow: hidden; }
     margin: clamp(1.75rem, 3vw, 2.5rem) auto 0;
     text-align: left;
 }
+
+/* ============================================================
+   SOLUCIÓN · preparación para IA
+   ============================================================ */
+
+.previos-section {
+    padding: clamp(4rem, 7vw, 6rem) 0;
+    background: var(--bg-root);
+}
+
+.previos-card {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: clamp(1.75rem, 3vw, 2.75rem);
+    border-radius: 40px;
+    background: linear-gradient(180deg, #102443 0%, #0a1930 100%);
+    border: 1px solid rgba(63, 168, 154, 0.26);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        0 9px 0 0 #050e1c,
+        0 34px 54px -26px rgba(10, 25, 48, 0.7);
+}
+
+.previos-lista { gap: 0.75rem; }
+
+.previos-lista .ent-item { align-items: center; }
+
+.previos-lista .ent-titulo { margin: 0; font-size: clamp(1rem, 1.3vw, 1.12rem); }
+
+/* Los límites llevan equis, y la última fila va centrada */
+.nohacemos-lista {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+}
+
+.nohacemos-lista li { flex: 0 1 calc(33.333% - 0.5rem); min-width: 290px; }
+
+@media (max-width: 900px) {
+    .previos-card { border-radius: 28px; }
+}
