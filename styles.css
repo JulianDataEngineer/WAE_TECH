@@ -7485,3 +7485,6 @@ body.visor-abierto { overflow: hidden; }
 @media (max-width: 900px) {
     .previos-card { border-radius: 28px; }
 }
+
+/* Cinco resultados: tres arriba y dos abajo, todos del mismo tamaño */
+.medidas-grid--tres .medida { flex: 0 1 calc(33.333% - 0.934rem); }
