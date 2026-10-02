@@ -7421,3 +7421,25 @@ body.visor-abierto { overflow: hidden; }
 .principio-texto em { font-style: normal; color: #50b7a8; font-weight: 600; }
 
 
+
+/* ============================================================
+   SOLUCIÓN · confiabilidad: diez capacidades, ruta de seis pasos
+   ============================================================ */
+
+.capacidades-lista--diez { grid-template-rows: repeat(5, minmax(0, 1fr)); }
+
+/* Seis pasos: la luz llega a cada nodo en su momento */
+.ruta-flujo--seis .ruta-paso:nth-child(2) .ruta-nodo { animation-delay: 0s; }
+.ruta-flujo--seis .ruta-paso:nth-child(3) .ruta-nodo { animation-delay: -4.54s; }
+.ruta-flujo--seis .ruta-paso:nth-child(4) .ruta-nodo { animation-delay: -3.67s; }
+.ruta-flujo--seis .ruta-paso:nth-child(5) .ruta-nodo { animation-delay: -2.81s; }
+.ruta-flujo--seis .ruta-paso:nth-child(6) .ruta-nodo { animation-delay: -1.94s; }
+.ruta-flujo--seis .ruta-paso:nth-child(7) .ruta-nodo { animation-delay: -1.08s; }
+
+/* La salvedad cierra el bloque de resultados */
+.medidas-nota {
+    justify-content: center;
+    max-width: 62ch;
+    margin: clamp(1.75rem, 3vw, 2.5rem) auto 0;
+    text-align: left;
+}
