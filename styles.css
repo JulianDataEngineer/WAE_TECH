@@ -7091,9 +7091,17 @@ body.visor-abierto { overflow: hidden; }
     background: var(--bg-section-alt);
 }
 
+/* Siete fichas en filas de cuatro: la última fila queda centrada */
 .cambia-lista {
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 0.75rem;
+}
+
+.cambia-lista li {
+    flex: 0 1 calc(25% - 0.5625rem);
+    min-width: 260px;
 }
 
 /* ─── Resultado esperado ─── */
