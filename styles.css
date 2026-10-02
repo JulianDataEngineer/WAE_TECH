@@ -6778,6 +6778,8 @@ body.visor-abierto { overflow: hidden; }
     background: var(--bg-section-alt);
 }
 
+.sol-indice-section .seccion-head { margin-bottom: clamp(2.5rem, 4.5vw, 3.5rem); }
+
 .sol-indice-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -6906,4 +6908,93 @@ body.visor-abierto { overflow: hidden; }
     .nav-item-menu.is-open .nav-submenu { display: grid; transform: none; }
     .nav-submenu::before { display: none; }
     .nav-caret { width: 30px; height: 30px; }
+}
+
+/* ============================================================
+   SOLUCIONES · modalidades de entrega y doble llamado
+   ============================================================ */
+
+.modalidades-section {
+    padding: clamp(4rem, 7vw, 6rem) 0 clamp(5rem, 9vw, 7rem);
+    background: var(--bg-root);
+}
+
+.modalidades-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: clamp(1rem, 1.8vw, 1.4rem);
+}
+
+.modalidad {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: clamp(1.25rem, 2vw, 1.6rem) clamp(1.4rem, 2.2vw, 1.8rem);
+    border-radius: 22px;
+    background: linear-gradient(180deg, #ffffff 0%, #f5f8fb 100%);
+    border: 1px solid rgba(23, 52, 92, 0.06);
+    box-shadow:
+        inset 0 2px 0 0 rgba(255, 255, 255, 0.9),
+        inset 0 -4px 0 0 rgba(23, 52, 92, 0.05),
+        0 8px 18px rgba(23, 52, 92, 0.07);
+    transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+}
+
+.modalidad:hover {
+    transform: translateY(-3px);
+    border-color: rgba(63, 168, 154, 0.35);
+    box-shadow:
+        inset 0 2px 0 0 rgba(255, 255, 255, 0.9),
+        inset 0 -4px 0 0 rgba(23, 52, 92, 0.05),
+        0 18px 30px -12px rgba(23, 52, 92, 0.32);
+}
+
+.modalidad-num {
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    background: #e4f5f2;
+    border: 1px solid rgba(63, 168, 154, 0.22);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--color-accent);
+}
+
+.modalidad-texto {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: clamp(0.98rem, 1.2vw, 1.05rem);
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--color-primary);
+}
+
+/* Dos caminos al cierre: partners y empresas */
+.modalidades-cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(1.5rem, 3vw, 3rem);
+    margin-top: clamp(2.5rem, 4.5vw, 3.5rem);
+    padding-top: clamp(2rem, 3.5vw, 3rem);
+    border-top: 1px solid rgba(23, 52, 92, 0.1);
+}
+
+.cta-via { text-align: center; }
+.cta-via .caja-etiqueta { margin-bottom: 0.85rem; }
+
+.cta-separador {
+    width: 1px;
+    height: 56px;
+    background: linear-gradient(180deg, rgba(23, 52, 92, 0) 0%, rgba(23, 52, 92, 0.18) 50%, rgba(23, 52, 92, 0) 100%);
+}
+
+@media (max-width: 700px) {
+    .cta-separador { width: 56px; height: 1px; background: linear-gradient(90deg, rgba(23,52,92,0) 0%, rgba(23,52,92,.18) 50%, rgba(23,52,92,0) 100%); }
+    .modalidades-cta .btn-relieve { width: 100%; justify-content: center; }
+    .cta-via { width: 100%; }
 }
