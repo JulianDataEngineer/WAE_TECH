@@ -7420,13 +7420,4 @@ body.visor-abierto { overflow: hidden; }
 
 .principio-texto em { font-style: normal; color: #50b7a8; font-weight: 600; }
 
-/* Métricas como etiquetas sueltas */
-.metricas-section {
-    padding: clamp(4rem, 7vw, 6rem) 0 clamp(5rem, 9vw, 7rem);
-    background: var(--bg-section-alt);
-}
 
-.metricas-tags li {
-    padding: 0.8rem 1.5rem;
-    font-size: clamp(0.95rem, 1.15vw, 1.05rem);
-}
