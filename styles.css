@@ -7254,3 +7254,141 @@ body.visor-abierto { overflow: hidden; }
 .resultados-section .medimos-panel { margin-top: 0; }
 .resultados-section .medimos-head { text-align: center; }
 .resultados-section .medimos-head .caja-etiqueta { margin-bottom: 0.5rem; }
+
+/* ============================================================
+   SOLUCIÓN · automatización: criterio técnico y medidas
+   ============================================================ */
+
+.decision-section {
+    padding: clamp(4rem, 7vw, 6rem) 0;
+    background: var(--bg-root);
+}
+
+.decision-inner {
+    max-width: 820px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.decision-texto {
+    margin: clamp(1.25rem, 2vw, 1.75rem) 0 0;
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 1.3vw, 1.12rem);
+    line-height: 1.75;
+    color: #4a6180;
+}
+
+/* Las alternativas, como etiquetas sueltas */
+.decision-tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.6rem;
+    margin: clamp(1.1rem, 2vw, 1.5rem) 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.decision-tags li {
+    padding: 0.65rem 1.25rem;
+    border-radius: 99px;
+    background: linear-gradient(180deg, #ffffff 0%, #f3f7fb 100%);
+    border: 1px solid rgba(23, 52, 92, 0.07);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.9),
+        0 4px 0 0 #dde6ef,
+        0 12px 20px -12px rgba(23, 52, 92, 0.4);
+    font-family: var(--font-body);
+    font-size: clamp(0.92rem, 1.1vw, 1rem);
+    font-weight: 600;
+    color: var(--color-primary);
+}
+
+/* La regla de decisión cierra el bloque */
+.decision-regla {
+    max-width: 44ch;
+    margin: clamp(1.75rem, 3vw, 2.5rem) auto 0;
+    padding-top: clamp(1.25rem, 2vw, 1.75rem);
+    border-top: 1px solid rgba(23, 52, 92, 0.12);
+    font-family: var(--font-primary);
+    font-size: clamp(1.15rem, 1.9vw, 1.5rem);
+    font-weight: 600;
+    line-height: 1.45;
+    color: var(--color-primary);
+}
+
+.decision-regla em { font-style: normal; color: var(--color-accent); }
+
+/* Los controles van en la tarjeta oscura, pero con check: son garantías */
+.controles-lista li {
+    color: rgba(232, 240, 247, 0.9);
+    font-weight: 500;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.03) 100%);
+    border-color: rgba(156, 184, 212, 0.16);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        inset 0 -3px 0 0 rgba(5, 14, 28, 0.45);
+}
+
+/* ─── Resultados a medir ─── */
+.medidas-section {
+    padding: clamp(4rem, 7vw, 6rem) 0 clamp(5rem, 9vw, 7rem);
+    background: var(--bg-section-alt);
+}
+
+.medidas-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: clamp(1rem, 1.8vw, 1.4rem);
+}
+
+.medida {
+    flex: 0 1 calc(25% - 1.05rem);
+    min-width: 230px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.85rem;
+    padding: clamp(1.4rem, 2.2vw, 1.9rem) 1.1rem;
+    border-radius: 24px;
+    text-align: center;
+    background: linear-gradient(180deg, #ffffff 0%, #f5f8fb 100%);
+    border: 1px solid rgba(23, 52, 92, 0.06);
+    box-shadow:
+        inset 0 3px 0 0 rgba(255, 255, 255, 0.9),
+        0 7px 0 0 #dbe4ee,
+        0 24px 38px -24px rgba(23, 52, 92, 0.45);
+    transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.medida:hover {
+    transform: translateY(-3px);
+    box-shadow:
+        inset 0 3px 0 0 rgba(255, 255, 255, 0.9),
+        0 10px 0 0 #dbe4ee,
+        0 32px 48px -26px rgba(23, 52, 92, 0.5);
+}
+
+.medida-num {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    background: #e4f5f2;
+    border: 1px solid rgba(63, 168, 154, 0.22);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--color-accent);
+}
+
+.medida-texto {
+    margin: 0;
+    font-family: var(--font-primary);
+    font-size: clamp(1rem, 1.25vw, 1.08rem);
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    color: var(--color-primary);
+}
