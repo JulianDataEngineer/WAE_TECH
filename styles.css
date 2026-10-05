@@ -7499,3 +7499,9 @@ body.visor-abierto { overflow: hidden; }
     line-height: 1.7;
     color: #4a6180;
 }
+
+/* La sección de alcance geográfico cierra en el fondo alterno */
+.alcance-geo-section {
+    padding: clamp(4rem, 7vw, 6rem) 0;
+    background: var(--bg-section-alt);
+}
