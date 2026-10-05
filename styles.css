@@ -7624,3 +7624,63 @@ a.dato-valor:hover { color: var(--color-accent); }
     .contacto-grid { grid-template-columns: minmax(0, 1fr); }
     .dato-card { border-radius: 24px; }
 }
+
+/* ============================================================
+   CONTACTO · mapa
+   ============================================================ */
+
+.mapa-section {
+    padding: 0 0 clamp(5rem, 9vw, 7rem);
+    background: var(--bg-root);
+}
+
+.mapa-marco {
+    position: relative;
+    overflow: hidden;
+    margin: 0;
+    border-radius: 40px;
+    aspect-ratio: 2.6;
+    background: #0a1930;
+    border: 1px solid rgba(23, 52, 92, 0.06);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.9),
+        0 9px 0 0 #dbe4ee,
+        0 34px 54px -28px rgba(23, 52, 92, 0.5);
+}
+
+.mapa-marco iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+    filter: saturate(0.85);
+}
+
+.mapa-sello {
+    position: absolute;
+    left: clamp(1.1rem, 2.4vw, 2rem);
+    bottom: clamp(1.1rem, 2.4vw, 2rem);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.8rem 1.4rem;
+    border-radius: 99px;
+    background: rgba(255, 255, 255, 0.92);
+    -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px);
+    border: 1px solid rgba(23, 52, 92, 0.08);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.9),
+        0 5px 0 0 #dbe4ee,
+        0 18px 26px -16px rgba(23, 52, 92, 0.45);
+    font-family: var(--font-primary);
+    font-size: clamp(0.92rem, 1.2vw, 1.05rem);
+    font-weight: 600;
+    color: var(--color-primary);
+}
+
+.mapa-sello .material-symbols-outlined { font-size: 20px; color: var(--color-accent); }
+
+@media (max-width: 900px) {
+    .mapa-marco { aspect-ratio: 1.4; border-radius: 28px; }
+}
