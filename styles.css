@@ -7505,3 +7505,6 @@ body.visor-abierto { overflow: hidden; }
     padding: clamp(4rem, 7vw, 6rem) 0;
     background: var(--bg-section-alt);
 }
+
+/* El banner de la página WAE va sobre el fondo claro base */
+.banner-wae { padding: clamp(3rem, 5vw, 4.5rem) 0 0; }
