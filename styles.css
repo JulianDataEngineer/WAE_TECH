@@ -3882,7 +3882,7 @@ a.contact-method:hover {
 .footer-top-link .material-symbols-outlined { font-size: 20px; }
 
 @media (max-width: 860px) {
-    .footer-social-link { flex: 1 1 calc(50% - 0.5rem); justify-content: space-between; padding: 0.75rem 0.75rem 0.75rem 1.25rem; font-size: 0.95rem; gap: 0.6rem; }
+    .footer-social-link { flex: 0 1 calc(50% - 0.5rem); justify-content: space-between; padding: 0.75rem 0.75rem 0.75rem 1.25rem; font-size: 0.95rem; gap: 0.6rem; }
     .fs-icon { width: 40px; height: 40px; }
     .footer-bottom { flex-wrap: wrap; }
     .footer-bottom > * { justify-content: center; text-align: center; }
