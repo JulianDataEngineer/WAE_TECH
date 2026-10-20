@@ -41,6 +41,7 @@ jobs:
           # visitante arrastra la hoja vieja hasta 7 días pese a la invalidación.
           aws s3 sync . "s3://$BUCKET" \
             --exclude "*" --include "*.css" --include "*.js" \
+            --include "robots.txt" --include "sitemap.xml" \
             --exclude ".*" --exclude "*/.*" --exclude "deploy.sh" \
             --exclude "wae-webhook-connector.js" \
             --cache-control "public, max-age=0, must-revalidate"
@@ -51,6 +52,7 @@ jobs:
           # nombre: CloudFront no añade index.html en subcarpetas, así que el
           # archivo se sube aparte declarando su tipo de contenido.
           for p in \
+            partners \
             partners/pod-administrado \
             empresas \
             empresas/diagnostico \

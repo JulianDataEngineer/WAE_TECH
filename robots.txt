@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Cada página se sirve con y sin extensión. No se bloquean las .html a
+# propósito: si el rastreador no puede abrirlas, tampoco lee su etiqueta
+# canónica, que es la que indica cuál es la dirección buena.
+
+Sitemap: https://www.waengineers.co/sitemap.xml
