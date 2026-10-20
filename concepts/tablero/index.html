@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>WAE — Data &amp; AI Engineering · Propuesta A: Tablero de control</title>
+<meta name="description" content="WAE conecta correo, hojas de cálculo, ERP y banco en flujos que operan solos donde es seguro y se detienen donde hace falta criterio humano. Diagnóstico de un proceso crítico en 10 días hábiles.">
+<meta name="theme-color" content="#1C2420">
+<link rel="icon" type="image/png" href="../assets/wae-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@400;500&family=Nanum+Pen+Script&family=Schibsted+Grotesk:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#contenido">Saltar al contenido</a>
+
+<header class="rack">
+  <a class="rack-logo" href="#inicio" aria-label="WAE, volver al inicio">
+    <img src="../assets/wae-logo.webp" width="660" height="315" alt="WAE — World AI Engineers">
+  </a>
+  <nav class="rack-nav" aria-label="Secciones">
+    <ul>
+      <li><a href="#diagnostico">Diagnóstico</a></li>
+      <li><a href="#controles">Controles</a></li>
+      <li><a href="#metodo">Método</a></li>
+      <li><a href="#partners">Partners</a></li>
+      <li><a href="#evidencia">Evidencia</a></li>
+    </ul>
+  </nav>
+  <a class="btn btn-amber rack-cta" href="mailto:proyectos@waengineers.co?subject=Solicitud%20de%20Diagn%C3%B3stico%20de%2010%20d%C3%ADas">Solicitar diagnóstico</a>
+</header>
+
+<main id="contenido" tabindex="-1">
+
+  <section class="hero" id="inicio" aria-labelledby="hero-title">
+    <div class="hero-copy">
+      <h1 id="hero-title">La IA mueve lo seguro. <span>Una persona decide el&nbsp;resto.</span></h1>
+      <p class="lede">WAE es una firma de Data &amp; AI Engineering. Conectamos correo, hojas de cálculo, ERP y banco en flujos que operan solos donde es seguro y se detienen donde hace falta criterio.</p>
+      <div class="actions">
+        <a class="btn btn-amber" href="mailto:proyectos@waengineers.co?subject=Solicitud%20de%20Diagn%C3%B3stico%20de%2010%20d%C3%ADas">Solicitar diagnóstico de 10 días</a>
+      </div>
+    </div>
+
+    <div class="board" id="board">
+      <div class="board-head">
+        <p class="board-title">Conciliación de facturas</p>
+        <p class="board-demo">Fichas de demostración con datos ficticios</p>
+        <button class="btn-rail" id="replay" type="button">Repetir</button>
+      </div>
+      <div class="bays">
+        <div class="bay">
+          <p class="bay-title"><span class="dot dot-blue" aria-hidden="true"></span>Entra</p>
+          <ol class="rail" id="bay-in" aria-label="Fichas que entran"></ol>
+        </div>
+        <div class="bay">
+          <p class="bay-title"><span class="dot dot-amber" aria-hidden="true"></span>Retenido · decisión humana</p>
+          <ol class="rail" id="bay-hold" aria-label="Fichas retenidas para decisión humana"></ol>
+        </div>
+        <div class="bay">
+          <p class="bay-title"><span class="dot dot-green" aria-hidden="true"></span>Cerrado</p>
+          <ol class="rail" id="bay-done" aria-label="Fichas cerradas"></ol>
+        </div>
+      </div>
+      <p class="board-status" id="board-status" role="status" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <section class="section problem" aria-labelledby="problem-title">
+    <div class="section-head">
+      <h2 id="problem-title">Hoy el trabajo no tiene tablero.</h2>
+      <p>Los procesos críticos viven entre bandejas de correo, archivos compartidos y sistemas que no se hablan. Nadie ve el estado completo, y las excepciones no tienen dueño.</p>
+    </div>
+    <ul class="loose">
+      <li class="strip strip-loose"><span class="strip-code">Sin dueño</span><span class="strip-text">Correos que alguien reenvía para que otro los resuelva</span></li>
+      <li class="strip strip-loose"><span class="strip-code">Sin fuente única</span><span class="strip-text">Hojas de cálculo que sostienen la operación sin estar declaradas</span></li>
+      <li class="strip strip-loose"><span class="strip-code">Sin conexión</span><span class="strip-text">ERP, WMS, CRM y banco cruzados a mano</span></li>
+      <li class="strip strip-loose"><span class="strip-code">Sin controles</span><span class="strip-text">Presión por usar IA antes de tener datos, reglas y responsables</span></li>
+    </ul>
+  </section>
+
+  <section class="section offer" id="diagnostico" aria-labelledby="offer-title">
+    <div class="offer-copy">
+      <h2 id="offer-title">Un proceso crítico, diagnosticado en 10&nbsp;días hábiles.</h2>
+      <p>Antes de elegir tecnología medimos la operación real y diseñamos la arquitectura ejecutable para integrarla, automatizarla y operarla con controles.</p>
+      <dl class="spec">
+        <div><dt>Alcance</dt><dd>Un proceso, un área, un conjunto acotado de sistemas</dd></div>
+        <div><dt>Muestra</dt><dd>Hasta 10.000 registros representativos</dd></div>
+        <div><dt>Entorno</dt><dd>Sandbox aislado. Nunca en producción</dd></div>
+        <div><dt>Entrega</dt><dd>Mapa actual, matriz de riesgo, blueprint, prototipo y caso económico con supuestos explícitos</dd></div>
+      </dl>
+      <a class="btn btn-amber" href="mailto:proyectos@waengineers.co?subject=Solicitud%20de%20Diagn%C3%B3stico%20de%2010%20d%C3%ADas">Solicitar diagnóstico</a>
+    </div>
+    <ol class="schedule" aria-label="Cronograma del diagnóstico">
+      <li class="strip strip-plan" data-reveal><span class="strip-code">Días 1–3</span><span class="strip-text"><strong>Inmersión.</strong> Levantamiento del proceso real, muestra de datos y mapa del estado actual con su matriz de riesgo.</span></li>
+      <li class="strip strip-plan" data-reveal><span class="strip-code">Días 4–5</span><span class="strip-text"><strong>Diseño.</strong> Blueprint de la arquitectura objetivo, comparado con alternativas más simples.</span></li>
+      <li class="strip strip-plan" data-reveal><span class="strip-code">Días 6–8</span><span class="strip-text"><strong>Prototipo.</strong> Un flujo crítico funcionando en sandbox, verificable por su líder técnico.</span><span class="pencil" aria-hidden="true">nunca en producción</span></li>
+      <li class="strip strip-plan" data-reveal><span class="strip-code">Días 9–10</span><span class="strip-text"><strong>Caso económico.</strong> Supuestos explícitos, sesión ejecutiva y propuesta de implementación.</span></li>
+    </ol>
+  </section>
+
+  <section class="section controls" id="controles" aria-labelledby="controls-title">
+    <div class="section-head">
+      <h2 id="controls-title">Controles antes que autonomía.</h2>
+      <p>Cada componente de IA opera dentro de límites escritos. Y compite contra reglas e integraciones simples: entra solo cuando aporta más que ellas.</p>
+    </div>
+    <ul class="ctl-row">
+      <li class="ctl"><span class="ctl-k">Permisos</span><span class="ctl-v">El sistema solo toca lo que tiene declarado.</span></li>
+      <li class="ctl"><span class="ctl-k">Umbral de confianza</span><span class="ctl-v">Bajo el umbral, no actúa: retiene.</span></li>
+      <li class="ctl"><span class="ctl-k">Límite económico</span><span class="ctl-v">Sobre el monto tope, decide una persona.</span></li>
+      <li class="ctl ctl-human"><span class="ctl-k">Aprobación humana</span><span class="ctl-v">En el punto exacto, con el contexto preparado.</span><span class="pencil" aria-hidden="true">aquí firma alguien</span></li>
+      <li class="ctl"><span class="ctl-k">Auditoría</span><span class="ctl-v">Entrada, decisión, responsable y hora quedan registrados.</span></li>
+    </ul>
+  </section>
+
+  <section class="section method" id="metodo" aria-labelledby="method-title">
+    <div class="section-head">
+      <h2 id="method-title">Una ficha, seis tramos.</h2>
+      <p>El método en seis pasos: el mismo trabajo pasa por cada tramo, y ninguno se salta.</p>
+    </div>
+    <ol class="progress" id="progress">
+      <li class="leg"><span class="leg-n">01</span><span class="leg-t">Diagnosticar</span><span class="leg-d">Línea base medida sobre una muestra real.</span></li>
+      <li class="leg"><span class="leg-n">02</span><span class="leg-t">Diseñar</span><span class="leg-d">Arquitectura proporcional, comparada con alternativas.</span></li>
+      <li class="leg"><span class="leg-n">03</span><span class="leg-t">Validar</span><span class="leg-d">Prototipo en sandbox con criterios acordados.</span></li>
+      <li class="leg"><span class="leg-n">04</span><span class="leg-t">Construir</span><span class="leg-d">Implementación incremental con revisión y pruebas.</span></li>
+      <li class="leg"><span class="leg-n">05</span><span class="leg-t">Gobernar</span><span class="leg-d">Permisos, umbrales, aprobación humana y trazabilidad.</span></li>
+      <li class="leg"><span class="leg-n">06</span><span class="leg-t">Operar</span><span class="leg-d">Monitoreo, documentación y transferencia.</span></li>
+    </ol>
+  </section>
+
+  <section class="section partners" id="partners" aria-labelledby="partners-title">
+    <div class="partners-copy">
+      <h2 id="partners-title">Para consultoras e integradores: capacidad con supervisión.</h2>
+      <p>El Pod Administrado de Data Engineering suma una célula a su proyecto con arquitectura y control de calidad incluidos. No es alquiler de perfiles.</p>
+      <a class="btn btn-paper" href="mailto:proyectos@waengineers.co?subject=Evaluaci%C3%B3n%20de%20Pod%20Administrado">Evaluar un pod</a>
+    </div>
+    <div class="compare-wrap">
+      <table class="compare">
+        <caption>Pod administrado frente a staffing tradicional</caption>
+        <thead><tr><th scope="col">Qué recibe</th><th scope="col">Pod WAE</th><th scope="col">Staffing</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Evaluación técnica de los perfiles</th><td>Incluida</td><td>Variable</td></tr>
+          <tr><th scope="row">Supervisión arquitectónica</th><td>Incluida</td><td>A cargo de su líder</td></tr>
+          <tr><th scope="row">Estándares y revisión de código</th><td>Incluidos</td><td>A cargo de su equipo</td></tr>
+          <tr><th scope="row">Documentación y gestión de conocimiento</th><td>Incluidas</td><td>No garantizadas</td></tr>
+          <tr><th scope="row">Continuidad ante rotación</th><td>Plan de empalme</td><td>Se reinicia</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section evidence" id="evidencia" aria-labelledby="evidence-title">
+    <div class="section-head">
+      <h2 id="evidence-title">Lo que podemos mostrar. Y lo que todavía no.</h2>
+      <p>WAE publica solo lo que puede respaldar. Separamos la experiencia previa del equipo de los proyectos contratados por WAE.</p>
+    </div>
+
+    <div class="evidence-grid">
+      <div class="panel">
+        <h3>Experiencia previa del equipo</h3>
+        <ul class="logos">
+          <li><img src="../../cinte.png" width="225" height="225" alt="Grupo Cinte" loading="lazy"></li>
+          <li><img src="../../Credi.png" width="500" height="500" alt="Credibanco" loading="lazy"></li>
+          <li><img src="../../gt.png" width="5516" height="1772" alt="Globaltask" loading="lazy"></li>
+          <li><img src="../../indra.jpg" width="1400" height="720" alt="Indra" loading="lazy"></li>
+          <li><img src="../../sky.webp" width="1200" height="1200" alt="Organización de experiencia previa del equipo (nombre por verificar)" loading="lazy"></li>
+          <li><img src="../../Sophos.png" width="685" height="594" alt="Sophos Solutions" loading="lazy"></li>
+          <li><img src="../../Tali.jpg" width="200" height="181" alt="Talycap Global" loading="lazy"></li>
+        </ul>
+        <p class="panel-note">Organizaciones donde integrantes del equipo participaron antes de WAE. No son clientes de WAE.</p>
+      </div>
+
+      <div class="panel">
+        <h3>Certificaciones del equipo</h3>
+        <ul class="certs">
+          <li><img src="../../aws-certified-cloud-practitioner.png" width="120" height="120" alt="AWS Certified Cloud Practitioner" loading="lazy"></li>
+          <li><img src="../../aws-certified-data-engineer-associate.png" width="120" height="120" alt="AWS Certified Data Engineer – Associate" loading="lazy"></li>
+        </ul>
+      </div>
+
+      <div class="panel">
+        <h3>Casos contratados por WAE</h3>
+        <ol class="rail rail-static">
+          <li class="slot">Ranura libre</li>
+        </ol>
+        <p class="panel-note">Aún no hay casos contratados por WAE para publicar. Preferimos una ranura vacía a un caso inventado.</p>
+      </div>
+    </div>
+
+    <div class="team">
+      <img class="team-photo" src="../assets/founder-bust.webp" width="640" height="960" alt="Ilustración del fundador de WAE con camiseta de la marca" loading="lazy">
+      <div class="team-copy">
+        <h3 class="team-line">Un núcleo de cinco ingenieros en Bogotá, con experiencia en datos, integración, cloud y automatización, dirigido por el fundador de WAE.</h3>
+        <p class="note-hand" aria-hidden="true">sin promesas que no podamos medir</p>
+        <p class="team-promise">No prometemos ahorros no medidos, automatización total ni retornos garantizados.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section close" id="contacto" aria-labelledby="close-title">
+    <div class="close-card">
+      <h2 id="close-title">Ponga un proceso sobre el tablero.</h2>
+      <p>Cuéntenos cuál proceso le cuesta más hoy. Respondemos con una propuesta de diagnóstico de alcance cerrado.</p>
+      <div class="actions">
+        <a class="btn btn-amber" href="mailto:proyectos@waengineers.co?subject=Solicitud%20de%20Diagn%C3%B3stico%20de%2010%20d%C3%ADas">Solicitar diagnóstico</a>
+        <a class="link-ink" href="tel:+573123757140">+57 312 375 7140</a>
+      </div>
+      <p class="close-meta">proyectos@waengineers.co · Bogotá, Colombia · remoto</p>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <img src="../assets/wae-logo.webp" width="660" height="315" alt="WAE" loading="lazy">
+  <p>Data &amp; AI Engineering · ingeniería confiable para convertir complejidad en capacidad.</p>
+  <p class="foot-meta">© 2026 WAE · <a href="../">Ver las tres propuestas</a></p>
+</footer>
+
+<script src="main.js" defer></script>
+</body>
+</html>

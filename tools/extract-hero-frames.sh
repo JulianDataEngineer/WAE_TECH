@@ -25,10 +25,21 @@ extraer () {  # $1=nombre  $2=nº fotogramas  $3=ancho  $4=calidad
   local fps; fps=$(python3 -c "print($n/$DUR)")
   rm -rf "$dir"; mkdir -p "$dir"
   echo "  $1: $n fotogramas a ${w}px (q=$q, fps=$fps)"
-  ffmpeg -v error -i "$VIDEO" \
-    -vf "fps=$fps,scale=$w:-2:flags=lanczos" \
-    -c:v libwebp -lossless 0 -quality "$q" -preset picture \
-    -frames:v "$n" "$dir/f%04d.webp" -y
+  if ffmpeg -hide_banner -encoders 2>/dev/null | grep -q libwebp; then
+    ffmpeg -v error -i "$VIDEO" \
+      -vf "fps=$fps,scale=$w:-2:flags=lanczos" \
+      -c:v libwebp -lossless 0 -quality "$q" -preset picture \
+      -frames:v "$n" "$dir/f%04d.webp" -y
+  else
+    # FFmpeg sin libwebp (p. ej. Homebrew): PNG intermedio y cwebp en paralelo
+    command -v cwebp >/dev/null || { echo "falta libwebp en ffmpeg o cwebp"; exit 1; }
+    local tmp; tmp=$(mktemp -d)
+    ffmpeg -v error -i "$VIDEO" -vf "fps=$fps,scale=$w:-2:flags=lanczos" \
+      -frames:v "$n" "$tmp/f%04d.png" -y
+    ls "$tmp"/*.png | xargs -P 8 -I{} sh -c \
+      'f="{}"; cwebp -quiet -q '"$q"' -preset picture "$f" -o "'"$dir"'/$(basename "${f%.png}").webp"'
+    rm -rf "$tmp"
+  fi
   echo "     -> $(ls "$dir" | wc -l) archivos, $(du -sh "$dir" | cut -f1)"
 }
 
@@ -39,10 +50,10 @@ extraer mobile  "$N_MOBILE"  "$W_MOBILE"  "$Q_MOBILE"
 cp "$OUT/desktop/f0001.webp" "$OUT/poster.webp"
 
 # Manifiesto con las cuentas REALES en disco, no las pedidas
-python3 - "$OUT" "$DUR" <<'PY'
+python3 - "$OUT" "$DUR" "$(basename "$VIDEO")" <<'PY'
 import json, os, sys, glob
-out, dur = sys.argv[1], float(sys.argv[2])
-m = {"source": "wae video final.mp4", "duration": round(dur, 3), "poster": f"{out}/poster.webp", "variants": {}}
+out, dur, src = sys.argv[1], float(sys.argv[2]), sys.argv[3]
+m = {"source": src, "duration": round(dur, 3), "poster": f"{out}/poster.webp", "variants": {}}
 for name in ("desktop", "mobile"):
     fs = sorted(glob.glob(f"{out}/{name}/*.webp"))
     if not fs: continue

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>WAE — Data &amp; AI Engineering · Propuesta C: Rótulo de depósito</title>
+<meta name="description" content="Cada caso con destino. WAE integra correo, hojas de cálculo, ERP y banco en flujos automáticos con permisos, umbrales, aprobación humana y trazabilidad. Diagnóstico de un proceso crítico en 10 días hábiles.">
+<meta name="theme-color" content="#0E3A2E">
+<link rel="icon" type="image/png" href="../assets/wae-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Libre+Franklin:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#contenido">Saltar al contenido</a>
+
+<div class="depot">
+  <header class="tape">
+    <a class="tape-logo" href="#inicio" aria-label="WAE, volver al inicio">
+      <img src="../assets/wae-logo-cut.webp" width="660" height="315" alt="WAE — World AI Engineers">
+    </a>
+    <nav class="tape-nav" aria-label="Índice del rótulo">
+      <ol>
+        <li><a href="#inicio" aria-current="true"><span class="n">01</span>Destino</a></li>
+        <li><a href="#diagnostico"><span class="n">02</span>Diagnóstico</a></li>
+        <li><a href="#controles"><span class="n">03</span>Controles</a></li>
+        <li><a href="#metodo"><span class="n">04</span>Método</a></li>
+        <li><a href="#partners"><span class="n">05</span>Partners</a></li>
+        <li><a href="#evidencia"><span class="n">06</span>Evidencia</a></li>
+      </ol>
+    </nav>
+    <svg class="eyelets" aria-hidden="true" focusable="false">
+      <defs>
+        <pattern id="eyelet" width="28" height="40" patternUnits="userSpaceOnUse">
+          <circle cx="14" cy="20" r="7" fill="#0A2C22" stroke="#155441" stroke-width="3.5"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#eyelet)"/>
+    </svg>
+  </header>
+
+  <main id="contenido" tabindex="-1">
+
+    <!-- 01 · La ventana del rótulo a todo el ancho -->
+    <section class="hero" id="inicio" aria-labelledby="hero-title">
+      <div class="blind">
+        <p class="blind-frame"><span><span class="frame-label">Rótulo de demostración · </span><span id="blind-pos">Curso 01</span></span><span class="frame-dest">Destino: Diagnóstico · 10 días</span></p>
+        <div class="blind-window" id="blind-window" aria-hidden="true">
+          <ol class="roll" id="blind-roll"></ol>
+        </div>
+        <div class="blind-controls">
+          <p class="blind-status" id="blind-status" role="status" aria-live="polite"></p>
+          <div class="blind-buttons">
+            <button class="btn btn-yellow cut" id="blind-approve" type="button" disabled>Aprobar y avanzar</button>
+            <button class="btn btn-line btn-line-light" id="blind-replay" type="button">Repetir</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="calico hero-panel cut">
+        <div class="hero-text">
+          <h1 id="hero-title">Cada caso con destino.</h1>
+          <p class="lede">WAE es una firma de Data &amp; AI Engineering. Integramos correo, hojas de cálculo, ERP y banco en flujos que avanzan solos y se detienen, a medio paso, cuando hace falta una persona.</p>
+          <div class="actions">
+            <a class="btn btn-green cut" href="mailto:proyectos@waengineers.co?subject=Solicitud%20de%20Diagn%C3%B3stico%20de%2010%20d%C3%ADas">Solicitar diagnóstico de 10 días</a>
+          </div>
+        </div>
+        <dl class="ticket" aria-label="Boleto del diagnóstico">
+          <div class="ticket-main"><dt>Destino</dt><dd>Diagnóstico</dd></div>
+          <div><dt>Plazo</dt><dd>10 días hábiles</dd></div>
+          <div><dt>Muestra</dt><dd>≤ 10.000 registros</dd></div>
+          <div><dt>Entorno</dt><dd>Sandbox, nunca producción</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- Problema -->
+    <section class="calico problem" aria-labelledby="problem-title">
+      <h2 id="problem-title">Hoy muchos casos salen sin destino.</h2>
+      <ul class="board">
+        <li><span class="board-from">Correos reenviados</span><span class="board-to cut">Sin dueño</span></li>
+        <li><span class="board-from">Hojas de cálculo</span><span class="board-to cut">Sin fuente única</span></li>
+        <li><span class="board-from">ERP, WMS, CRM y banco</span><span class="board-to cut">Cruzados a mano</span></li>
+        <li><span class="board-from">IA sin datos ni reglas</span><span class="board-to cut">Sin controles</span></li>
+      </ul>
+    </section>
+
+    <!-- 02 · Diagnóstico -->
+    <section class="split" id="diagnostico" aria-labelledby="offer-title">
+      <div class="calico split-copy">
+        <h2 id="offer-title">Diagnóstico de un proceso crítico en 10 días hábiles.</h2>
+        <p>Medimos la operación real antes de elegir tecnología. Un proceso, un área, un conjunto acotado de sistemas y una muestra de hasta 10.000 registros, trabajada en sandbox y nunca en producción.</p>
+        <p>Entregamos mapa del estado actual, matriz de riesgo, blueprint de arquitectura, prototipo acotado y caso económico con supuestos explícitos.</p>
+        <a class="btn btn-green cut" href="mailto:proyectos@waengineers.co?subject=Solicitud%20de%20Diagn%C3%B3stico%20de%2010%20d%C3%ADas">Solicitar diagnóstico</a>
+      </div>
+      <ol class="courses" aria-label="Cronograma del diagnóstico">
+        <li class="course"><span class="c-no">01–03</span><span class="c-name">Inmersión</span><span class="c-note">Mapa actual y matriz de riesgo</span></li>
+        <li class="course"><span class="c-no">04–05</span><span class="c-name">Diseño</span><span class="c-note">Blueprint frente a alternativas simples</span></li>
+        <li class="course"><span class="c-no">06–08</span><span class="c-name">Prototipo</span><span class="c-note">Un flujo crítico en sandbox</span></li>
+        <li class="course"><span class="c-no">09–10</span><span class="c-name">Caso económico</span><span class="c-note">Supuestos explícitos y sesión ejecutiva</span></li>
+      </ol>
+    </section>
+
+    <!-- 03 · Controles, con el curso detenido -->
+    <section class="split" id="controles" aria-labelledby="ctl-title">
+      <div class="calico split-copy">
+        <h2 id="ctl-title">Una parada a medio paso no es una falla. Es el control.</h2>
+        <p>La IA avanza solo lo que puede respaldar. Se compara contra reglas e integraciones simples y opera dentro de cinco controles.</p>
+      </div>
+      <ol class="courses" aria-label="Controles de un flujo gobernado">
+        <li class="course"><span class="c-name">Permisos</span><span class="c-note">Solo toca lo declarado</span></li>
+        <li class="course"><span class="c-name">Umbral de confianza</span><span class="c-note">Bajo el umbral, retiene</span></li>
+        <li class="course"><span class="c-name">Límite económico</span><span class="c-note">Sobre el tope, decide una persona</span></li>
+        <li class="course course-stalled">
+          <span class="sr">Aprobación humana: el curso se detiene a medio paso hasta que una persona decide, con el contexto preparado.</span>
+          <div class="stall-window" aria-hidden="true">
+            <div class="stall-roll">
+              <div class="stall-row"><span class="stall-top">Retenido</span></div>
+              <div class="stall-row"><span class="stall-top">Aprobación</span></div>
+            </div>
+          </div>
+          <span class="stall-note" aria-hidden="true">Aprobación humana: el curso se detiene a medio paso, con el contexto preparado.</span>
+        </li>
+        <li class="course"><span class="c-name">Auditoría</span><span class="c-note">Decisión, responsable y hora</span></li>
+      </ol>
+    </section>
+
+    <!-- 04 · Método -->
+    <section class="method" id="metodo" aria-labelledby="method-title">
+      <h2 id="method-title" class="legend-bar cut">El método en seis pasos</h2>
+      <ol class="method-roll" id="method-list">
+        <li class="is-lead"><span class="m-no">01</span><span class="m-name">Diagnosticar</span><span class="m-note">Línea base medida sobre una muestra real</span></li>
+        <li><span class="m-no">02</span><span class="m-name">Diseñar</span><span class="m-note">Arquitectura proporcional, comparada con alternativas</span></li>
+        <li><span class="m-no">03</span><span class="m-name">Validar</span><span class="m-note">Prototipo en sandbox con criterios acordados</span></li>
+        <li><span class="m-no">04</span><span class="m-name">Construir</span><span class="m-note">Entregas incrementales con revisión y pruebas</span></li>
+        <li><span class="m-no">05</span><span class="m-name">Gobernar</span><span class="m-note">Permisos, umbrales, aprobación humana y trazabilidad</span></li>
+        <li><span class="m-no">06</span><span class="m-name">Operar</span><span class="m-note">Monitoreo, documentación y transferencia</span></li>
+      </ol>
+    </section>
+
+    <!-- 05 · Partners -->
+    <section class="split split-rev" id="partners" aria-labelledby="partners-title">
+      <div class="calico split-copy">
+        <h2 id="partners-title">Para consultoras e integradores: el Pod Administrado.</h2>
+        <p>Una célula de Data Engineering se integra a su proyecto con evaluación técnica, supervisión arquitectónica, estándares, documentación y plan de continuidad. No es alquiler de perfiles.</p>
+        <a class="btn btn-green cut" href="mailto:proyectos@waengineers.co?subject=Evaluaci%C3%B3n%20de%20Pod%20Administrado">Evaluar un pod</a>
+      </div>
+      <div class="pod-blind">
+        <table class="pod">
+          <caption class="sr">Pod administrado frente a staffing tradicional</caption>
+          <thead><tr><th scope="col">Qué recibe su proyecto</th><th scope="col">Pod WAE</th><th scope="col">Staffing</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Evaluación técnica de perfiles</th><td>Incluida</td><td>Depende del proveedor</td></tr>
+            <tr><th scope="row">Supervisión arquitectónica</th><td>A cargo de WAE</td><td>A cargo de su líder técnico</td></tr>
+            <tr><th scope="row">Estándares y revisión de código</th><td>Definidos por WAE</td><td>A cargo de su equipo</td></tr>
+            <tr><th scope="row">Documentación y conocimiento</th><td>Parte de la entrega</td><td>No garantizada</td></tr>
+            <tr><th scope="row">Rotación de un integrante</th><td>Plan de empalme</td><td>Se empieza de nuevo</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 06 · Evidencia -->
+    <section class="evidence" id="evidencia" aria-labelledby="evidence-title">
+      <div class="calico evidence-head">
+        <h2 id="evidence-title">Lo que está en el rollo. Y lo que todavía no.</h2>
+        <p>WAE publica solo lo que puede respaldar y separa la experiencia previa del equipo de los proyectos contratados por WAE.</p>
+      </div>
+
+      <div class="evidence-grid">
+        <div class="mat">
+          <h3>Experiencia previa del equipo</h3>
+          <ul class="logos">
+            <li><img src="../../cinte.png" width="225" height="225" alt="Grupo Cinte" loading="lazy"></li>
+            <li><img src="../../Credi.png" width="500" height="500" alt="Credibanco" loading="lazy"></li>
+            <li><img src="../../gt.png" width="5516" height="1772" alt="Globaltask" loading="lazy"></li>
+            <li><img src="../../indra.jpg" width="1400" height="720" alt="Indra" loading="lazy"></li>
+            <li><img src="../../sky.webp" width="1200" height="1200" alt="Organización de experiencia previa del equipo (nombre por verificar)" loading="lazy"></li>
+            <li><img src="../../Sophos.png" width="685" height="594" alt="Sophos Solutions" loading="lazy"></li>
+            <li><img src="../../Tali.jpg" width="200" height="181" alt="Talycap Global" loading="lazy"></li>
+          </ul>
+          <p class="mat-note">Organizaciones donde integrantes del equipo participaron antes de WAE. No son clientes de WAE.</p>
+        </div>
+
+        <div class="mat">
+          <h3>Certificaciones del equipo</h3>
+          <div class="certs">
+            <img src="../../aws-certified-cloud-practitioner.png" width="96" height="96" alt="AWS Certified Cloud Practitioner" loading="lazy">
+            <img src="../../aws-certified-data-engineer-associate.png" width="96" height="96" alt="AWS Certified Data Engineer – Associate" loading="lazy">
+          </div>
+        </div>
+
+        <div class="blank">
+          <h3>Casos contratados por WAE: <span class="blank-v">curso sin imprimir</span></h3>
+          <p>Aún no hay casos contratados por WAE para publicar. Preferimos un curso en blanco a un caso inventado.</p>
+        </div>
+
+        <figure class="mat mat-founder">
+          <img src="../assets/founder-cut.webp" width="540" height="1340" alt="Ilustración del fundador de WAE" loading="lazy">
+          <figcaption>El fundador de WAE dirige un núcleo de cinco ingenieros en Bogotá.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- Cierre -->
+    <section class="closing" id="contacto" aria-labelledby="close-title">
+      <h2 id="close-title" class="closing-legend">Próximo destino: su proceso.</h2>
+      <div class="calico closing-panel cut">
+        <p>Cuéntenos cuál proceso le cuesta más hoy. Respondemos con una propuesta de diagnóstico de alcance cerrado.</p>
+        <div class="actions">
+          <a class="btn btn-green cut" href="mailto:proyectos@waengineers.co?subject=Solicitud%20de%20Diagn%C3%B3stico%20de%2010%20d%C3%ADas">Solicitar diagnóstico</a>
+          <a class="link" href="tel:+573123757140">+57 312 375 7140</a>
+        </div>
+        <p class="closing-meta">proyectos@waengineers.co · Bogotá, Colombia · remoto</p>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <p>WAE · Data &amp; AI Engineering · © 2026</p>
+      <p><a href="../">Ver las tres propuestas</a></p>
+    </footer>
+  </main>
+</div>
+
+<script src="main.js" defer></script>
+</body>
+</html>

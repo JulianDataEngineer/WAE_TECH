@@ -29,3 +29,44 @@ id_*
 
 # Video del hero: retirado del sitio, se conserva en local
 hero-video.mp4
+
+# Impeccable: el launcher descarga el motor binario (~12 MB) en el primer uso
+.claude/skills/impeccable/scripts/bin/
+.impeccable/live/sessions/
+.impeccable/live/inject-journal.json
+.impeccable/live/roots.json
+.impeccable/config.local.json
+
+# Claude Code: preferencias locales de cada máquina
+.claude/settings.local.json
+
+# Playwright: artefactos de pruebas
+test-results/
+playwright-report/
+# Impeccable: capturas de inspección y caché del hook (se regeneran)
+.impeccable/review/
+.impeccable/hook.cache.json
+
+# Credenciales: nunca al repositorio
+clave*.sh
+tools/clave*.sh
+.aws/
+*.credentials
+
+# Playwright MCP: registros de sesión
+.playwright-mcp/
+
+# Hero 3D: intermedios pesados que se regeneran con los scripts de tools/hero-3d
+tools/hero-3d/assets/bg.mp4
+tools/hero-3d/assets/plate.mp4
+tools/hero-3d/assets/hands/passes/
+tools/hero-3d/assets/hands/pov.mp4
+tools/hero-3d/assets/hands/pov-hands.webm
+tools/hero-3d/assets/seq/pon/
+tools/hero-3d/assets/seq/pov/
+tools/hero-3d/assets/seq/quita/
+tools/hero-3d/assets/video/clip2-abre.mp4
+tools/hero-3d/assets/video/gen.log
+tools/hero-3d/research/log.txt
+tools/hero-3d/.hyperframes/
+tools/hero-3d/assets/seq/_*.mp4

@@ -1,0 +1,99 @@
+{
+  "version": 1,
+  "status": "reemplazado el 2026-10-17: al usuario no le gustó el video editado (apagado, aburrido). La fuente del hero es ahora la escena 3D de tools/hero-3d/index.html, con los mismos 7 capítulos. Este archivo queda como registro del análisis del video anterior.",
+  "source": {
+    "file": "wae video final.mp4",
+    "location": "máquina Ubuntu: /home/wae/Documents/videos wae/ (no está en el Mac)",
+    "duration_s": 87.678,
+    "published_frames": { "desktop": 240, "mobile": 120, "desktop_width_px": 1600, "seconds_per_frame": 0.3653 },
+    "known_defects": [
+      "Marca de agua WAE incrustada abajo a la derecha (x ≥ 80 %, y 72–91 % del cuadro) durante casi todo el video",
+      "Logo de IBM dentro de una nube en el diagrama de integración (≈ 60,3–63,9 s)",
+      "Textos sin sentido generados por IA en paneles ('Coliper Rook', 'Architery guide')",
+      "Solo 2,7 fotogramas por segundo de video en la web: el movimiento salta"
+    ]
+  },
+
+  "current_sequence": [
+    { "id": "S01", "t": [0.0, 4.0],   "frames": [1, 12],    "content": "Mujer (blazer oscuro) en oficina oscura se pone las gafas de realidad mixta; acercamiento al visor", "verdict": "keep",  "reason": "Entrada humana a la capa de datos: abre el relato" },
+    { "id": "S02", "t": [4.4, 5.5],   "frames": [13, 16],   "content": "Negro con una línea teal en esquina", "verdict": "cut", "reason": "No comunica nada" },
+    { "id": "S03", "t": [5.8, 12.1],  "frames": [17, 34],   "content": "Red de triángulos y líneas blancas sobre negro", "verdict": "cut", "reason": "Decorativo, 6 s sin contenido de negocio (señalado por el usuario)" },
+    { "id": "S04", "t": [12.4, 14.3], "frames": [35, 40],   "content": "Disolvencia de la red a oficina con paneles de vidrio", "verdict": "cut", "reason": "Transición de S03" },
+    { "id": "S05", "t": [14.6, 23.0], "frames": [41, 64],   "content": "Paneles de vidrio con gráficas giran y se ordenan en una oficina oscura", "verdict": "trim", "keep": [14.6, 21.0], "reason": "Analítica que se arma; demasiado larga" },
+    { "id": "S06", "t": [23.4, 25.9], "frames": [65, 72],   "content": "Paneles apilados + glitch hacia el hombre", "verdict": "cut", "reason": "Glitch decorativo" },
+    { "id": "S07", "t": [26.3, 33.3], "frames": [73, 92],   "content": "Hombre con gafas manipula paneles que pasan al monitor", "verdict": "keep", "reason": "Persona tomando decisiones con los datos" },
+    { "id": "S08", "t": [33.6, 34.7], "frames": [93, 96],   "content": "Láminas de vidrio cruzan; cambio a escritorio con lámpara", "verdict": "transition", "reason": "Se reemplaza por disolvencia corta" },
+    { "id": "S09", "t": [35.1, 40.6], "frames": [97, 112],  "content": "Panel 'Document Assistant': línea teal enruta documentos", "verdict": "keep", "reason": "IA como componente dentro de un flujo" },
+    { "id": "S10", "t": [40.9, 43.1], "frames": [113, 119], "content": "Glitch del panel", "verdict": "cut", "reason": "Decorativo" },
+    { "id": "S11", "t": [43.5, 52.6], "frames": [120, 145], "content": "Paneles flotantes convergen en un solo monitor con dashboard claro", "verdict": "keep", "reason": "Todo converge en un sistema" },
+    { "id": "S12", "t": [53.0, 58.1], "frames": [146, 160], "content": "Negro, planeta, Tierra, flash blanco, nubes", "verdict": "cut", "reason": "Sin relación con el negocio; flash blanco agresivo" },
+    { "id": "S13", "t": [58.5, 60.0], "frames": [161, 165], "content": "Atrio: documentos sueltos (orden CRM, factura ERP, prueba de entrega)", "verdict": "keep_move", "reason": "Es el caso demostrativo de WAE (conciliación de facturas vs órdenes). Debe ir al principio: el problema antes de la solución" },
+    { "id": "S14", "t": [60.3, 63.9], "frames": [166, 176], "content": "Diagrama 'Integrar / Validar / Entregar' con logo IBM y texto sin sentido", "verdict": "cut", "reason": "Marca de tercero que sugiere alianza inexistente" },
+    { "id": "S15", "t": [64.3, 66.1], "frames": [177, 182], "content": "Atrio con líneas teal que conectan los sistemas", "verdict": "keep_move", "reason": "Integración: los sistemas quedan conectados" },
+    { "id": "S16", "t": [66.5, 66.5], "frames": [183, 183], "content": "Flash blanco", "verdict": "cut", "reason": "Agresivo" },
+    { "id": "S17", "t": [66.9, 69.8], "frames": [184, 192], "content": "Dashboard oscuro en primer plano que se aleja hasta un monitor", "verdict": "keep", "reason": "Resultado visible" },
+    { "id": "S18", "t": [70.2, 76.7], "frames": [193, 211], "content": "Mujer (blusa clara) se quita las gafas y sigue trabajando", "verdict": "keep", "reason": "Cierre: el sistema ya opera en el día a día" },
+    { "id": "S19", "t": [77.1, 87.7], "frames": [212, 240], "content": "Negro + logo WAE que se arma y queda fijo 6 s", "verdict": "cut", "reason": "El encabezado ya muestra el logo; compite con el llamado a la acción" }
+  ],
+
+  "proposed_edit": {
+    "narrative": "De datos dispersos a un sistema que opera",
+    "duration_s_approx": 42.6,
+    "chapters": [
+      { "n": "01", "label": "Entrada",             "segments": ["S01"],        "source_s": [[0.4, 4.0]] },
+      { "n": "02", "label": "Datos dispersos",     "segments": ["S13"],        "source_s": [[58.5, 60.2]] },
+      { "n": "03", "label": "Integración",         "segments": ["S15"],        "source_s": [[64.3, 66.1]] },
+      { "n": "04", "label": "IA gobernada",        "segments": ["S09"],        "source_s": [[35.1, 40.6]] },
+      { "n": "05", "label": "Analítica",           "segments": ["S05", "S07"], "source_s": [[14.6, 21.0], [26.3, 33.3]] },
+      { "n": "06", "label": "Un solo sistema",     "segments": ["S11", "S17"], "source_s": [[43.5, 52.6], [66.9, 69.8]] },
+      { "n": "07", "label": "Operación",           "segments": ["S18"],        "source_s": [[70.2, 76.7]] }
+    ],
+    "transitions": "disolvencias de 0,4–0,6 s entre planos que no empalman; sin flashes ni glitches",
+    "reframe": "recorte 80 % del ancho (fuera la marca de agua), conservando 16:9",
+    "grade": "un solo etalonaje: sombras hacia el navy de marca (#0a1930), altas contenidas, acentos teal (#3fa89a) respetados; enfoque suave",
+    "frame_density": { "desktop": 360, "mobile": 180, "source_fps_equivalent": 8 }
+  },
+
+  "render": {
+    "source": "~/Downloads/wae video final.mp4",
+    "output": "~/Downloads/wae hero editado.mp4",
+    "size": [1600, 900],
+    "fps": 30,
+    "watermark_box": { "x": [1558, 1927], "y": [812, 978], "note": "todo encuadre debe terminar antes de x=1550 o antes de y=804" },
+    "crops": {
+      "right_cut":  { "w": 1550, "h": 872, "x": 0,   "y": 104 },
+      "center":     { "w": 1429, "h": 804, "x": 250, "y": 0 },
+      "subject_r":  { "w": 1429, "h": 804, "x": 499, "y": 0 },
+      "closing":    { "w": 1429, "h": 804, "x": 400, "y": 0 }
+    },
+    "grade": { "contrast": 1.05, "saturation": 0.9, "shadows_to_navy": 0.04, "sharpen": 0.6 },
+    "segments": [
+      { "id": "A", "chapter": "01", "in": 0.25,  "out": 3.30,  "crop": "right_cut", "speed": 1.0,  "exposure": 0.0,   "join": "start" },
+      { "id": "B", "chapter": "01", "in": 3.70,  "out": 4.30,  "crop": "right_cut", "speed": 1.0,  "exposure": 0.0,   "join": "cut" },
+      { "id": "C", "chapter": "02", "in": 58.65, "out": 60.85, "crop": "center",    "speed": 0.65, "exposure": -0.04, "join": 0.5 },
+      { "id": "D", "chapter": "03", "in": 64.20, "out": 66.25, "crop": "center",    "speed": 0.7,  "exposure": -0.04, "join": 0.5 },
+      { "id": "E", "chapter": "04", "in": 34.90, "out": 41.30, "crop": "center",    "speed": 1.0,  "exposure": 0.0,   "join": 0.6 },
+      { "id": "F", "chapter": "05", "in": 14.40, "out": 22.00, "crop": "center",    "speed": 1.15, "exposure": 0.0,   "join": 0.6 },
+      { "id": "G", "chapter": "05", "in": 26.40, "out": 33.40, "crop": "subject_r", "speed": 1.1,  "exposure": -0.02, "join": 0.5 },
+      { "id": "H", "chapter": "06", "in": 43.45, "out": 52.20, "crop": "center",    "speed": 1.2,  "exposure": 0.0,   "join": 0.6 },
+      { "id": "I", "chapter": "06", "in": 66.60, "out": 76.40, "crop": "closing",   "speed": 1.0,  "exposure": -0.03, "join": 0.5, "split": { "at": 69.90, "chapter": "07" } }
+    ]
+  },
+
+  "layers": [
+    { "z": 0, "name": "plate",          "kind": "secuencia WebP en canvas", "notes": "video editado y etalonado" },
+    { "z": 1, "name": "scrim",          "kind": "HTML/CSS existente",       "notes": "legibilidad del texto" },
+    { "z": 2, "name": "chapter_labels", "kind": "HTML nuevo",               "notes": "rótulo mono por capítulo junto al contador; texto real, no quemado en el video" },
+    { "z": 3, "name": "acts",           "kind": "HTML existente",           "notes": "titular, párrafo y llamado a la acción; mismo texto, nuevos tramos" },
+    { "z": 4, "name": "progress",       "kind": "HTML existente",           "notes": "contador y barra" }
+  ],
+
+  "chapter_marks_progress": { "01": 0.0, "02": 0.080, "03": 0.147, "04": 0.203, "05": 0.339, "06": 0.618, "07": 0.853 },
+
+  "approved_changes": [
+    "Reordenar: los documentos y la integración pasan al principio",
+    "Quitar el cierre con el logo animado",
+    "Añadir rótulos de capítulo (texto nuevo)",
+    "Mostrar el titular desde el primer pantallazo"
+  ]
+}

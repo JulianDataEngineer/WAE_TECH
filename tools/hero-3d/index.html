@@ -1,0 +1,682 @@
+<!doctype html>
+<html lang="es" data-composition-variables='[{"id":"hideWorld","type":"boolean","label":"Ocultar holograma (pasada para recortar las manos)","default":false}]'>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=Inter:wght@500;600&family=Manrope:wght@600;700&display=block" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <!-- Posición de las manos cuadro a cuadro (track-hands.py) -->
+    <script src="assets/hands/hands.js"></script>
+    <!--
+      WAE · hero 3D — un sistema de datos que se construye capa por capa.
+      Capítulos (segundos): 01 Diagnóstico 0 · 02 Datos dispersos 3.5 ·
+      03 Integración 8 · 04 IA gobernada 13 · 05 Analítica 19 ·
+      06 Un solo sistema 28 · 07 Operación 35 (tiempos del relato; la línea maestra
+      los desplaza 3 s por la apertura) · logo 47 · fin 49.
+      Fondo: assets/bg.mp4, armado con make-bg.py a partir de secuencias de fotos generadas
+      con Codex (assets/seq/): se pone las gafas, la cámara entra al lente y vemos en primera
+      persona lo que ella ve (sus manos y Bogotá con Monserrate) mientras el holograma se arma;
+      al salir del visor se quita las gafas y el holograma se recoge en el logo.
+      La acción vive a la derecha del cuadro: a la izquierda va el texto del hero.
+    -->
+    <style>
+      :root {
+        --navy: #0a1930;
+        --navy-2: #17345c;
+        --navy-3: #214878;
+        --teal: #3fa89a;
+        --teal-l: #62d6c4;
+        --blue: #6fbbff;
+        --amber: #f2b94b;
+        --coral: #ef8a6f;
+        --violet: #9a8cf0;
+        --ok: #4fd18b;
+        --ink: #0f2747;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--navy); }
+      #root { position: relative; width: 1920px; height: 1080px; overflow: hidden;
+              font-family: Inter, system-ui, sans-serif; }
+      .clip { position: absolute; inset: 0; }
+
+      /* ── Fondo: azul de marca con luces vivas ── */
+      #bgwrap { position: absolute; inset: 0; transform-origin: 30% 51%; }
+      #bgv { position: absolute; inset: 0; width: 1920px; height: 1080px; object-fit: cover;
+             transform-origin: 32% 16%; }
+      #open { position: absolute; inset: 0; width: 1920px; height: 1080px; object-fit: cover; }
+      /* HUD del visor, en la mono de marca: evidencia técnica, no adorno */
+      .hud { position: absolute; inset: 26px; opacity: 0; pointer-events: none;
+             font: 500 17px/1 "IBM Plex Mono", monospace; letter-spacing: .14em; color: rgba(255,255,255,.82);
+             text-shadow: 0 1px 6px rgba(0,0,0,.6); }
+      .hud b { font-weight: 500; color: #62d6c4; }
+      .hud > div { position: absolute; }
+      .hud-tl { left: 190px; top: 120px; display: flex; align-items: center; gap: 12px; }
+      .hud-tl i { width: 12px; height: 12px; border-radius: 50%; background: #ef5b4c; box-shadow: 0 0 10px #ef5b4c; }
+      .hud-tr { right: 190px; top: 120px; }
+      .hud-bl { left: 190px; top: 156px; color: rgba(255,255,255,.6); }
+      .hud-br { right: 190px; bottom: 112px; }
+      .hud-ruler { left: 190px; right: 190px; bottom: 80px; height: 14px;
+                   background: repeating-linear-gradient(90deg, rgba(255,255,255,.45) 0 2px, transparent 2px 24px) bottom/100% 7px no-repeat,
+                               repeating-linear-gradient(90deg, rgba(255,255,255,.7) 0 2px, transparent 2px 120px) bottom/100% 14px no-repeat; }
+      .hud-ruler span { position: absolute; bottom: -6px; left: 0; width: 3px; height: 26px; background: #62d6c4;
+                        box-shadow: 0 0 12px #62d6c4; }
+      .logo-dim { position: absolute; inset: 0; opacity: 0; pointer-events: none;
+                  background: linear-gradient(90deg, rgba(10,25,48,0) 18%, rgba(10,25,48,.55) 52%, rgba(10,25,48,.72) 100%); }
+      /* Logo animado del video original; el fondo oscuro se funde con 'screen' */
+      #logov { position: absolute; left: 830px; top: 190px; width: 880px; height: auto;
+               mix-blend-mode: screen; opacity: 0;
+               -webkit-mask-image: radial-gradient(closest-side, #000 72%, transparent 100%);
+                       mask-image: radial-gradient(closest-side, #000 72%, transparent 100%); }
+      /* Marco del visor: lo que ella ve desde dentro de las gafas */
+      .visor { position: absolute; inset: 0; pointer-events: none; opacity: 0; }
+      .visor::before { content: ""; position: absolute; inset: 26px; border-radius: 96px;
+                       box-shadow: 0 0 0 420px rgba(3,7,14,.94), inset 0 0 140px 50px rgba(3,7,14,.6); }
+      .visor::after { content: ""; position: absolute; inset: 26px; border-radius: 96px;
+                      background: linear-gradient(118deg, rgba(255,255,255,.10) 0%, rgba(255,255,255,0) 28%),
+                                  radial-gradient(120% 90% at 50% 120%, rgba(98,214,196,.10), transparent 60%); }
+      .lens { position: absolute; inset: 0; pointer-events: none; opacity: 0; background: #04080f; }
+      .flash { position: absolute; inset: 0; pointer-events: none; opacity: 0;
+               background: radial-gradient(circle at 50% 50%, #ffffff 0%, #dff4ff 40%, rgba(223,244,255,0) 80%); }
+      .sky { position: absolute; inset: 0; opacity: 0;
+             background: linear-gradient(90deg, rgba(10,25,48,.55) 0%, rgba(10,25,48,.25) 45%, rgba(16,48,92,.38) 100%); }
+      #blobs { position: absolute; inset: 0; opacity: 0; mix-blend-mode: screen; }
+      .blob { position: absolute; border-radius: 50%; filter: blur(110px); opacity: .55; }
+      .blob.b1 { width: 900px; height: 900px; left: 980px; top: -260px; background: #2f8fe0; }
+      .blob.b2 { width: 760px; height: 760px; left: 1180px; top: 420px; background: var(--teal); opacity: .45; }
+      .blob.b3 { width: 620px; height: 620px; left: 420px; top: 560px; background: #3a5fd0; opacity: .30; }
+      .dust { position: absolute; width: 4px; height: 4px; border-radius: 50%;
+              background: #cfefff; box-shadow: 0 0 10px #9fdcff; }
+
+      /* ── Escenario 3D ── */
+      #stage { position: absolute; left: 1190px; top: 760px; width: 0; height: 0; perspective: 2600px; }
+      #world { position: absolute; width: 0; height: 0; transform-style: preserve-3d; }
+      .p3 { position: absolute; transform-style: preserve-3d; }
+
+      /* Cara de vidrio blanco */
+      .face { position: absolute; backface-visibility: visible; }
+      .top  { background: linear-gradient(140deg, #ffffff 0%, #eef6fc 55%, #dcebf7 100%);
+              border: 1.5px solid rgba(255,255,255,.95); border-radius: 18px;
+              box-shadow: inset 0 0 0 1px rgba(63,168,154,.25), 0 0 60px rgba(98,214,196,.35); }
+      .side-a { background: linear-gradient(180deg, #b9d3ea, #8fb2d4); }
+      .side-b { background: linear-gradient(180deg, #a3c3e2, #7398c2); }
+      .glow-edge { box-shadow: inset 0 0 0 1.5px var(--teal-l), 0 0 80px rgba(98,214,196,.65); }
+
+      /* Plano técnico del piso */
+      .floor { position: absolute; left: -900px; top: -900px; width: 1800px; height: 1800px;
+               background-image:
+                 linear-gradient(rgba(111,187,255,.20) 1.5px, transparent 1.5px),
+                 linear-gradient(90deg, rgba(111,187,255,.20) 1.5px, transparent 1.5px);
+               background-size: 60px 60px;
+               -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 0%, transparent 62%);
+                       mask-image: radial-gradient(circle at 50% 50%, #000 0%, transparent 62%); }
+      .shadow { position: absolute; border-radius: 50%;
+               background: radial-gradient(closest-side, rgba(3,10,24,.55), rgba(3,10,24,0)); }
+      .ghost { position: absolute; border: 2px dashed rgba(98,214,196,.85); border-radius: 18px; }
+      .scan { position: absolute; border-radius: 50%; border: 3px solid var(--teal-l);
+              box-shadow: 0 0 40px var(--teal-l), inset 0 0 40px rgba(98,214,196,.5); }
+
+      /* Tarjetas de origen (miran a cámara) */
+      .card { position: absolute; width: 190px; height: 120px; border-radius: 18px;
+              background: linear-gradient(150deg, rgba(255,255,255,.97), rgba(232,242,251,.93));
+              border: 1.5px solid #fff;
+              box-shadow: 0 18px 40px rgba(4,14,32,.35), 0 0 0 1px rgba(15,39,71,.06);
+              display: flex; flex-direction: column; justify-content: space-between; padding: 16px 18px; }
+      .card .ic { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; }
+      .card .ic svg { width: 26px; height: 26px; }
+      .card .lb { font: 600 21px/1 Manrope, sans-serif; color: var(--ink); letter-spacing: -.01em; }
+      .card .ic-teal { position: absolute; left: 18px; top: 16px; width: 44px; height: 44px;
+                       border-radius: 12px; background: var(--teal); opacity: 0; display: grid; place-items: center; }
+      .card .ic-teal svg { width: 26px; height: 26px; }
+
+      /* Etiquetas flotantes */
+      .tag { position: absolute; white-space: nowrap; display: flex; align-items: center; gap: 12px;
+             padding: 14px 20px; border-radius: 999px;
+             background: rgba(255,255,255,.96); color: var(--ink);
+             font: 700 23px/1 Manrope, sans-serif;
+             box-shadow: 0 14px 34px rgba(4,14,32,.35); }
+      .tag b { font: 500 16px/1 "IBM Plex Mono", monospace; color: var(--teal); letter-spacing: .08em; }
+      .tag .dot { width: 12px; height: 12px; border-radius: 50%; background: var(--ok);
+                  box-shadow: 0 0 14px var(--ok); }
+      .chip { position: absolute; white-space: nowrap; display: flex; align-items: center; gap: 10px;
+              padding: 13px 18px; border-radius: 14px; background: rgba(255,255,255,.97);
+              color: var(--ink); font: 700 21px/1 Manrope, sans-serif;
+              box-shadow: 0 12px 30px rgba(4,14,32,.32); }
+      .chip .ck { width: 24px; height: 24px; border-radius: 50%; background: #e4edf6;
+                  display: grid; place-items: center; }
+      .chip .ck svg { width: 15px; height: 15px; opacity: 0; }
+
+      /* Haces de datos entre capas */
+      .beam { position: absolute; width: 18px; border-radius: 9px;
+              background: linear-gradient(0deg, rgba(98,214,196,0), rgba(98,214,196,.95) 50%, rgba(111,187,255,0));
+              box-shadow: 0 0 30px rgba(98,214,196,.8); }
+      .spark { position: absolute; width: 14px; height: 14px; border-radius: 50%; background: #fff;
+               box-shadow: 0 0 18px var(--teal-l), 0 0 6px #fff; }
+
+      svg.surface { position: absolute; left: 0; top: 0; overflow: visible; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="49"
+         data-width="1920" data-height="1080">
+      <div id="scene" style="position:absolute;inset:0">
+        <div id="bgwrap"><video id="bgv" src="assets/bg.mp4" muted playsinline class="clip"
+               data-start="0" data-duration="49" data-track-index="1"></video></div>
+        <img id="open" src="assets/seq/open/o1.png" alt="" />
+        <div class="sky"></div>
+        <div id="blobs"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+        <div id="dust"></div>
+        <div id="stage"><div id="world"></div></div>
+        <div class="visor"></div>
+        <div class="lens"></div>
+        <div class="flash"></div>
+        <div class="hud">
+          <div class="hud-tl"><i></i>REC <b id="tc">00:00:00:00</b></div>
+          <div class="hud-tr">WAE · VISION &nbsp; <b id="cap">01 · DIAGNÓSTICO</b></div>
+          <div class="hud-bl">BOGOTÁ · 4°38′N 74°05′W</div>
+          <div class="hud-br">ISO 400 &nbsp; F/2.0 &nbsp; FRAME <b id="fr">0000</b></div>
+          <div class="hud-ruler"><span id="ruler-mark"></span></div>
+        </div>
+        <div class="logo-dim"></div>
+        <video id="logov" src="assets/logo-reveal.mp4" muted playsinline class="clip"
+               data-start="44.0" data-duration="5" data-track-index="2"></video>
+      </div>
+    </div>
+
+    <script>
+    (function () {
+      /* ─── Utilidades deterministas ─── */
+      let seed = 7;
+      const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+      const el = (cls, parent, html) => {
+        const d = document.createElement('div');
+        if (cls) d.className = cls;
+        if (html) d.innerHTML = html;
+        parent.appendChild(d);
+        return d;
+      };
+      const world = document.getElementById('world');
+      const TOTAL = 46;
+
+      /* Iconos propios en SVG (sin paquetes externos) */
+      const I = {
+        mail:  '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 6.5 12 13l8.5-6.5"/></svg>',
+        sheet: '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><rect x="4" y="3" width="16" height="18" rx="2.5"/><path d="M4 9h16M4 15h16M10 3v18"/></svg>',
+        pdf:   '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l5 5v13H6z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg>',
+        erp:   '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v6c0 1.7 3.1 3 7 3s7-1.3 7-3V6M5 12v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"/></svg>',
+        crm:   '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.6 3.4-5.5 6.5-5.5s5.7 1.9 6.5 5.5"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18.5 14.8c1.6.8 2.6 2.5 3 5.2"/></svg>',
+        bank:  '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 12 4l9 5.5M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 20h18"/></svg>',
+        check: '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>',
+        person:'<svg viewBox="0 0 24 24" fill="none" stroke="#0f2747" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c1-3.8 3.7-5.8 7-5.8s6 2 7 5.8"/></svg>',
+        gauge: '<svg viewBox="0 0 24 24" fill="none" stroke="#0f2747" stroke-width="2.2" stroke-linecap="round"><path d="M4 16a8 8 0 1 1 16 0"/><path d="m12 16 4-5"/></svg>',
+        log:   '<svg viewBox="0 0 24 24" fill="none" stroke="#0f2747" stroke-width="2.2" stroke-linecap="round"><rect x="4" y="3" width="16" height="18" rx="2.5"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>',
+      };
+
+      /* ─── Caja 3D: tapa + cuatro lados ─── */
+      function box(w, d, h, cls) {
+        const g = el('p3 ' + (cls || ''), world);
+        const top = el('face top', g);
+        Object.assign(top.style, { width: w + 'px', height: d + 'px', left: -w / 2 + 'px', top: -d / 2 + 'px',
+          transform: `translateZ(${h}px)` });
+        const sides = [
+          // frente (y = +d/2), atrás, derecha (x = +w/2), izquierda
+          { cls: 'side-a', w: w, hgt: h, l: -w / 2, t: d / 2, o: 'top center', tr: 'rotateX(90deg)' },
+          { cls: 'side-a', w: w, hgt: h, l: -w / 2, t: -d / 2, o: 'top center', tr: 'rotateX(90deg)' },
+          { cls: 'side-b', w: h, hgt: d, l: w / 2, t: -d / 2, o: 'left center', tr: 'rotateY(-90deg)' },
+          { cls: 'side-b', w: h, hgt: d, l: -w / 2, t: -d / 2, o: 'left center', tr: 'rotateY(-90deg)' },
+        ];
+        sides.forEach(s => {
+          const f = el('face ' + s.cls, g);
+          Object.assign(f.style, { width: s.w + 'px', height: s.hgt + 'px', left: s.l + 'px', top: s.t + 'px',
+            transformOrigin: s.o, transform: s.tr, borderRadius: '6px' });
+        });
+        return { g, top };
+      }
+
+      /* Plano plano en el mundo (para piso, fantasmas, anillos) */
+      function plane(cls, w, d, z, parent) {
+        const p = el(cls, parent || world);
+        Object.assign(p.style, { width: w + 'px', height: d + 'px', left: -w / 2 + 'px', top: -d / 2 + 'px',
+          transform: `translateZ(${z}px)` });
+        return p;
+      }
+
+      /* Elemento que siempre mira a cámara (contrarresta la rotación del mundo) */
+      const billboards = [];
+      function billboard(node, w, h) {
+        node.style.left = -w / 2 + 'px';
+        node.style.top = -h / 2 + 'px';
+        billboards.push(node);
+        return node;
+      }
+
+      /* ─── Construcción de la escena ─── */
+      const floor = el('floor', world);
+      floor.style.transform = 'translateZ(-2px)';
+
+      const LAYERS = [
+        { id: 'int', w: 620, h: 44, z: 0,   name: 'Integración' },
+        { id: 'ia',  w: 460, h: 38, z: 240, name: 'IA gobernada' },
+        { id: 'ana', w: 580, h: 44, z: 480, name: 'Analítica' },
+      ];
+      const floorShadow = plane('shadow', 1100, 1100, 1);
+      const ghosts = LAYERS.map(L => plane('ghost', L.w, L.w, L.z + L.h));
+      const scan = plane('scan', 200, 200, 4);
+
+      /* Capas */
+      const slab = {};
+      LAYERS.forEach(L => {
+        const b = box(L.w, L.w, L.h);
+        b.g.style.transform = `translateZ(${L.z}px)`;
+        slab[L.id] = b;
+      });
+
+      /* Integración: ranuras y líneas hacia el núcleo */
+      const SLOTS = [0, 60, 120, 180, 240, 300].map(a => {
+        const r = 205, rad = (a - 90) * Math.PI / 180;
+        return { x: Math.cos(rad) * r, y: Math.sin(rad) * r };
+      });
+      const intW = LAYERS[0].w;
+      const svgNS = 'http://www.w3.org/2000/svg';
+      function svgOn(face, w) {
+        const s = document.createElementNS(svgNS, 'svg');
+        s.setAttribute('class', 'surface'); s.setAttribute('width', w); s.setAttribute('height', w);
+        s.setAttribute('viewBox', `0 0 ${w} ${w}`);
+        face.appendChild(s);
+        return s;
+      }
+      function svgEl(parent, tag, attrs) {
+        const n = document.createElementNS(svgNS, tag);
+        for (const k in attrs) n.setAttribute(k, attrs[k]);
+        parent.appendChild(n);
+        return n;
+      }
+      const sInt = svgOn(slab.int.top, intW);
+      const intLines = SLOTS.map(p => {
+        const x = p.x + intW / 2, y = p.y + intW / 2, c = intW / 2;
+        svgEl(sInt, 'path', { d: `M${x} ${y} L${c} ${c}`, stroke: '#cfe2f1', 'stroke-width': 10, 'stroke-linecap': 'round', fill: 'none' });
+        const ln = svgEl(sInt, 'path', { d: `M${x} ${y} L${c} ${c}`, stroke: '#3fa89a', 'stroke-width': 10,
+          'stroke-linecap': 'round', fill: 'none', 'stroke-dasharray': 220, 'stroke-dashoffset': 220 });
+        return ln;
+      });
+      const intPulses = SLOTS.map(p => svgEl(sInt, 'circle', { cx: p.x + intW / 2, cy: p.y + intW / 2, r: 9, fill: '#fff', opacity: 0 }));
+      const hubRing = svgEl(sInt, 'circle', { cx: intW / 2, cy: intW / 2, r: 46, fill: '#0f2747' });
+      const hubCore = svgEl(sInt, 'circle', { cx: intW / 2, cy: intW / 2, r: 24, fill: '#3fa89a' });
+      SLOTS.forEach(p => svgEl(sInt, 'rect', { x: p.x + intW / 2 - 70, y: p.y + intW / 2 - 46, width: 140, height: 92,
+        rx: 16, fill: 'none', stroke: '#9cc0dd', 'stroke-width': 3, 'stroke-dasharray': '10 9' }));
+
+      /* IA gobernada: núcleo con anillos */
+      const iaW = LAYERS[1].w;
+      const sIa = svgOn(slab.ia.top, iaW);
+      const iaC = iaW / 2;
+      const iaRings = [150, 112, 74].map((r, i) => svgEl(sIa, 'circle', { cx: iaC, cy: iaC, r,
+        fill: 'none', stroke: i === 2 ? '#3fa89a' : '#9fc7e6', 'stroke-width': i === 2 ? 12 : 4,
+        'stroke-dasharray': i === 0 ? '18 14' : 'none' }));
+      const iaCore = svgEl(sIa, 'circle', { cx: iaC, cy: iaC, r: 46, fill: '#0f2747' });
+      const iaCoreIn = svgEl(sIa, 'circle', { cx: iaC, cy: iaC, r: 22, fill: '#62d6c4' });
+
+      /* Analítica: barras 3D, línea y anillo */
+      const anaW = LAYERS[2].w;
+      const sAna = svgOn(slab.ana.top, anaW);
+      svgEl(sAna, 'rect', { x: 40, y: 40, width: anaW - 80, height: anaW - 80, rx: 20, fill: 'none', stroke: '#d3e3f1', 'stroke-width': 3 });
+      const linePath = svgEl(sAna, 'path', { d: 'M70 470 C 130 430, 170 450, 220 400 S 320 330, 370 350 S 470 250, 510 230',
+        stroke: '#2f8fe0', 'stroke-width': 9, fill: 'none', 'stroke-linecap': 'round', 'stroke-dasharray': 620, 'stroke-dashoffset': 620 });
+      svgEl(sAna, 'circle', { cx: 430, cy: 140, r: 62, fill: 'none', stroke: '#e1ecf6', 'stroke-width': 22 });
+      const donut = svgEl(sAna, 'circle', { cx: 430, cy: 140, r: 62, fill: 'none', stroke: '#3fa89a', 'stroke-width': 22,
+        'stroke-dasharray': 390, 'stroke-dashoffset': 390, transform: 'rotate(-90 430 140)', 'stroke-linecap': 'round' });
+
+      const bars = [];
+      const BAR_X = [-210, -150, -90, -30];
+      BAR_X.forEach((bx, i) => {
+        const g = el('p3', world);
+        g.style.setProperty('--h', '0px');
+        const w = 40;
+        const top = el('face', g); const fr = el('face', g); const rt = el('face', g);
+        Object.assign(top.style, { width: w + 'px', height: w + 'px', left: -w / 2 + 'px', top: -w / 2 + 'px',
+          background: ['#6fbbff', '#62d6c4', '#ffd27a', '#62d6c4'][i], transform: 'translateZ(var(--h))', borderRadius: '6px' });
+        Object.assign(fr.style, { width: w + 'px', height: 'var(--h)', left: -w / 2 + 'px', top: w / 2 + 'px',
+          transformOrigin: 'top center', transform: 'rotateX(90deg)', background: ['#3f8fd8', '#3fa89a', '#f2b94b', '#3fa89a'][i] });
+        Object.assign(rt.style, { width: 'var(--h)', height: w + 'px', left: w / 2 + 'px', top: -w / 2 + 'px',
+          transformOrigin: 'left center', transform: 'rotateY(-90deg)', background: ['#2f74b8', '#2f8a7e', '#d99a2b', '#2f8a7e'][i] });
+        g.style.transform = `translate3d(${bx}px, ${-150}px, ${LAYERS[2].z + LAYERS[2].h}px)`;
+        bars.push(g);
+      });
+      const BAR_H = [80, 135, 105, 175];
+
+      /* Pilares de luz en las esquinas, entre cada par de capas */
+      const CORNERS = [[-1, -1], [1, -1], [1, 1], [-1, 1]];
+      const beams = [];
+      [0, 1].forEach(i => {
+        const zFrom = LAYERS[i].z + LAYERS[i].h, zTo = LAYERS[i + 1].z;
+        const len = zTo - zFrom, off = LAYERS[1].w / 2 - 34;
+        CORNERS.forEach(([cx, cy], k) => {
+          const g = el('p3', world);
+          g.style.transform = `translate3d(${cx * off}px, ${cy * off}px, ${zFrom}px)`;
+          [0, 90].forEach(rz => {
+            const b = el('beam', g);
+            Object.assign(b.style, { height: len + 'px', left: '-9px', top: '0px', transformOrigin: 'top center',
+              transform: `rotateZ(${rz}deg) rotateX(90deg)` });
+          });
+          const spark = el('spark', g);
+          Object.assign(spark.style, { left: '-7px', top: '-7px' });
+          beams.push({ g, spark, len, layer: i, k });
+        });
+      });
+
+      /* Tarjetas de origen */
+      const SOURCES = [
+        { lb: 'Correo',  ic: 'mail',  c: '#ef8a6f' },
+        { lb: 'Excel',   ic: 'sheet', c: '#4fb36f' },
+        { lb: 'Factura', ic: 'pdf',   c: '#f2b94b' },
+        { lb: 'ERP',     ic: 'erp',   c: '#6fbbff' },
+        { lb: 'CRM',     ic: 'crm',   c: '#9a8cf0' },
+        { lb: 'Banco',   ic: 'bank',  c: '#2f8fe0' },
+      ];
+      const SCATTER = [
+        { x: -470, y: -60, z: 90 },  { x: -260, y: 360, z: 170 }, { x: -120, y: -430, z: 150 },
+        { x: 300, y: -330, z: 210 }, { x: 460, y: 140, z: 80 },   { x: 40, y: 470, z: 120 },
+      ];
+      const cards = SOURCES.map((s, i) => {
+        const c = el('card', world, `<div class="ic" style="background:${s.c}">${I[s.ic]}</div>
+          <div class="ic-teal">${I[s.ic]}</div><div class="lb">${s.lb}</div>`);
+        billboard(c, 190, 120);
+        return c;
+      });
+
+      /* Etiquetas de capa y chips de gobierno */
+      const layerTags = LAYERS.map((L, i) => {
+        const t = el('tag', world, `<b>0${i + 1}</b>${L.name}`);
+        billboard(t, 230, 46);
+        return t;
+      });
+      const govChips = [
+        { lb: 'Aprobación humana', ic: 'person' },
+        { lb: 'Umbral de confianza', ic: 'gauge' },
+        { lb: 'Registro de auditoría', ic: 'log' },
+      ].map(g => {
+        const c = el('chip', world, `<span style="width:24px;height:24px;display:grid;place-items:center">${I[g.ic]}</span>${g.lb}<span class="ck">${I.check}</span>`);
+        billboard(c, 290, 46);
+        return c;
+      });
+      const status = el('tag', world, '<span class="dot"></span>Sistema en operación');
+      billboard(status, 300, 46);
+
+      /* Polvo de luz de fondo */
+      const dustBox = document.getElementById('dust');
+      const dust = Array.from({ length: 46 }, () => {
+        const d = el('dust', dustBox);
+        d.style.left = (700 + rnd() * 1220) + 'px';
+        d.style.top = (rnd() * 1080) + 'px';
+        d.style.opacity = (0.25 + rnd() * 0.6).toFixed(2);
+        const s = 2 + rnd() * 4; d.style.width = d.style.height = s + 'px';
+        return d;
+      });
+
+      /* ─── Cámara ─── */
+      const CAM = { rx: 58, rz: -42, s: 0.95, y: 0 };
+      const camState = { ...CAM };
+      function applyCam() {
+        world.style.transform = `translateY(${camState.y}px) scale(${camState.s}) rotateX(${camState.rx}deg) rotateZ(${camState.rz}deg)`;
+        // Los billboards anulan la rotación del mundo para mirar siempre a cámara
+        const counter = `rotateZ(${-camState.rz}deg) rotateX(${-camState.rx}deg)`;
+        billboards.forEach(b => b.style.setProperty('--bb', counter));
+      }
+      // Posición propia de cada billboard + contrarrotación
+      const bbPos = new Map();
+      function placeBB(node, p) {
+        bbPos.set(node, p);
+      }
+      function renderBB() {
+        billboards.forEach(b => {
+          const p = bbPos.get(b) || { x: 0, y: 0, z: 0, s: 1, o: 1, flat: 0 };
+          const f = p.flat || 0;   // 0 = mira a cámara, 1 = acostado sobre la capa
+          if (cardSet.has(b) && f < 1) {
+            const m = 1 + (0.55 + 0.7 * hand.spread - 1) * hand.w * (1 - f);
+            b.style.transform = `translate3d(${p.x * m}px, ${p.y * m}px, ${p.z}px) rotateZ(${-camState.rz * (1 - f)}deg) rotateX(${-camState.rx * (1 - f)}deg) rotate(${p.r || 0}deg) scale(${p.s ?? 1})`;
+            b.style.opacity = p.o ?? 1;
+            return;
+          }
+          const rz = -camState.rz * (1 - f), rx = -camState.rx * (1 - f);
+          b.style.transform = `translate3d(${p.x}px, ${p.y}px, ${p.z}px) rotateZ(${rz}deg) rotateX(${rx}deg) rotate(${p.r || 0}deg) scale(${p.s ?? 1})`;
+          b.style.opacity = p.o ?? 1;
+        });
+      }
+
+      /* Estado animable de billboards */
+      const TILT = [-12, 9, -7, 13, -10, 8];
+      const cardState = cards.map((c, i) => ({ x: SCATTER[i].x, y: SCATTER[i].y, z: SCATTER[i].z, s: 0.6, o: 0, flat: 0, r: TILT[i] }));
+      cards.forEach((c, i) => placeBB(c, cardState[i]));
+      const tagState = LAYERS.map((L, i) => ({ x: L.w / 2 + 70, y: L.w / 2 + 70, z: L.z + L.h / 2, s: 0.9, o: 0 }));
+      layerTags.forEach((t, i) => placeBB(t, tagState[i]));
+      const GOV_POS = [{ x: -330, y: -250 }, { x: 260, y: -330 }, { x: -280, y: 300 }];
+      const govState = govChips.map((c, i) => ({ x: GOV_POS[i].x, y: GOV_POS[i].y, z: LAYERS[1].z + 90, s: 0.9, o: 0 }));
+      govChips.forEach((c, i) => placeBB(c, govState[i]));
+      const statusState = { x: -120, y: -120, z: LAYERS[2].z + 300, s: 0.9, o: 0 };
+      placeBB(status, statusState);
+
+      /* Estado de capas */
+      const slabState = LAYERS.map(L => ({ z: L.z - 260, o: 0 }));
+      function renderSlabs() {
+        LAYERS.forEach((L, i) => {
+          slab[L.id].g.style.transform = `translateZ(${slabState[i].z}px)`;
+          slab[L.id].g.style.opacity = slabState[i].o;
+        });
+      }
+
+      /* ─── Las manos mueven el holograma ───
+         hands.js trae, por cuadro del visor, el punto entre las manos, su separación
+         y el giro acumulado. El escenario se acerca a las manos, las tarjetas se abren
+         y se juntan con ellas, y la torre gira lo que giran las manos. */
+      const HANDS = window.HANDS || null;
+      const stage = document.getElementById('stage');
+      const STAGE0 = { x: 1190, y: 760 };
+      const cardSet = new Set(cards);
+      const hand = { w: 0, x: STAGE0.x, y: STAGE0.y, spread: 0.5, rot: 0 };
+      function sampleHands(t) {
+        if (!HANDS) return;
+        const n = HANDS.mx.length, i = Math.round((t - HANDS.start) * HANDS.fps);
+        // entra y sale con suavidad en los bordes de la vista del visor
+        const edge = Math.min(1, Math.max(0, (t - HANDS.start - 0.6) / 1.2), Math.max(0, (HANDS.start + n / HANDS.fps - 0.6 - t) / 1.0));
+        const k = Math.min(n - 1, Math.max(0, i));
+        hand.w = edge * HANDS.vis[k];
+        hand.x = HANDS.mx[k]; hand.y = HANDS.my[k];
+        hand.spread = HANDS.spread[k]; hand.rot = HANDS.rot[k];
+      }
+      function applyHands() {
+        const w = hand.w;
+        // la base de la torre flota justo por encima de las puntas de los dedos
+        stage.style.left = (STAGE0.x + (hand.x - STAGE0.x) * 0.5 * w).toFixed(1) + 'px';
+        stage.style.top = (STAGE0.y + (hand.y + 70 - STAGE0.y) * 0.45 * w).toFixed(1) + 'px';
+      }
+
+      function renderAll() {
+        sampleHands(tl.time());
+        const rz0 = camState.rz, s0 = camState.s;
+        camState.rz = rz0 - hand.rot * hand.w;                       // gira con las manos
+        if (tl.time() > 32.8) camState.s = s0 * (1 + 0.12 * hand.spread * hand.w); // abre el sistema
+        applyHands(); applyCam(); renderBB(); renderSlabs();
+        camState.rz = rz0; camState.s = s0;                           // el estado animado no se toca
+      }
+
+      /* ─── Línea de tiempo ─── */
+      const tl = gsap.timeline({ onUpdate: renderAll });
+      const E = 'power3.out', EI = 'power2.inOut';
+
+      // Estado inicial
+      gsap.set([ghosts, scan, floor, floorShadow], { opacity: 0 });
+      gsap.set(bars, { opacity: 0 });
+      gsap.set(beams.map(b => b.g), { opacity: 0 });
+
+      // Cámara: órbita lenta y encuadre que acompaña el crecimiento de la torre
+      tl.to(camState, { rz: -30, duration: 28, ease: 'none' }, 0);
+      tl.fromTo(camState, { y: -40, s: 1.12 }, { y: -170, s: 1.0, duration: 3.5, ease: E }, 0);
+      tl.to(camState, { y: -120, s: 0.88, duration: 2.0, ease: EI }, 12.8);
+      tl.to(camState, { y: 10, s: 0.74, duration: 2.4, ease: EI }, 18.8);
+      tl.to(camState, { rz: -18, rx: 54, s: 0.68, y: 30, duration: 7, ease: EI }, 28);
+      tl.to(camState, { rz: -12, duration: 7, ease: 'none' }, 35);
+
+      // Fondo vivo
+      tl.to('.blob.b1', { x: -180, y: 120, duration: TOTAL, ease: 'sine.inOut' }, 0);
+      tl.to('.blob.b2', { x: -220, y: -160, duration: TOTAL, ease: 'sine.inOut' }, 0);
+      tl.to('.blob.b3', { x: 260, y: -80, duration: TOTAL, ease: 'sine.inOut' }, 0);
+      dust.forEach((d, i) => tl.to(d, { y: -80 - (i % 7) * 18, x: (i % 2 ? 1 : -1) * 30, duration: TOTAL, ease: 'none' }, 0));
+
+      // 01 · Diagnóstico (0 – 3.5): plano técnico y escaneo
+      // la toma: con las gafas puestas se corre a la izquierda y se desenfoca
+      // Fondo: video de la secuencia interpolada (make-bg.py). Se pone las gafas,
+      // la cámara entra al lente y desde 4.2 s vemos lo que ella ve.
+      tl.fromTo('#bgv', { scale: 1.0 }, { scale: 3.4, duration: 1.15, ease: 'power2.in', immediateRender: false }, 2.95);
+      tl.to('.lens', { opacity: 1, duration: 0.25, ease: 'power1.in' }, 3.85);
+      tl.set('#bgv', { scale: 1.0 }, 4.2);
+      tl.set('.visor', { opacity: 1 }, 4.2);
+      tl.to('.lens', { opacity: 0, duration: 0.8, ease: 'power2.out' }, 4.2);
+      tl.fromTo('.flash', { opacity: 0 }, { opacity: 0.55, duration: 0.25, yoyo: true, repeat: 1, ease: 'sine.inOut', immediateRender: false }, 4.2);
+      tl.fromTo('.sky', { opacity: 0 }, { opacity: 0.7, duration: 1.0, ease: 'power2.inOut' }, 4.3);
+      tl.to('#blobs', { opacity: 0.55, duration: 1.4, ease: 'power2.inOut' }, 4.3);
+      // Salida del visor (38.4 – 39.6): destello y de nuevo la vemos desde fuera
+      tl.to('.flash', { opacity: 1, duration: 0.45, ease: 'power2.in' }, 38.95);
+      tl.set('.visor', { opacity: 0 }, 39.4);
+      tl.to('.flash', { opacity: 0, duration: 0.7, ease: 'power2.out' }, 39.4);
+      tl.to(floor, { opacity: 1, duration: 1.2, ease: 'power1.out' }, 4.3);
+      tl.to(floorShadow, { opacity: 1, duration: 1.2 }, 8.2);
+      ghosts.forEach((g, i) => tl.to(g, { opacity: 1, duration: 0.6 }, 4.5 + i * 0.2));
+      tl.fromTo(scan, { opacity: 0, scale: 0.3 }, { opacity: 1, scale: 1, duration: 0.4, immediateRender: false }, 4.4);
+      tl.to(scan, { scale: 4.2, duration: 1.8, ease: 'power2.out' }, 4.4);
+      tl.to(scan, { opacity: 0, duration: 0.5 }, 5.8);
+
+      // 02 · Datos dispersos (3.5 – 8): llegan las fuentes en desorden
+      cardState.forEach((s, i) => {
+        tl.to(s, { o: 1, s: 1, duration: 0.7, ease: 'back.out(1.6)' }, 5.0 + i * 0.2);
+        // flotación desordenada
+        tl.to(s, { z: s.z + 30 + (i % 3) * 12, x: s.x + (i % 2 ? 22 : -22), r: -TILT[i] * 0.6, duration: 1.6, ease: 'sine.inOut', yoyo: true, repeat: 1 }, 5.0 + i * 0.08);
+      });
+      tl.to(ghosts, { opacity: 0.35, duration: 1 }, 4);
+
+      // 03 · Integración (8 – 13): sube la capa y las fuentes encajan
+      tl.to(slabState[0], { z: LAYERS[0].z, o: 1, duration: 1.3, ease: E }, 8.0);
+      tl.to(ghosts[0], { opacity: 0, duration: 0.6 }, 8.6);
+      cardState.forEach((s, i) => {
+        const p = SLOTS[i];
+        tl.to(s, { x: p.x, y: p.y, z: LAYERS[0].h + 3, flat: 1, s: 0.74, r: 0, duration: 1.5, ease: 'power3.inOut' }, 9.7 + i * 0.12);
+      });
+      cards.forEach((c, i) => tl.to(c.querySelector('.ic-teal'), { opacity: 1, duration: 0.4 }, 11.0 + i * 0.12));
+      intLines.forEach((l, i) => tl.to(l, { attr: { 'stroke-dashoffset': 0 }, duration: 0.8, ease: 'power2.inOut' }, 11.3 + i * 0.1));
+      tl.to(slab.int.top, { boxShadow: 'inset 0 0 0 2px #62d6c4, 0 0 90px rgba(98,214,196,.85)', duration: 0.8 }, 11.6);
+      tl.to(tagState[0], { o: 1, s: 1, duration: 0.6, ease: 'back.out(1.6)' }, 11.8);
+
+      // Pulsos que viajan de las fuentes al núcleo (desde aquí hasta el final)
+      intPulses.forEach((p, i) => {
+        const x0 = +p.getAttribute('cx'), y0 = +p.getAttribute('cy'), c = intW / 2;
+        for (let t = 12 + i * 0.25; t < TOTAL - 0.8; t += 1.6) {
+          tl.fromTo(p, { attr: { cx: x0, cy: y0 }, opacity: 0 }, { attr: { cx: c, cy: c }, opacity: 1, duration: 0.8, ease: 'power1.in', immediateRender: false }, t);
+          tl.to(p, { opacity: 0, duration: 0.15, immediateRender: false }, t + 0.8);
+        }
+      });
+
+      // 04 · IA gobernada (13 – 19): haz de datos, capa de IA y controles
+      tl.to(beams.filter(b => b.layer === 0).map(b => b.g), { opacity: 1, duration: 0.6 }, 13.0);
+      tl.to(slabState[1], { z: LAYERS[1].z, o: 1, duration: 1.4, ease: E }, 13.4);
+      tl.to(ghosts[1], { opacity: 0, duration: 0.6 }, 13.9);
+      tl.fromTo(iaRings[0], { attr: { 'stroke-dashoffset': 0 } }, { attr: { 'stroke-dashoffset': -320 }, duration: TOTAL - 14, ease: 'none' }, 14);
+      for (let t = 14.6; t < TOTAL - 1; t += 1.4) {
+        tl.fromTo(iaCoreIn, { attr: { r: 18 } }, { attr: { r: 30 }, duration: 0.7, ease: 'sine.inOut', yoyo: true, repeat: 1, immediateRender: false }, t);
+      }
+      govState.forEach((s, i) => tl.to(s, { o: 1, s: 1, duration: 0.6, ease: 'back.out(1.6)' }, 15.2 + i * 0.6));
+      govChips.forEach((c, i) => {
+        const at = [17.0, 17.35, 18.7][i];
+        tl.to(c.querySelector('.ck'), { backgroundColor: '#4fd18b', duration: 0.25 }, at);
+        tl.to(c.querySelector('.ck svg'), { opacity: 1, duration: 0.25 }, at);
+        tl.fromTo(govState[i], { s: 1 }, { s: 1.12, duration: 0.18, yoyo: true, repeat: 1, ease: 'sine.inOut', immediateRender: false }, at);
+      });
+      tl.to(tagState[1], { o: 1, s: 1, duration: 0.6, ease: 'back.out(1.6)' }, 17.6);
+      tl.to(govState, { o: 0, s: 0.85, duration: 0.6 }, 18.6);
+
+      // 05 · Analítica (19 – 28): capa de dashboards, barras, línea y anillo
+      tl.to(beams.filter(b => b.layer === 1).map(b => b.g), { opacity: 1, duration: 0.6 }, 19.0);
+      tl.to(slabState[2], { z: LAYERS[2].z, o: 1, duration: 1.4, ease: E }, 19.4);
+      tl.to(ghosts[2], { opacity: 0, duration: 0.6 }, 19.9);
+      tl.to(bars, { opacity: 1, duration: 0.3 }, 20.6);
+      bars.forEach((b, i) => tl.to(b, { '--h': BAR_H[i] + 'px', duration: 1.2, ease: 'power3.out' }, 20.8 + i * 0.18));
+      tl.to(linePath, { attr: { 'stroke-dashoffset': 0 }, duration: 2.2, ease: 'power2.inOut' }, 21.6);
+      tl.to(donut, { attr: { 'stroke-dashoffset': 120 }, duration: 1.8, ease: 'power2.out' }, 22.4);
+      tl.to(tagState[2], { o: 1, s: 1, duration: 0.6, ease: 'back.out(1.6)' }, 23.4);
+      // datos vivos: las barras respiran
+      bars.forEach((b, i) => {
+        for (let t = 24.5 + i * 0.3; t < TOTAL - 1.5; t += 2.4) {
+          tl.to(b, { '--h': (BAR_H[i] * (0.75 + ((i * 7 + t) % 5) / 10)) + 'px', duration: 1.2, ease: 'sine.inOut' }, t);
+        }
+      });
+
+      // Chispas subiendo por los pilares
+      beams.forEach(b => {
+        for (let t = (b.layer ? 20 : 13.6) + b.k * 0.22; t < TOTAL - 0.6; t += 1.1) {
+          tl.fromTo(b.spark, { z: 0, opacity: 0 }, { z: b.len, opacity: 1, duration: 0.7, ease: 'none', immediateRender: false }, t);
+          tl.to(b.spark, { opacity: 0, duration: 0.1, immediateRender: false }, t + 0.7);
+        }
+      });
+
+      // 06 · Un solo sistema (28 – 35): la cámara se aleja, todo encendido
+      LAYERS.forEach((L, i) => tl.to(slab[L.id].top, { boxShadow: 'inset 0 0 0 2px #62d6c4, 0 0 100px rgba(98,214,196,.9)', duration: 0.8 }, 28.4 + i * 0.3));
+      tl.to(tagState, { s: 1.05, duration: 0.8 }, 29);
+
+      // 07 · Operación (35 – 42): estado en verde
+      tl.to(statusState, { o: 1, s: 1, duration: 0.7, ease: 'back.out(1.6)' }, 35.4);
+      for (let t = 36.2; t < TOTAL - 0.6; t += 1.2) {
+        tl.fromTo(status.querySelector('.dot'), { scale: 1 }, { scale: 1.5, duration: 0.6, yoyo: true, repeat: 1, ease: 'sine.inOut', immediateRender: false }, t);
+      }
+
+      // Cierre (38 – 46): vuelve el foco, ella se quita las gafas y el holograma
+      // se recoge en el logo de WAE
+      tl.to([statusState, ...tagState], { o: 0, duration: 0.5 }, 38.6);
+      tl.to(camState, { s: 0.25, y: -60, duration: 1.2, ease: 'power3.in' }, 38.9);
+      tl.set('#world', { opacity: 0 }, 39.4);   // el holograma solo existe dentro del visor
+      tl.to('.sky', { opacity: 0.2, duration: 0.6 }, 39.4);
+      tl.to('#blobs', { opacity: 0.3, duration: 0.6 }, 39.4);
+
+      // El pellizco enciende la capa de IA
+      tl.fromTo(slab.ia.top, { boxShadow: 'inset 0 0 0 1px rgba(63,168,154,.25), 0 0 60px rgba(98,214,196,.35)' },
+        { boxShadow: 'inset 0 0 0 3px #62d6c4, 0 0 140px rgba(98,214,196,1)', duration: 0.25, yoyo: true, repeat: 1, ease: 'sine.inOut', immediateRender: false }, 17.0);
+      // HUD del visor: visible solo dentro de las gafas
+      tl.set('.hud', { opacity: 1 }, 4.2);
+      tl.set('.hud', { opacity: 0 }, 39.4);
+      tl.set({}, {}, TOTAL);
+
+      /* Línea maestra: 3 s de apertura (plano 5x que se abre) + el relato + logo */
+      const OFF = 3.0, MTOTAL = TOTAL + OFF;
+      const CAPS = [[0,'01 · DIAGNÓSTICO'],[3.5,'02 · DATOS DISPERSOS'],[8,'03 · INTEGRACIÓN'],[13,'04 · IA GOBERNADA'],[19,'05 · ANALÍTICA'],[28,'06 · UN SOLO SISTEMA'],[35,'07 · OPERACIÓN']];
+      const tc = document.getElementById('tc'), frEl = document.getElementById('fr'),
+            capEl = document.getElementById('cap'), mark = document.getElementById('ruler-mark');
+      const pad = n => String(n).padStart(2, '0');
+      const master = gsap.timeline({ paused: true, onUpdate() {
+        const t = master.time(), f = Math.floor(t * 30);
+        tc.textContent = `00:00:${pad(Math.floor(t))}:${pad(f % 30)}`;
+        frEl.textContent = String(f).padStart(4, '0');
+        const rel = t - OFF; let c = CAPS[0][1]; CAPS.forEach(([s, n]) => { if (rel >= s) c = n; }); capEl.textContent = c;
+        mark.style.left = (Math.max(0, Math.min(1, (rel - 4.2) / 35.2)) * 100).toFixed(2) + '%';
+      } });
+      master.add(tl, OFF);
+      // Apertura: detalle 5x de las gafas en sus manos, y la cámara se aleja hasta el plano general
+      master.fromTo('#open', { scale: 1.18 }, { scale: 1.0, duration: 2.6, ease: 'power2.out' }, 0);
+      master.fromTo('#open', { opacity: 1 }, { opacity: 0, duration: 1.0, ease: 'power1.inOut' }, 1.5);
+      master.fromTo('#bgwrap', { scale: 2.4 }, { scale: 1.0, duration: 3.4, ease: 'power3.out' }, 1.2);
+      // Cierre: el escenario se atenúa a la derecha y el logo se dibuja sobre el cielo de Bogotá
+      master.to('.logo-dim', { opacity: 1, duration: 1.2, ease: 'power2.inOut' }, 43.6);
+      master.to('#logov', { opacity: 1, duration: 0.6 }, 44.0);
+      master.set({}, {}, MTOTAL);
+      const V = (window.__hyperframes && window.__hyperframes.getVariables) ? window.__hyperframes.getVariables() : {};
+      // Pasada para las manos: se oculta lo físico del holograma (capas, tarjetas, haces),
+      // pero las etiquetas y los controles siguen visibles: la interfaz queda por encima
+      // de los dedos, como en un visor real, y nunca aparece cortada.
+      if (V.hideWorld) {
+        stage.style.visibility = 'hidden';
+        [...layerTags, ...govChips, status].forEach(n => { n.style.visibility = 'visible'; });
+      }
+      renderAll();
+      window.__timelines = window.__timelines || {};
+      window.__timelines['main'] = master;
+      master.seek(0);
+    })();
+    </script>
+  </body>
+</html>

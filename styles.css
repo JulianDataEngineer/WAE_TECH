@@ -1837,6 +1837,78 @@ h1, h2, h3, h4, h5, h6,
     will-change: opacity;
 }
 
+/* ── Capítulos del recorrido ──
+   Rótulo mono abajo a la derecha (la esquina que ocupaba la marca quemada en
+   el video anterior). Nombra la etapa que se está viendo: diagnóstico,
+   datos, integración, IA, analítica, sistema y operación. */
+.hero-cinematic .hero-chapters {
+    position: absolute;
+    z-index: 5;
+    /* A la izquierda del botón flotante de WhatsApp (60 px), a la altura de su centro */
+    right: calc(clamp(1rem, 2.2vw, 1.75rem) + 60px + 1.25rem);
+    bottom: calc(clamp(1rem, 2.2vw, 1.75rem) + 11px);
+    display: grid;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #ffffff;
+    text-shadow: 0 1px 10px rgba(0, 6, 16, .95), 0 1px 3px rgba(0, 6, 16, .8);
+    pointer-events: none;
+}
+
+.hero-cinematic .hero-chapter {
+    grid-area: 1 / 1;
+    justify-self: end;
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    /* Pastilla de vidrio: se sostiene igual sobre planos oscuros y sobre
+       dashboards claros */
+    padding: 0.5rem 0.9rem;
+    border: 1px solid rgba(255, 255, 255, .12);
+    border-radius: var(--radius-full);
+    background: rgba(8, 18, 32, .55);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity .4s ease, transform .4s cubic-bezier(.22, .61, .36, 1);
+}
+
+.hero-cinematic .hero-chapter b {
+    font-weight: 500;
+    color: var(--hero-acento);
+}
+
+.hero-cinematic .hero-chapter.is-on {
+    opacity: 1;
+    transform: none;
+}
+
+.hero-cinematic.hero-static .hero-chapters { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-cinematic .hero-chapter { transform: none; transition: opacity .2s linear; }
+}
+
+@media (max-width: 820px) {
+    /* Centrado bajo el menú: los actos largos suben hasta el pie de la banda */
+    .hero-cinematic .hero-chapters {
+        top: 5.75rem;
+        bottom: auto;
+        right: auto;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 0.7rem;
+    }
+
+    .hero-cinematic .hero-chapter { justify-self: center; white-space: nowrap; }
+}
+
 .hero-cinematic.hero-static .hero-intro {
     display: none;              /* la versión estática muestra el póster */
 }

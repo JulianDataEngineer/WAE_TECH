@@ -1,19 +1,19 @@
 {
-  "source": "wae video final.mp4",
-  "duration": 87.678,
+  "source": "wae hero bogota video.mp4",
+  "duration": 49.0,
   "poster": "hero-frames/poster.webp",
   "variants": {
     "desktop": {
-      "count": 240,
+      "count": 440,
       "pattern": "hero-frames/desktop/f%04d.webp",
       "first": 1,
-      "bytes": 5859830
+      "bytes": 26578544
     },
     "mobile": {
-      "count": 120,
+      "count": 220,
       "pattern": "hero-frames/mobile/f%04d.webp",
       "first": 1,
-      "bytes": 1538382
+      "bytes": 6106580
     }
   }
 }

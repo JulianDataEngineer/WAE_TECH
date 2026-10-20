@@ -8,16 +8,21 @@
   /* ─── PARÁMETROS AJUSTABLES ─────────────────────────────── */
   const CONFIG = {
     manifest:      'hero-frames/manifest.json',
-    scrollLength:  6.5,   // duración del recorrido, en alturas de ventana
-    introFade:     0.085, // tramo inicial en color plano antes del primer fotograma
+    scrollLength:  6,     // duración del recorrido, en alturas de ventana
+                          // (video de 49 s y 440 fotogramas: ~73 por pantalla; más recorrido = gestos más pausados)
+    introFade:     0,     // tramo inicial en color plano (0 = sin plano: el video abre
+                          // con el detalle 5x de las gafas, que es el gancho)
     suavizado:     0.22,  // constante de tiempo del seguimiento, en segundos
                           // (mayor = más controlado y más lento en reaccionar)
     maxLag:        60,    // huecos de hasta N fotogramas se recorren uno a uno;
                           // por encima se comprimen para no arrastrar retraso
     concurrency:   6,     // descargas simultáneas
     cacheSize:     90,    // fotogramas decodificados en memoria
-    preloadAhead:  22,    // cuántos adelantar en la dirección del scroll
-    focal:  { desktop: [0.50, 0.50], mobile: [0.52, 0.45] },
+    preloadAhead:  40,    // cuántos decodificar por delante en la dirección del scroll
+    precarga:      4,     // descargas en segundo plano de TODA la secuencia (a la caché
+                          // HTTP, sin decodificar): al bajar rápido nunca falta un cuadro
+    focal:  { desktop: [0.50, 0.50], mobile: [0.47, 0.50] }, // ella entre 22 y 33 % y la torre al 62 % del ancho
+    focalCierreMovil: 0.80, // encuadre móvil del logo final
     mobileMaxWidth: 820,  // px; por debajo se usa la variante móvil
   };
   /* ───────────────────────────────────────────────────────── */
@@ -36,7 +41,7 @@
   const bar    = root.querySelector('.hero-progress-bar');
   const intro  = root.querySelector('.hero-intro');
   const num    = root.querySelector('.hero-progress-num');
-  const acts   = Array.from(root.querySelectorAll('.hero-act'));
+  const acts   = Array.from(root.querySelectorAll('.hero-act, .hero-chapter'));
   if (!canvas) return;
 
   const ctx = canvas.getContext('2d', { alpha: false });
@@ -51,13 +56,13 @@
   }
 
   /* ─────────── Almacén de fotogramas ─────────── */
-  function FrameStore(pattern, count) {
+  function FrameStore(pattern, count, ver) {
     const cache = new Map();      // idx -> HTMLImageElement ya decodificada
     const inflight = new Map();   // idx -> Promise
     let active = 0;
     const waiting = [];
 
-    const url = i => pattern.replace('%04d', String(i).padStart(4, '0'));
+    const url = i => pattern.replace('%04d', String(i).padStart(4, '0')) + ver;
 
     function pump() {
       while (active < CONFIG.concurrency && waiting.length) {
@@ -95,6 +100,7 @@
         });
         pump();
       },
+      exact: i => cache.get(i) || null,
       /* El pedido, o el más cercano ya disponible: nunca se queda en blanco */
       nearest(i) {
         if (cache.has(i)) return cache.get(i);
@@ -132,7 +138,13 @@
     const cw = canvas.width, ch = canvas.height;
     const s = Math.max(cw / img.naturalWidth, ch / img.naturalHeight);
     const dw = img.naturalWidth * s, dh = img.naturalHeight * s;
-    const [fx, fy] = CONFIG.focal[isMobile() ? 'mobile' : 'desktop'];
+    let [fx, fy] = CONFIG.focal[isMobile() ? 'mobile' : 'desktop'];
+    /* En móvil solo cabe la mitad del ancho: en el cierre el encuadre se desliza
+       hacia la derecha, donde el logo se dibuja sobre el cielo. */
+    if (isMobile()) {
+      const k = Math.min(1, Math.max(0, (state.suave - 0.86) / 0.07));
+      fx += (CONFIG.focalCierreMovil - fx) * k * k * (3 - 2 * k);
+    }
     ctx.drawImage(img, (cw - dw) * fx, (ch - dh) * fy, dw, dh);
   }
 
@@ -148,7 +160,7 @@
     /* Pantalla de color plano que abre el recorrido y se disuelve al bajar.
        De paso cubre la carga de los primeros fotogramas. */
     if (intro) {
-      const o = 1 - Math.min(1, Math.max(0, p / CONFIG.introFade));
+      const o = CONFIG.introFade > 0 ? 1 - Math.min(1, Math.max(0, p / CONFIG.introFade)) : 0;
       intro.style.opacity = o.toFixed(3);
       intro.style.visibility = o < 0.01 ? 'hidden' : 'visible';
     }
@@ -157,6 +169,29 @@
       const from = parseFloat(a.dataset.from), to = parseFloat(a.dataset.to);
       a.classList.toggle('is-on', p >= from && p < to);
     });
+  }
+
+  /* Dibuja la posición exacta del recorrido, no un cuadro entero: entre dos
+     cuadros vecinos se funde el siguiente según la fracción. Con scroll lento
+     el movimiento avanza continuo, sin quedarse quieto y saltar. */
+  let lastPos = -1;
+  function dibujarEn(pos) {
+    pos = Math.min(store.count, Math.max(1, pos));
+    const dir = pos >= lastPos ? 1 : -1;
+    if (Math.abs(pos - lastPos) < 0.004 && lastDrawn !== -1) return;   // nada nuevo que pintar
+    const i = Math.floor(pos), f = pos - i;
+    store.request(i, dir);
+    const a = store.exact(i), b = f > 0.01 ? store.exact(i + 1) : null;
+    if (a && b) {
+      paint(a);
+      ctx.globalAlpha = f; paint(b); ctx.globalAlpha = 1;
+    } else {
+      const im = a || store.nearest(Math.round(pos));
+      if (!im) return;
+      paint(im);
+    }
+    lastDrawn = i; lastPos = pos; state.shown = i;
+    store.trim(i);
   }
 
   function step(t) {
@@ -168,13 +203,7 @@
          transición y los últimos fotogramas no llegaban a dibujarse. */
       state.suave = state.crudo;
       pintarUI(state.suave);
-      const ult = Math.min(store.count, Math.max(1, Math.round(state.suave * (store.count - 1)) + 1));
-      if (ult !== state.shown) {
-        store.request(ult, ult > state.shown ? 1 : -1);
-        const im = store.nearest(ult);
-        if (im) { paint(im); lastDrawn = ult; }
-        state.shown = ult;
-      }
+      dibujarEn(Math.round(state.suave * (store.count - 1) + 1));
       state.running = false;
       return;
     }
@@ -190,22 +219,12 @@
       : state.suave + resto * (1 - Math.exp(-dt / CONFIG.suavizado));
 
     pintarUI(state.suave);
-
-    const target = Math.min(store.count, Math.max(1, Math.round(state.suave * (store.count - 1)) + 1));
-    const diff = target - state.shown;
-
-    if (diff !== 0) {
-      const dir = diff > 0 ? 1 : -1;
-      const gap = Math.abs(diff);
-      const salto = gap <= CONFIG.maxLag ? 1 : Math.ceil(gap / CONFIG.maxLag);
-      const idx = state.shown + dir * Math.min(salto, gap);
-      store.request(idx, dir);
-      const img = store.nearest(idx);
-      if (img) { paint(img); lastDrawn = idx; }
-      state.shown = idx;
-    } else {
-      store.trim(state.shown);
-    }
+    /* En reposo no se queda una mezcla de dos cuadros (las etiquetas se verían
+       dobles): en 0,25 s se asienta suavemente en el cuadro entero más cercano. */
+    const pos = state.suave * (store.count - 1) + 1;
+    state.reposo = resto === 0 || Math.abs(resto) < 0.0008 ? Math.min(1, (state.reposo || 0) + dt / 0.25) : 0;
+    const r = state.reposo, k = r * r * (3 - 2 * r);
+    dibujarEn(pos + (Math.round(pos) - pos) * k);
 
     requestAnimationFrame(step);
   }
@@ -217,11 +236,14 @@
   }
 
   /* ─────────── Arranque ─────────── */
-  fetch(CONFIG.manifest)
+  /* Los fotogramas conservan su nombre entre versiones del video: la marca de
+     versión evita que el navegador muestre una secuencia vieja desde caché. */
+  fetch(CONFIG.manifest, { cache: 'no-cache' })
     .then(r => r.json())
     .then(m => {
       const v = m.variants[isMobile() ? 'mobile' : 'desktop'] || m.variants.desktop;
-      store = FrameStore(v.pattern, v.count);
+      const ver = '?v=' + v.count + '-' + v.bytes;
+      store = FrameStore(v.pattern, v.count, ver);
       resize();
 
       /* Primer fotograma antes de retirar el poster: evita el parpadeo */
@@ -232,7 +254,7 @@
         root.classList.add('hero-ready');
         if (poster) poster.setAttribute('aria-hidden', 'true');
       };
-      first.src = v.pattern.replace('%04d', '0001');
+      first.src = v.pattern.replace('%04d', '0001') + ver;
 
       gsap.registerPlugin(ScrollTrigger);
       const tl = { p: 0 };
@@ -266,7 +288,20 @@
       if (document.readyState === 'complete') asentar();
       else window.addEventListener('load', asentar, { once: true });
 
-      window.addEventListener('resize', () => { resize(); ScrollTrigger.refresh(); });
+      window.addEventListener('resize', () => { resize(); lastPos = -1; ScrollTrigger.refresh(); });
+
+      /* Precarga silenciosa: trae todos los archivos a la caché del navegador
+         (sin decodificarlos, para no gastar memoria). Después, cada cuadro se
+         decodifica desde disco en milisegundos, nunca desde la red. */
+      const urls = Array.from({ length: v.count }, (_, k) => v.pattern.replace('%04d', String(k + 1).padStart(4, '0')) + ver);
+      let next = 0;
+      const bajar = () => {
+        if (next >= urls.length) return;
+        fetch(urls[next++], { priority: 'low' }).catch(() => {}).finally(bajar);
+      };
+      const iniciarPrecarga = () => { for (let k = 0; k < CONFIG.precarga; k++) bajar(); };
+      if ('requestIdleCallback' in window) requestIdleCallback(iniciarPrecarga, { timeout: 2500 });
+      else setTimeout(iniciarPrecarga, 1200);
       pintarUI(0);
       arrancarBucle();
     })

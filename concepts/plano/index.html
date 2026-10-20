@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>WAE — Data &amp; AI Engineering · Propuesta B: Plano de ingeniería</title>
+<meta name="description" content="Primero el plano, después la obra. WAE diagnostica un proceso crítico en 10 días hábiles y entrega la arquitectura ejecutable para integrarlo, automatizarlo y operarlo con controles.">
+<meta name="theme-color" content="#FBFBF9">
+<link rel="icon" type="image/png" href="../assets/wae-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Azeret+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#contenido">Saltar al contenido</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <marker id="arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L8 4 L0 8 z" fill="#132A4F"/>
+    </marker>
+    <marker id="tick" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M4 0 V8" stroke="#C2311D" stroke-width="1.4"/>
+    </marker>
+  </defs>
+</svg>
+
+<div class="sheet">
+  <div class="ticks ticks-top" aria-hidden="true"><span>A</span><span>B</span><span>C</span><span>D</span><span>E</span><span>F</span></div>
+  <div class="ticks ticks-side" aria-hidden="true"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span></div>
+
+  <div class="frame">
+    <header class="bar">
+      <a class="bar-logo" href="#inicio" aria-label="WAE, volver al inicio">
+        <img src="../assets/wae-logo-cut.webp" width="660" height="315" alt="WAE — World AI Engineers">
+      </a>
+      <nav aria-label="Índice de hojas">
+        <ol class="sheet-index">
+          <li><a href="#diagnostico"><span>02</span>Alcance</a></li>
+          <li><a href="#controles"><span>03</span>Controles</a></li>
+          <li><a href="#metodo"><span>04</span>Método</a></li>
+          <li><a href="#partners"><span>05</span>Partners</a></li>
+          <li><a href="#referencias"><span>06</span>Referencias</a></li>
+        </ol>
+      </nav>
+      <a class="btn btn-ink bar-cta" href="mailto:proyectos@waengineers.co?subject=Solicitud%20de%20Diagn%C3%B3stico%20de%2010%20d%C3%ADas">Solicitar diagnóstico</a>
+    </header>
+
+    <main id="contenido" tabindex="-1">
+
+      <!-- Hoja 01 -->
+      <section class="hero" id="inicio" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <h1 id="hero-title">Primero el plano. <span>Después la obra.</span></h1>
+          <p class="lede">WAE es una firma de Data &amp; AI Engineering. Dibujamos su proceso como realmente opera, lo rediseñamos con controles y le entregamos una arquitectura ejecutable antes de pedirle una inversión mayor.</p>
+          <div class="actions">
+            <a class="btn btn-ink" href="mailto:proyectos@waengineers.co?subject=Solicitud%20de%20Diagn%C3%B3stico%20de%2010%20d%C3%ADas">Solicitar diagnóstico de 10 días</a>
+          </div>
+        </div>
+
+        <figure class="drawing" id="drawing">
+          <div class="drawing-bar">
+            <figcaption>Hoja 01 / 06<span class="cap-long"> · conciliación de facturas</span></figcaption>
+            <div class="seg" role="group" aria-label="Vista del plano">
+              <button type="button" class="seg-btn" data-view="asis" aria-pressed="true"><span class="lbl-long">Estado actual</span><span class="lbl-short">Actual</span></button>
+              <button type="button" class="seg-btn" data-view="tobe" aria-pressed="false"><span class="lbl-long">Arquitectura objetivo</span><span class="lbl-short">Objetivo</span></button>
+            </div>
+          </div>
+
+          <!-- Plano horizontal (escritorio y tablet) -->
+          <svg class="plan plan-wide" viewBox="0 0 620 440" data-view="asis" role="img" aria-labelledby="plan-title plan-desc">
+            <title id="plan-title">Plano del proceso de conciliación</title>
+            <desc id="plan-desc">Estado actual: correo, Excel, ERP y banco llegan enredados a una conciliación manual, sin integraciones, con re-digitación y aprobación por correo. Arquitectura objetivo: las fuentes entran a una ingesta, pasan por reglas y por un componente de IA con umbral, y una decisión envía los casos seguros al ERP y los dudosos a una persona; todo queda en auditoría.</desc>
+
+            <g class="nodes">
+              <rect x="20" y="40"  width="110" height="40"/><text x="75" y="65">CORREO</text>
+              <rect x="20" y="130" width="110" height="40"/><text x="75" y="155">EXCEL</text>
+              <rect x="20" y="220" width="110" height="40"/><text x="75" y="245">ERP</text>
+              <rect x="20" y="310" width="110" height="40"/><text x="75" y="335">BANCO</text>
+            </g>
+
+            <g class="view view-asis">
+              <g class="lines lines-asis">
+                <path d="M130 60 C 220 60, 180 300, 250 208"/>
+                <path d="M130 150 C 300 120, 150 260, 250 200"/>
+                <path d="M130 240 C 220 240, 300 100, 310 180"/>
+                <path d="M130 330 C 260 360, 240 240, 300 236"/>
+                <path d="M130 150 C 330 30, 420 50, 470 82"/>
+                <path d="M130 330 C 360 420, 430 360, 470 318"/>
+                <path d="M370 196 C 420 196, 420 100, 470 92"/>
+                <path d="M370 214 C 430 230, 400 320, 470 322"/>
+              </g>
+              <g class="nodes">
+                <rect class="dashed" x="250" y="178" width="120" height="56"/>
+                <text x="310" y="203">CONCILIACIÓN</text><text x="310" y="219">MANUAL</text>
+                <rect x="470" y="66" width="120" height="40"/><text x="530" y="91">REPORTE</text>
+                <rect x="470" y="300" width="120" height="40"/><text x="530" y="318">APROBACIÓN</text><text x="530" y="332">POR CORREO</text>
+              </g>
+              <g class="markup">
+                <path class="dim" d="M20 22 H370" marker-start="url(#tick)" marker-end="url(#tick)"/>
+                <text class="markup-text" x="130" y="16">4 FUENTES · 0 INTEGRACIONES</text>
+                <path class="cloud" d="M252 172 q10 -16 26 -8 q12 -14 28 -4 q16 -12 30 0 q18 -6 24 10 q16 8 6 24 q12 14 -2 26 q4 18 -16 18 q-8 14 -26 6 q-14 12 -30 2 q-18 8 -26 -8 q-18 -2 -14 -20 q-14 -12 0 -26 q-8 -16 0 -20 z"/>
+                <path class="leader" d="M318 262 V416 H336"/>
+                <text class="markup-text" x="340" y="420">RE-DIGITACIÓN · SIN DUEÑO NI TRAZA</text>
+                <text class="markup-text" x="530" y="360" text-anchor="middle">DECIDE EN BANDEJA</text>
+              </g>
+            </g>
+
+            <g class="view view-tobe">
+              <g class="lines lines-tobe">
+                <path d="M130 60 H150 V200 H170" marker-end="url(#arrow)"/>
+                <path d="M130 150 H150"/>
+                <path d="M130 240 H150"/>
+                <path d="M130 330 H150 V200"/>
+                <path d="M270 200 H285 V130 H298" marker-end="url(#arrow)"/>
+                <path d="M285 200 V270 H298" marker-end="url(#arrow)"/>
+                <path d="M400 130 H450 V164" marker-end="url(#arrow)"/>
+                <path d="M400 270 H450 V236" marker-end="url(#arrow)"/>
+                <path d="M486 200 H498 V110 H508" marker-end="url(#arrow)"/>
+                <path d="M498 200 V320 H508" marker-end="url(#arrow)"/>
+                <path class="dashed" d="M556 300 V132" marker-end="url(#arrow)"/>
+                <path d="M450 236 V376" marker-end="url(#arrow)"/>
+              </g>
+              <g class="nodes">
+                <rect x="170" y="180" width="100" height="40"/><text x="220" y="205">INGESTA</text>
+                <rect x="300" y="110" width="100" height="40"/><text x="350" y="135">REGLAS</text>
+                <rect x="300" y="250" width="100" height="40"/><text x="350" y="268">IA</text><text x="350" y="282">+ UMBRAL</text>
+                <path d="M450 164 L486 200 L450 236 L414 200 Z"/><text x="450" y="205">¿OK?</text>
+                <rect x="508" y="90" width="96" height="40"/><text x="556" y="108">ERP</text><text x="556" y="122">ESCRITURA</text>
+                <rect class="human" x="508" y="300" width="96" height="40"/><text x="556" y="318">PERSONA</text><text x="556" y="332">APRUEBA</text>
+                <rect x="380" y="376" width="140" height="36"/><text x="450" y="399">AUDITORÍA</text>
+              </g>
+              <g class="markup">
+                <text class="markup-text" x="300" y="330">CONF &lt; 0,85</text>
+                <text class="markup-text" x="300" y="344">→ RETIENE</text>
+                <path class="leader" d="M372 338 H440 V352 H506"/>
+              </g>
+            </g>
+          </svg>
+
+          <!-- Plano vertical (móvil) -->
+          <svg class="plan plan-tall" viewBox="0 0 360 560" data-view="asis" role="img" aria-labelledby="plan-title-m plan-desc">
+            <title id="plan-title-m">Plano del proceso de conciliación</title>
+
+            <g class="nodes">
+              <rect x="14" y="36" width="156" height="36"/><text x="92" y="59">CORREO</text>
+              <rect x="190" y="36" width="156" height="36"/><text x="268" y="59">EXCEL</text>
+              <rect x="14" y="84" width="156" height="36"/><text x="92" y="107">ERP</text>
+              <rect x="190" y="84" width="156" height="36"/><text x="268" y="107">BANCO</text>
+            </g>
+
+            <g class="view view-asis">
+              <g class="lines lines-asis">
+                <path d="M92 120 C 92 170, 200 150, 180 214"/>
+                <path d="M268 120 C 268 170, 120 160, 150 214"/>
+                <path d="M170 60 C 330 150, 40 170, 200 214"/>
+                <path d="M190 102 C 60 190, 330 180, 210 214"/>
+                <path d="M92 120 C 10 220, 20 300, 60 350"/>
+                <path d="M268 120 C 350 220, 340 300, 290 350"/>
+                <path d="M140 264 C 120 320, 90 320, 80 350"/>
+                <path d="M220 264 C 240 320, 270 320, 280 350"/>
+              </g>
+              <g class="nodes">
+                <rect class="dashed" x="100" y="214" width="160" height="50"/>
+                <text x="180" y="236">CONCILIACIÓN</text><text x="180" y="252">MANUAL</text>
+                <rect x="14" y="350" width="140" height="36"/><text x="84" y="373">REPORTE</text>
+                <rect x="200" y="350" width="146" height="42"/><text x="273" y="368">APROBACIÓN</text><text x="273" y="382">POR CORREO</text>
+              </g>
+              <g class="markup">
+                <path class="dim" d="M14 20 H346" marker-start="url(#tick)" marker-end="url(#tick)"/>
+                <text class="markup-text" x="180" y="14" text-anchor="middle">4 FUENTES · 0 INTEGRACIONES</text>
+                <path class="cloud" d="M96 212 q6 -14 22 -8 q10 -12 26 -4 q12 -10 26 -2 q12 -10 26 -2 q12 -10 26 -2 q14 -6 22 8 q14 4 8 20 q12 12 -2 22 q2 16 -16 14 q-8 12 -24 4 q-12 10 -26 2 q-12 10 -26 2 q-12 10 -26 2 q-14 8 -22 -6 q-16 0 -12 -18 q-12 -12 2 -22 q-6 -14 14 -14 z"/>
+                <path class="leader" d="M180 285 V430 H40"/>
+                <text class="markup-text" x="40" y="448">RE-DIGITACIÓN · SIN DUEÑO NI TRAZA</text>
+              </g>
+            </g>
+
+            <g class="view view-tobe">
+              <g class="lines lines-tobe">
+                <path d="M92 120 V140 H180 V160" marker-end="url(#arrow)"/>
+                <path d="M268 120 V140 H180"/>
+                <path d="M180 196 V210 H85 V224" marker-end="url(#arrow)"/>
+                <path d="M180 210 H275 V224" marker-end="url(#arrow)"/>
+                <path d="M85 264 V300 H158" marker-end="url(#arrow)"/>
+                <path d="M275 264 V300 H202" marker-end="url(#arrow)"/>
+                <path d="M160 322 H90 V400" marker-end="url(#arrow)"/>
+                <path d="M200 322 H270 V400" marker-end="url(#arrow)"/>
+                <path class="dashed" d="M200 422 H162" marker-end="url(#arrow)"/>
+                <path d="M180 344 V478" marker-end="url(#arrow)"/>
+              </g>
+              <g class="nodes">
+                <rect x="130" y="160" width="100" height="36"/><text x="180" y="183">INGESTA</text>
+                <rect x="20" y="224" width="130" height="40"/><text x="85" y="249">REGLAS</text>
+                <rect x="210" y="224" width="130" height="40"/><text x="275" y="242">IA</text><text x="275" y="256">+ UMBRAL</text>
+                <path d="M180 300 L202 322 L180 344 L158 322 Z"/><text x="180" y="326">¿OK?</text>
+                <rect x="20" y="400" width="140" height="44"/><text x="90" y="419">ERP</text><text x="90" y="434">ESCRITURA</text>
+                <rect class="human" x="200" y="400" width="140" height="44"/><text x="270" y="419">PERSONA</text><text x="270" y="434">APRUEBA</text>
+                <rect x="110" y="478" width="140" height="36"/><text x="180" y="501">AUDITORÍA</text>
+              </g>
+              <g class="markup">
+                <text class="markup-text" x="226" y="352">CONF &lt; 0,85</text>
+                <text class="markup-text" x="226" y="366">→ RETIENE</text>
+                <path class="leader" d="M270 372 V398"/>
+              </g>
+            </g>
+          </svg>
+        </figure>
+
+        <dl class="titleblock" aria-label="Cajetín del diagnóstico">
+          <div><dt>Alcance</dt><dd>1 proceso · 1 área</dd></div>
+          <div><dt>Plazo</dt><dd>10 días hábiles</dd></div>
+          <div><dt>Muestra</dt><dd>≤ 10.000 registros</dd></div>
+          <div><dt>Entorno</dt><dd>Sandbox</dd></div>
+          <div class="tb-project"><dt>Proyecto</dt><dd>Desbloqueo operativo de un proceso crítico</dd></div>
+          <div class="tb-approve"><dt>Aprobación</dt><dd><a class="btn btn-ink btn-block" href="mailto:proyectos@waengineers.co?subject=Solicitud%20de%20Diagn%C3%B3stico%20de%2010%20d%C3%ADas">Solicitar diagnóstico</a></dd></div>
+        </dl>
+      </section>
+
+      <!-- Hoja 02 -->
+      <section class="sheet-sec" id="diagnostico" aria-labelledby="scope-title">
+        <p class="sheet-ref" aria-hidden="true">Hoja 02 / 06</p>
+        <header class="sec-head">
+          <h2 id="scope-title">Qué medimos y qué le entregamos en 10 días.</h2>
+          <p>Un solo proceso, medido sobre una muestra real. El trabajo se hace en sandbox y termina con un plano que su equipo o el nuestro puede construir.</p>
+        </header>
+        <ol class="chain" aria-label="Cronograma del diagnóstico">
+          <li><p class="dim">3 días</p><h3>Inmersión</h3><p>Proceso real, muestra de datos, mapa del estado actual y matriz de riesgo.</p></li>
+          <li><p class="dim">2 días</p><h3>Diseño</h3><p>Arquitectura objetivo comparada con alternativas más simples.</p></li>
+          <li><p class="dim">3 días</p><h3>Prototipo</h3><p>Un flujo crítico funcionando en sandbox, verificable por su líder técnico.</p></li>
+          <li><p class="dim">2 días</p><h3>Caso económico</h3><p>Supuestos explícitos, sesión ejecutiva y propuesta de implementación.</p></li>
+        </ol>
+      </section>
+
+      <!-- Hoja 03 -->
+      <section class="sheet-sec detail" id="controles" aria-labelledby="ctl-title">
+        <p class="sheet-ref" aria-hidden="true">Hoja 03 / 06</p>
+        <header class="sec-head">
+          <h2 id="ctl-title">Detalle A: dónde se detiene la IA.</h2>
+          <p>La IA es un componente del plano, no el plano. Se compara contra reglas e integraciones simples y opera dentro de cinco controles.</p>
+        </header>
+        <div class="detail-grid">
+          <svg class="detail-svg" viewBox="0 0 320 320" aria-hidden="true">
+            <circle cx="160" cy="160" r="150"/>
+            <path class="thin" d="M20 160 H112" marker-end="url(#arrow)"/>
+            <path d="M160 112 L208 160 L160 208 L112 160 Z"/>
+            <path class="thin" d="M208 160 H292" marker-end="url(#arrow)"/>
+            <path class="thin red" d="M160 208 V282" marker-end="url(#arrow)"/>
+            <text x="60" y="150">CASO</text><text x="160" y="165">DECIDE</text>
+            <text x="252" y="150">EJECUTA</text><text class="red" x="200" y="262">PERSONA</text>
+          </svg>
+          <ol class="balloons">
+            <li><span class="balloon">1</span><div><h3>Permisos</h3><p>El sistema solo toca lo que tiene declarado.</p></div></li>
+            <li><span class="balloon">2</span><div><h3>Umbral de confianza</h3><p>Bajo el umbral no actúa: retiene el caso.</p></div></li>
+            <li><span class="balloon">3</span><div><h3>Límite económico</h3><p>Sobre el monto tope decide una persona.</p></div></li>
+            <li class="is-red"><span class="balloon">4</span><div><h3>Aprobación humana</h3><p>En el punto exacto, con el contexto preparado.</p></div></li>
+            <li><span class="balloon">5</span><div><h3>Auditoría</h3><p>Entrada, decisión, responsable y hora quedan registrados.</p></div></li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- Hoja 04 -->
+      <section class="sheet-sec" id="metodo" aria-labelledby="method-title">
+        <p class="sheet-ref" aria-hidden="true">Hoja 04 / 06</p>
+        <header class="sec-head">
+          <h2 id="method-title">Tabla de revisiones: el método en seis pasos.</h2>
+          <p>Cada revisión del plano corresponde a un paso. Ninguno se salta.</p>
+        </header>
+        <div class="table-wrap">
+          <table class="revs">
+            <thead><tr><th scope="col">Rev.</th><th scope="col">Paso</th><th scope="col">Qué queda resuelto</th></tr></thead>
+            <tbody>
+              <tr><td>A</td><th scope="row">Diagnosticar</th><td>Línea base medida sobre una muestra real.</td></tr>
+              <tr><td>B</td><th scope="row">Diseñar</th><td>Arquitectura proporcional, comparada con alternativas.</td></tr>
+              <tr><td>C</td><th scope="row">Validar</th><td>Prototipo en sandbox con criterios de éxito acordados.</td></tr>
+              <tr><td>D</td><th scope="row">Construir</th><td>Implementación incremental con revisión técnica y pruebas.</td></tr>
+              <tr><td>E</td><th scope="row">Gobernar</th><td>Permisos, umbrales, aprobación humana y trazabilidad.</td></tr>
+              <tr><td>F</td><th scope="row">Operar</th><td>Monitoreo, documentación y transferencia de conocimiento.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Hoja 05 -->
+      <section class="sheet-sec" id="partners" aria-labelledby="partners-title">
+        <p class="sheet-ref" aria-hidden="true">Hoja 05 / 06</p>
+        <header class="sec-head">
+          <h2 id="partners-title">Variante para partners: el Pod Administrado.</h2>
+          <p>Para consultoras e integradores que necesitan capacidad de Data Engineering con supervisión, estándares y continuidad incluidos.</p>
+          <a class="btn btn-line" href="mailto:proyectos@waengineers.co?subject=Evaluaci%C3%B3n%20de%20Pod%20Administrado">Evaluar un pod</a>
+        </header>
+        <table class="parts">
+          <caption>Lista de componentes</caption>
+          <thead><tr><th scope="col">Ítem</th><th scope="col">Componente</th><th scope="col">Pod WAE</th><th scope="col">Staffing</th></tr></thead>
+          <tbody>
+            <tr><td>01</td><th scope="row">Evaluación técnica de perfiles</th><td data-label="Pod WAE">Incluida</td><td data-label="Staffing">Variable</td></tr>
+            <tr><td>02</td><th scope="row">Supervisión arquitectónica</th><td data-label="Pod WAE">Incluida</td><td data-label="Staffing">A cargo de su líder</td></tr>
+            <tr><td>03</td><th scope="row">Estándares y revisión</th><td data-label="Pod WAE">Incluidos</td><td data-label="Staffing">A cargo de su equipo</td></tr>
+            <tr><td>04</td><th scope="row">Documentación y conocimiento</th><td data-label="Pod WAE">Incluidos</td><td data-label="Staffing">No garantizados</td></tr>
+            <tr><td>05</td><th scope="row">Continuidad ante rotación</th><td data-label="Pod WAE">Plan de empalme</td><td data-label="Staffing">Se reinicia</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Hoja 06 -->
+      <section class="sheet-sec refs" id="referencias" aria-labelledby="refs-title">
+        <p class="sheet-ref" aria-hidden="true">Hoja 06 / 06</p>
+        <header class="sec-head">
+          <h2 id="refs-title">Referencias y notas generales.</h2>
+        </header>
+        <div class="refs-grid">
+          <div>
+            <h3 class="block-title">Lista de referencias</h3>
+            <div class="table-wrap">
+              <table class="reflist">
+                <thead><tr><th scope="col">Referencia</th><th scope="col">Tipo</th></tr></thead>
+                <tbody>
+                  <tr><td><ul class="logos">
+                    <li><img src="../../cinte.png" width="225" height="225" alt="Grupo Cinte" loading="lazy"></li>
+                    <li><img src="../../Credi.png" width="500" height="500" alt="Credibanco" loading="lazy"></li>
+                    <li><img src="../../gt.png" width="5516" height="1772" alt="Globaltask" loading="lazy"></li>
+                    <li><img src="../../indra.jpg" width="1400" height="720" alt="Indra" loading="lazy"></li>
+                    <li><img src="../../sky.webp" width="1200" height="1200" alt="Organización de experiencia previa del equipo (nombre por verificar)" loading="lazy"></li>
+                    <li><img src="../../Sophos.png" width="685" height="594" alt="Sophos Solutions" loading="lazy"></li>
+                    <li><img src="../../Tali.jpg" width="200" height="181" alt="Talycap Global" loading="lazy"></li>
+                  </ul></td><td>Experiencia previa del equipo. No son clientes de WAE.</td></tr>
+                  <tr><td><div class="certs">
+                    <img src="../../aws-certified-cloud-practitioner.png" width="72" height="72" alt="AWS Certified Cloud Practitioner" loading="lazy">
+                    <img src="../../aws-certified-data-engineer-associate.png" width="72" height="72" alt="AWS Certified Data Engineer – Associate" loading="lazy">
+                  </div></td><td>Certificaciones del equipo.</td></tr>
+                  <tr class="pending"><td>Casos contratados por WAE</td><td>Sin emitir: aún no hay casos contratados por WAE para publicar.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div>
+            <h3 class="block-title">Notas generales</h3>
+            <ol class="notes">
+              <li>Toda cifra económica se presenta como supuesto explícito, nunca como garantía.</li>
+              <li>No prometemos ahorros no medidos ni automatización total.</li>
+              <li>La IA se usa solo cuando aporta más que reglas o integraciones simples.</li>
+              <li>Ningún prototipo del diagnóstico se conecta a producción.</li>
+              <li>Toda solución se entrega documentada y con transferencia de conocimiento.</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- Cajetín final -->
+      <section class="close" id="contacto" aria-labelledby="close-title">
+        <div class="close-grid">
+          <div class="cell cell-drawn">
+            <p class="cell-k">Elaboró</p>
+            <img src="../assets/founder-cut.webp" width="540" height="1340" alt="Ilustración del fundador de WAE" loading="lazy">
+            <p class="cell-v">Fundador de WAE · núcleo de cinco ingenieros en Bogotá</p>
+          </div>
+          <div class="cell cell-main">
+            <p class="cell-k">Aprobación</p>
+            <h2 id="close-title">Traiga el proceso. Nosotros traemos el plano.</h2>
+            <p>Cuéntenos cuál proceso le cuesta más hoy. Respondemos con una propuesta de diagnóstico de alcance cerrado.</p>
+            <div class="actions">
+              <a class="btn btn-ink" href="mailto:proyectos@waengineers.co?subject=Solicitud%20de%20Diagn%C3%B3stico%20de%2010%20d%C3%ADas">Solicitar diagnóstico</a>
+              <a class="link" href="tel:+573123757140">+57 312 375 7140</a>
+            </div>
+          </div>
+          <div class="cell"><p class="cell-k">Contacto</p><p class="cell-v">proyectos@waengineers.co</p></div>
+          <div class="cell"><p class="cell-k">Ubicación</p><p class="cell-v">Bogotá, Colombia · remoto</p></div>
+          <div class="cell"><p class="cell-k">Revisión</p><p class="cell-v">A · para aprobación</p></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <p>WAE · Data &amp; AI Engineering · © 2026</p>
+      <p><a href="../">Ver las tres propuestas</a></p>
+    </footer>
+  </div>
+</div>
+
+<script src="main.js" defer></script>
+</body>
+</html>

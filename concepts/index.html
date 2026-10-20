@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WAE · Tres propuestas de home</title>
+<meta name="description" content="Tres direcciones de diseño para el nuevo home corporativo de WAE, construidas para comparar.">
+<meta name="theme-color" content="#FFFFFF">
+<link rel="icon" type="image/png" href="assets/wae-logo.png">
+<style>
+  :root{color-scheme:light;--ink:#16181B;--ink-2:#4F5560;--line:#DADDE2;--ease-out:cubic-bezier(.23,1,.32,1)}
+  *{box-sizing:border-box}
+  body{margin:0;background:#FFFFFF;color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+  main{max-width:1080px;margin:0 auto;padding:48px 24px 64px}
+  h1{font-size:clamp(1.8rem,3.4vw,2.6rem);line-height:1.1;margin:0;text-wrap:balance}
+  .intro{margin:14px 0 0;color:var(--ink-2);max-width:62ch}
+  ol{list-style:none;margin:40px 0 0;padding:0;border-top:1px solid var(--line)}
+  li{display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:20px;align-items:center;padding:24px 0;border-bottom:1px solid var(--line)}
+  .n{font-variant-numeric:tabular-nums;color:var(--ink-2)}
+  h2{font-size:1.25rem;margin:0}
+  p{margin:6px 0 0;color:var(--ink-2)}
+  .chips{display:flex;gap:6px;margin-top:12px}
+  .chips span{width:28px;height:18px;border:1px solid rgba(0,0,0,.12)}
+  .meta{font-size:.875rem}
+  a.open{display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border:1.5px solid var(--ink);color:var(--ink);text-decoration:none;font-weight:600;border-radius:3px;
+    transition:transform .16s var(--ease-out),background-color .2s ease,color .2s ease;touch-action:manipulation}
+  a.open:active{transform:scale(.97)}
+  @media (hover:hover) and (pointer:fine){ a.open:hover{background:var(--ink);color:#fff} }
+  :focus-visible{outline:2px solid #2F5FD0;outline-offset:3px}
+  .foot{margin-top:28px;font-size:.875rem;color:var(--ink-2)}
+  .foot a{color:var(--ink)}
+  @media (max-width:640px){ li{grid-template-columns:28px minmax(0,1fr)} a.open{grid-column:2;justify-self:start} }
+  @media (prefers-reduced-motion:reduce){ a.open{transition:none} }
+</style>
+</head>
+<body>
+<main>
+  <h1>Tres direcciones para el nuevo home de WAE</h1>
+  <p class="intro">Mismo contenido real y misma acción principal, solicitar el Diagnóstico de 10 días, en tres mundos visuales distintos. Los casos que se animan son de demostración y están rotulados como tales.</p>
+
+  <ol>
+    <li>
+      <span class="n">A</span>
+      <div>
+        <h2>Tablero de control</h2>
+        <p>El trabajo como fichas en un tablero de control aéreo: la IA mueve lo seguro y retiene lo dudoso hasta que una persona lo aprueba.</p>
+        <div class="chips" aria-hidden="true"><span style="background:#1C2420"></span><span style="background:#F2F3EF"></span><span style="background:#2F5FD0"></span><span style="background:#E3A51E"></span><span style="background:#3E8A57"></span></div>
+        <p class="meta">Schibsted Grotesk · Martian Mono · Nanum Pen Script</p>
+      </div>
+      <a class="open" href="tablero/">Abrir A</a>
+    </li>
+    <li>
+      <span class="n">B</span>
+      <div>
+        <h2>Plano de ingeniería</h2>
+        <p>El sitio como el juego de planos que WAE entrega: estado actual, arquitectura objetivo, detalle de controles y cajetín de aprobación.</p>
+        <div class="chips" aria-hidden="true"><span style="background:#FBFBF9"></span><span style="background:#132A4F"></span><span style="background:#C2311D"></span><span style="background:#D9DEE6"></span></div>
+        <p class="meta">Archivo condensada · Azeret Mono</p>
+      </div>
+      <a class="open" href="plano/">Abrir B</a>
+    </li>
+    <li>
+      <span class="n">C</span>
+      <div>
+        <h2>Rótulo de depósito</h2>
+        <p>El rótulo de destinos de un centro de distribución: cada caso avanza un curso, y la aprobación humana es un curso detenido a medio paso.</p>
+        <div class="chips" aria-hidden="true"><span style="background:#0E3A2E"></span><span style="background:#FFD200"></span><span style="background:#F2EFE6"></span></div>
+        <p class="meta">Big Shoulders Display · Libre Franklin</p>
+      </div>
+      <a class="open" href="rotulo/">Abrir C</a>
+    </li>
+  </ol>
+
+  <p class="foot">Referencias: <a href="../">home actual</a></p>
+</main>
+</body>
+</html>

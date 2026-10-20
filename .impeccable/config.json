@@ -1,0 +1,152 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "repeating-stripes-gradient",
+        "value": "*",
+        "files": [
+          "concepts/tablero/index.html"
+        ],
+        "createdAt": "2026-09-15T03:38:53.337Z",
+        "reason": "Claude, contrato de dirección A: franjas del portafichas vacío en las fichas sueltas, material del tablero"
+      },
+      {
+        "rule": "repeating-stripes-gradient",
+        "value": "*",
+        "files": [
+          "concepts/rotulo/index.html"
+        ],
+        "createdAt": "2026-09-15T03:38:53.355Z",
+        "reason": "Claude, contrato de dirección C: trama de la lona teñida, material del rótulo"
+      },
+      {
+        "rule": "codex-grid-background",
+        "value": "*",
+        "files": [
+          "concepts/plano/index.html"
+        ],
+        "createdAt": "2026-09-15T03:38:53.373Z",
+        "reason": "Claude, contrato de dirección B: retícula de la hoja de trazado, material del plano"
+      },
+      {
+        "rule": "bounce-easing",
+        "value": "cubic-bezier(.34, 1.12, .64, 1)",
+        "files": [
+          "concepts/rotulo/style.css"
+        ],
+        "createdAt": "2026-09-15T03:38:53.390Z",
+        "reason": "Claude, contrato de dirección C: el curso avanza, sobrepasa y asienta; sobrepaso reducido a 1.12"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "concepts/plano/index.html"
+        ],
+        "createdAt": "2026-09-15T03:38:53.406Z",
+        "reason": "Claude, verificado en capturas: el marco y la cadena de cotas tienen padding en sus hijos; el ras con el borde es la línea de cota"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "concepts/rotulo/index.html"
+        ],
+        "createdAt": "2026-09-15T03:38:53.424Z",
+        "reason": "Claude, verificado en capturas: lona y calicó tienen 28–64px de padding; el detector mide la capa de trama"
+      },
+      {
+        "rule": "tiny-text",
+        "value": "*",
+        "files": [
+          "concepts/plano/index.html"
+        ],
+        "createdAt": "2026-09-15T03:38:53.441Z",
+        "reason": "Claude: anotaciones del plano y rótulos del cajetín a 11px, piso funcional; texto de cotas propio de un dibujo técnico"
+      },
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "concepts/tablero/style.css"
+        ],
+        "createdAt": "2026-09-15T04:03:01.437Z",
+        "reason": "Claude, contrato A (raise origami): barra superior de 6px del portaficha que avanza por los tramos del método; no es borde lateral de tarjeta"
+      },
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "concepts/tablero/index.html"
+        ],
+        "createdAt": "2026-09-15T04:03:01.457Z",
+        "reason": "Claude: mismo pseudo-elemento .leg::before del método, detectado en el HTML renderizado"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "concepts/tablero/index.html"
+        ],
+        "createdAt": "2026-09-15T04:03:01.477Z",
+        "reason": "Claude, verificado en capturas: las fichas tienen 10-16px de padding en sus hijos; el ras es la columna de agarre de 12px del portaficha"
+      },
+      {
+        "rule": "low-contrast",
+        "value": "*",
+        "files": [
+          "concepts/rotulo/index.html"
+        ],
+        "createdAt": "2026-09-15T04:03:01.497Z",
+        "reason": "Claude, verificado en capturas: el texto verde está sobre calicó dibujado en ::before sesgado (.cut) que el detector no ve; contraste real ~10:1"
+      },
+      {
+        "rule": "all-caps-body",
+        "value": "*",
+        "files": [
+          "concepts/plano/index.html"
+        ],
+        "createdAt": "2026-09-15T04:28:36.187Z",
+        "reason": "Revisor final de B (R1): rótulos técnicos cortos en mayúsculas espaciadas, 32-34 caracteres (botón de CTA y pie del plano); convención de dibujo"
+      },
+      {
+        "rule": "all-caps-body",
+        "value": "*",
+        "files": [
+          "concepts/rotulo/index.html"
+        ],
+        "createdAt": "2026-09-15T04:28:36.210Z",
+        "reason": "Contrato C: una grotesca condensada en mayúsculas; 31-33 caracteres en el marco del rótulo y el CTA, sin párrafos en mayúsculas"
+      },
+      {
+        "rule": "dark-glow",
+        "value": "*",
+        "files": [
+          "tools/hero-3d/index.html"
+        ],
+        "createdAt": "2026-10-17T18:20:18.576Z",
+        "reason": "Claude: es una composición de video (HyperFrames), no UI; los halos son iluminación de la escena 3D. El usuario pidió un hero vivo y luminoso (2026-10-17)"
+      },
+      {
+        "rule": "wide-tracking",
+        "value": "*",
+        "files": [
+          "tools/hero-3d/index.html"
+        ],
+        "createdAt": "2026-10-17T23:49:03.489Z",
+        "reason": "Claude: composición de video; el tracking amplio es solo en etiquetas mono en mayúsculas del HUD del visor"
+      },
+      {
+        "rule": "clipped-overflow-container",
+        "value": "*",
+        "files": [
+          "tools/hero-3d/index.html"
+        ],
+        "createdAt": "2026-10-17T23:49:03.519Z",
+        "reason": "Claude: composición de video 1920x1080; el recorte del cuadro es intencional (no hay menús ni tooltips)"
+      }
+    ]
+  }
+}
