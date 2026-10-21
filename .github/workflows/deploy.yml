@@ -84,6 +84,14 @@ jobs:
             --exclude "ceo-full.png" --exclude "hero-banner.png" --exclude "hero-ceo.png" \
             --cache-control "public, max-age=604800"
 
+      - name: Retirar objetos que ya no forman parte del sitio
+        run: |
+          # La subida no borra: un archivo retirado del repositorio sigue
+          # sirviéndose hasta que se elimina aquí a mano.
+          for obsoleto in prototipo-hero.html; do
+            aws s3 rm "s3://$BUCKET/$obsoleto" || true
+          done
+
       - name: Invalidar caché de CloudFront
         run: |
           ID=$(aws cloudfront create-invalidation --distribution-id "$DIST" \
