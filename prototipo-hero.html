@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>Prototipo — Traza WAE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Inter:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0a1930;
+            --acento: #3fa89a;
+            --acento-claro: #50b7a8;
+            --acento-suave: #93d5cb;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--navy);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            background: var(--navy);
+        }
+
+        /* Placa generada */
+        .hero-placa {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+
+        /* Velo para que el titular mantenga contraste */
+        .hero-velo {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            background:
+                linear-gradient(100deg, rgba(10, 25, 48, .92) 0%, rgba(10, 25, 48, .72) 38%, rgba(10, 25, 48, 0) 62%);
+        }
+
+        /* Capa de la Traza */
+        .hero-capa {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .hero-capa svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .traza-etiqueta {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 1.9px;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            fill: var(--acento-suave);
+            paint-order: stroke;
+            stroke: rgba(10, 25, 48, .85);
+            stroke-width: .55;
+            stroke-linejoin: round;
+        }
+
+        /* Contorno navy + halo teal: así la Traza se lee también sobre el vidrio */
+        .con-relieve {
+            filter:
+                drop-shadow(0 0 .7px rgba(10, 25, 48, .95))
+                drop-shadow(0 0 .35px rgba(10, 25, 48, .9))
+                drop-shadow(0 0 1.6px rgba(80, 183, 168, .45));
+        }
+
+        .traza-nodo-anillo { fill: none; stroke: var(--acento-suave); stroke-width: .28; }
+        .traza-nodo-centro { fill: #fff; }
+        .traza-guia { stroke: rgba(147, 213, 203, .7); stroke-width: .14; }
+        .traza-intento { fill: none; stroke: rgba(147, 213, 203, .85); stroke-width: .34; stroke-dasharray: 1.1 1.3; stroke-linecap: round; }
+        .traza-linea { fill: none; stroke: url(#degradadoTraza); stroke-width: .5; stroke-linecap: round; stroke-linejoin: round; }
+        .traza-rama { fill: none; stroke: var(--acento-claro); stroke-width: .4; stroke-linecap: round; stroke-linejoin: round; }
+
+        .reticula line { stroke: rgba(147, 213, 203, .9); stroke-width: .06; }
+        .reglas line { stroke: rgba(147, 213, 203, .9); stroke-width: .08; }
+
+        /* Texto del hero, replicando la posición real del sitio */
+        .hero-texto {
+            position: relative;
+            z-index: 3;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .hero-texto > * { max-width: 650px; }
+
+        .eyebrow {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: .75rem;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            color: var(--acento);
+            display: block;
+            margin-bottom: 1.25rem;
+        }
+
+        h1 {
+            font-family: 'Manrope', sans-serif;
+            font-size: clamp(2.2rem, 4.4vw, 3.9rem);
+            font-weight: 700;
+            line-height: 1.08;
+            letter-spacing: -.03em;
+            color: #fff;
+        }
+
+        h1 em { font-style: normal; color: var(--acento-claro); }
+
+        .lead {
+            margin-top: 1.5rem;
+            color: rgba(255, 255, 255, .72);
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .hero-capa * { animation: none !important; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <section class="hero">
+        <img class="hero-placa" src="assets-hero/placa-01.webp" alt="">
+        <div class="hero-velo"></div>
+
+        <!-- Capa de la Traza -->
+        <div class="hero-capa" aria-hidden="true">
+            <svg viewBox="0 0 192 108" preserveAspectRatio="xMidYMid slice">
+                <defs>
+                    <linearGradient id="degradadoTraza" x1="0" y1="1" x2="1" y2="0">
+                        <stop offset="0%" stop-color="#3fa89a" />
+                        <stop offset="55%" stop-color="#50b7a8" />
+                        <stop offset="100%" stop-color="#93d5cb" />
+                    </linearGradient>
+                </defs>
+
+                <!-- Retícula de ingeniería, confinada a la mitad derecha -->
+                <g class="reticula" opacity="0">
+                    <line x1="104" y1="0" x2="104" y2="108" /><line x1="128" y1="0" x2="128" y2="108" />
+                    <line x1="152" y1="0" x2="152" y2="108" /><line x1="176" y1="0" x2="176" y2="108" />
+                    <line x1="100" y1="27" x2="192" y2="27" /><line x1="100" y1="54" x2="192" y2="54" />
+                    <line x1="100" y1="81" x2="192" y2="81" />
+                </g>
+
+                <!-- Marcas de regla, borde derecho -->
+                <g class="reglas" opacity="0">
+                    <line x1="188" y1="22" x2="191" y2="22" /><line x1="189.5" y1="27" x2="191" y2="27" />
+                    <line x1="189.5" y1="32" x2="191" y2="32" /><line x1="188" y1="37" x2="191" y2="37" />
+                    <line x1="189.5" y1="42" x2="191" y2="42" /><line x1="189.5" y1="47" x2="191" y2="47" />
+                    <line x1="188" y1="52" x2="191" y2="52" /><line x1="189.5" y1="57" x2="191" y2="57" />
+                    <line x1="189.5" y1="62" x2="191" y2="62" /><line x1="188" y1="67" x2="191" y2="67" />
+                    <line x1="189.5" y1="72" x2="191" y2="72" /><line x1="189.5" y1="77" x2="191" y2="77" />
+                    <line x1="188" y1="82" x2="191" y2="82" />
+                </g>
+
+                <!-- Intentos fallidos de conexión -->
+                <path class="traza-intento con-relieve" id="intento1" d="M 115.2 82.1 H 128" opacity="0" />
+                <path class="traza-intento con-relieve" id="intento2" d="M 134.4 71.3 H 146" opacity="0" />
+
+                <!-- La Traza: escalera de ángulos rectos que sigue los tres paneles -->
+                <path class="traza-linea con-relieve" id="traza"
+                      d="M 115.2 82.1 H 132.4 Q 134.4 82.1 134.4 80.1 V 71.3
+                         H 149.7 Q 151.7 71.3 151.7 69.3 V 62.6" />
+
+                <!-- Bifurcación: la única del recorrido -->
+                <path class="traza-rama con-relieve" id="ramaTronco" d="M 151.7 62.6 H 160.5" />
+                <path class="traza-rama con-relieve" id="ramaAuto" d="M 158.5 62.6 Q 160.5 62.6 160.5 60.6 V 53.5" />
+                <path class="traza-rama con-relieve" id="ramaHumana" d="M 158.5 62.6 Q 160.5 62.6 160.5 64.6 V 72" />
+
+                <!-- Nodos -->
+                <g class="nodo con-relieve" id="nodo1" opacity="0">
+                    <circle class="traza-nodo-anillo" cx="115.2" cy="82.1" r="1.5" />
+                    <circle class="traza-nodo-centro" cx="115.2" cy="82.1" r="0.55" />
+                </g>
+                <g class="nodo con-relieve" id="nodo2" opacity="0">
+                    <circle class="traza-nodo-anillo" cx="134.4" cy="71.3" r="1.5" />
+                    <circle class="traza-nodo-centro" cx="134.4" cy="71.3" r="0.55" />
+                </g>
+                <g class="nodo con-relieve" id="nodo3" opacity="0">
+                    <circle class="traza-nodo-anillo" cx="151.7" cy="62.6" r="1.5" />
+                    <circle class="traza-nodo-centro" cx="151.7" cy="62.6" r="0.55" />
+                </g>
+
+                <!-- Líneas guía: suben del nodo hacia su etiqueta -->
+                <line class="traza-guia guia con-relieve" id="guia1" x1="115.2" y1="80.4" x2="115.2" y2="78.4" opacity="0" />
+                <line class="traza-guia guia con-relieve" id="guia2" x1="134.4" y1="69.6" x2="134.4" y2="67.6" opacity="0" />
+                <line class="traza-guia guia con-relieve" id="guia3" x1="151.7" y1="60.9" x2="151.7" y2="58.9" opacity="0" />
+
+                <!-- Etiquetas de los nodos: dos por nodo, se cruzan en opacidad.
+                     Así el estado es correcto en cualquier instante, también al saltar. -->
+                <text class="traza-etiqueta etq-antes" id="etq1a" x="115.2" y="77.6" text-anchor="middle" opacity="0">CRM</text>
+                <text class="traza-etiqueta etq-despues" id="etq1b" x="115.2" y="77.6" text-anchor="middle" opacity="0">Origen</text>
+                <text class="traza-etiqueta etq-antes" id="etq2a" x="134.4" y="66.8" text-anchor="middle" opacity="0">ERP</text>
+                <text class="traza-etiqueta etq-despues" id="etq2b" x="134.4" y="66.8" text-anchor="middle" opacity="0">Validado</text>
+                <text class="traza-etiqueta etq-antes" id="etq3a" x="151.7" y="58.1" text-anchor="middle" opacity="0">Entrega</text>
+                <text class="traza-etiqueta etq-despues" id="etq3b" x="151.7" y="58.1" text-anchor="middle" opacity="0">Confirmado</text>
+
+                <!-- Etiquetas de la bifurcación -->
+                <text class="traza-etiqueta" id="etqAuto" x="160.5" y="51.2" text-anchor="middle" opacity="0">Automático</text>
+                <text class="traza-etiqueta" id="etqHumana" x="160.5" y="75.2" text-anchor="middle" opacity="0">Revisión humana</text>
+            </svg>
+        </div>
+
+        <div class="hero-texto">
+            <span class="eyebrow">World AI Engineers</span>
+            <h1>Conectamos datos,<br>sistemas y capacidad de<br>ingeniería para que<br><em>la operación avance</em>.</h1>
+            <p class="lead">Prototipo de la capa animada sobre la placa generada. El texto reproduce la posición real del hero.</p>
+        </div>
+    </section>
+
+    <script src="vendor/gsap.min.js"></script>
+    <script>
+        (function () {
+            const capa = document.querySelector('.hero-capa');
+            if (!capa || !window.gsap) return;
+
+            const q = s => capa.querySelector(s);
+            const traza = q('#traza');
+            const ramas = ['#ramaTronco', '#ramaAuto', '#ramaHumana'].map(q);
+            const intentos = [q('#intento1'), q('#intento2')];
+
+            // Preparar trazos para dibujarse
+            const preparar = el => {
+                const l = el.getTotalLength();
+                gsap.set(el, { strokeDasharray: l, strokeDashoffset: l, opacity: 1 });
+                return l;
+            };
+            preparar(traza);
+            ramas.forEach(preparar);
+            intentos.forEach(el => { preparar(el); gsap.set(el, { opacity: 0 }); });
+
+            const tl = gsap.timeline({ repeat: -1, defaults: { ease: 'power2.out' } });
+            window.__tl = tl;
+
+            // 00,0–01,2 · Instrumento
+            tl.to('.reticula', { opacity: .06, duration: 1.2 }, 0)
+              .to('.reglas', { opacity: .18, duration: 1.2 }, .2);
+
+            // 01,2–03,0 · Tres puntos
+            ['#nodo1', '#nodo2', '#nodo3'].forEach((n, i) => {
+                tl.fromTo(n, { opacity: 0, transformOrigin: 'center' },
+                    { opacity: 1, duration: .4, ease: 'back.out(2)' }, 1.2 + i * .18);
+            });
+            ['#guia1', '#guia2', '#guia3'].forEach((g, i) => {
+                tl.to(g, { opacity: 1, duration: .5 }, 1.5 + i * .18);
+            });
+            ['#etq1a', '#etq2a', '#etq3a'].forEach((e, i) => {
+                tl.to(e, { opacity: 1, duration: .5 }, 1.7 + i * .18);
+            });
+
+            // 03,0–05,5 · El vacío: la conexión se intenta, pierde fuerza y se disuelve.
+            // El frenado (power2.out) es lo que hace legible el fracaso.
+            intentos.forEach((el, i) => {
+                const t0 = 3.0 + i * 1.15;
+                tl.to(el, { opacity: 1, duration: .25 }, t0)
+                  .to(el, { strokeDashoffset: 0, duration: .95, ease: 'power2.out' }, t0)
+                  .to(el, { opacity: 0, duration: .55, ease: 'power1.in' }, t0 + 1.1);
+            });
+
+            // 05,5–09,0 · La Traza
+            tl.to(traza, { strokeDashoffset: 0, duration: 3.5, ease: 'power1.inOut' }, 5.5);
+            // El nombre del sistema cede paso a su estado, cruzando opacidades
+            [[1, 6.4], [2, 7.4], [3, 8.5]].forEach(([n, t]) => {
+                tl.to(`#etq${n}a`, { opacity: 0, duration: .35 }, t)
+                  .to(`#etq${n}b`, { opacity: 1, duration: .45 }, t + .2);
+            });
+
+            // 09,0–11,0 · La bifurcación
+            tl.to(ramas[0], { strokeDashoffset: 0, duration: .5 }, 9.0)
+              .to([ramas[1], ramas[2]], { strokeDashoffset: 0, duration: .8 }, 9.4)
+              .to(['#etq1b', '#etq2b', '#etq3b'], { opacity: .5, duration: .5 }, 9.4)
+              .to('#etqAuto', { opacity: 1, duration: .4 }, 10.0)
+              .to('#etqHumana', { opacity: 1, duration: .4 }, 10.2)
+              .to('#etqHumana', { opacity: .3, duration: .35, yoyo: true, repeat: 1 }, 10.7);
+
+            // 11,0–14,0 · Retorno
+            tl.to(['#etqAuto', '#etqHumana'], { opacity: 0, duration: .5 }, 11.4)
+              .to([ramas[1], ramas[2], ramas[0]], { opacity: 0, duration: .6 }, 11.6)
+              .to(['#etq1b', '#etq2b', '#etq3b', '.guia'], { opacity: 0, duration: .6 }, 11.9)
+              .to(['#nodo1', '#nodo2', '#nodo3'], { opacity: 0, duration: .6 }, 12.2)
+              .to(traza, { opacity: 0, duration: .8 }, 12.4)
+              .to(['.reticula', '.reglas'], { opacity: 0, duration: .9 }, 12.6)
+              // Rebobinado explícito: deja el trazo listo para el siguiente ciclo
+              .to([traza, ...ramas], { strokeDashoffset: (i, t) => t.getTotalLength(), duration: 0 }, 13.5)
+              .to([traza, ...ramas], { opacity: 1, duration: 0 }, 13.55)
+              .to({}, { duration: .45 }, 13.55);
+        })();
+    </script>
+</body>
+
+</html>
