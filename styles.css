@@ -3961,6 +3961,12 @@ a.contact-method:hover {
     .footer-links { flex-wrap: wrap; justify-content: center; }
 }
 
+/* La columna derecha entra desplazada 24 px (fade-left): la sección la recorta para que
+   la página no se ensanche en móvil mientras la animación no ha ocurrido. */
+.contact-section {
+    overflow-x: clip;
+}
+
 /* Columna derecha: formulario y, debajo, los certificados */
 .contact-right {
     display: flex;
